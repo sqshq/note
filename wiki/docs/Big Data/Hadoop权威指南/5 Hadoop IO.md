@@ -1,5 +1,5 @@
 ---
-title: 5 Hadoop I/O
+title: 5 Hadoop IO
 toc: false
 date: 2017-10-30
 ---

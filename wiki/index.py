@@ -1,6 +1,7 @@
 import os
 import codecs
 
+
 Invalid_tags = []
 Invalid_dir = ['custom_theme', 'tags', 'css']
 

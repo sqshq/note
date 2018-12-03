@@ -19,3 +19,10 @@ except KeyError as e:
 ```python
 print('.', end='')
 ```
+
+#### String r
+
+`r` is a prefix for string *literals*. This means, r"1\2\3\4" will not interpret \ as an escape when creating the string value, but keep \ as an actual character in the string. Thus, r"1\2\3\4" will have seven characters.
+
+`var = "1\2\3\4"` will interpret backslashes as escapes, create the string `'1\x02\x03\x04'` (a four-character string), then assign this string to the variable `var`.
+

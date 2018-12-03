@@ -1,38 +1,34 @@
-### **Algorithm**
+### Algorithm 
 
-### AlgorithmPrinceton
+#### 剑指Offer 
 
-* [Topic 1: UnionFind](algorithmPrinceton/unionfind)
-* [Topic 2: StackQueue](algorithmPrinceton/stackqueue)
-* [Topic 3: Sort](algorithmPrinceton/sort)
-* [Topic 4: PriorityQueues](algorithmPrinceton/priorityqueue)
-* [Topic 5: Symbol Tables](algorithmPrinceton/symboltable)
-* [Topic 6: Balanced Search Trees](algorithmPrinceton/bst)
-* [Topic 7: Hash Table](algorithmPrinceton/hashtable)
-* [Topic 8: Graph](algorithmPrinceton/graph)
-* [Topic 9: Minimum Spanning Tree and Shortest Path](algorithmPrinceton/mst_shortestpath)
-* [Topic 11: String Sort](algorithmPrinceton/stringsort)
-* [Topic 12: Tries](algorithmPrinceton/tries)
+* [7 两个面试案例](剑指Offer/7%20两个面试案例) 
+* [6 面试中的各项能力](剑指Offer/6%20面试中的各项能力) 
+* [5 优化时间和空间效率](剑指Offer/5%20优化时间和空间效率) 
+* [3 高质量的代码](剑指Offer/3%20高质量的代码) 
+* [solution](剑指Offer/solution) 
+* [2 ⾯试需要的基础知识](剑指Offer/2%20⾯试需要的基础知识) 
+* [4 解决面试题的思路](剑指Offer/4%20解决面试题的思路) 
 
-### AlgorithmStanford
+#### Stanford 
 
-* [Topic: Dynammic Programming](algorithmStanford/dynamicprogramming)
-* [Topic: Heap](algorithmStanford/heap)
-* [Topic: Graph](algorithmStanford/graph)
-* [Topic: Greedy Algorithm](algorithmStanford/greedy)
-* [Topic: Hash Table](algorithmStanford/hashtable)
+* [Topic - Graph](Stanford/Topic%20-%20Graph) 
+* [Topic - Heap](Stanford/Topic%20-%20Heap) 
+* [Topic - Dynamic Programming](Stanford/Topic%20-%20Dynamic%20Programming) 
+* [Topic - Hash Table](Stanford/Topic%20-%20Hash%20Table) 
+* [Topic - Greedy Algorithm](Stanford/Topic%20-%20Greedy%20Algorithm) 
 
-### CS61B
+#### Princeton 
 
-* [Lab1: javac, java, git](cs61b/Lab1)
-* [Lab2: Unit Testing with JUnit and IntLists](cs61b/Lab2)
-* [Lab3: Unit Testing with JUnit, Debugging](cs61b/Lab3)
+* [Topic 1 - Union Find](Princeton/Topic%201%20-%20Union%20Find) 
+* [Topic 2 - Stacks and Queues](Princeton/Topic%202%20-%20Stacks%20and%20Queues) 
+* [Topic 3 - Sorting](Princeton/Topic%203%20-%20Sorting) 
+* [Topic 4 - Priority Queues](Princeton/Topic%204%20-%20Priority%20Queues) 
+* [Topic 5 - Symbol Tables](Princeton/Topic%205%20-%20Symbol%20Tables) 
+* [Topic 6 - Balanced Search Trees](Princeton/Topic%206%20-%20Balanced%20Search%20Trees) 
+* [Topic 7 - Hash Table](Princeton/Topic%207%20-%20Hash%20Table) 
+* [Topic 8 - Graph](Princeton/Topic%208%20-%20Graph) 
+* [Topic 9 - Minimum Spanning Tree and Shortest Path](Princeton/Topic%209%20-%20Minimum%20Spanning%20Tree%20and%20Shortest%20Path) 
+* [Topic 11 - String Sort](Princeton/Topic%2011%20-%20String%20Sort) 
+* [Topic 12 - Tries](Princeton/Topic%2012%20-%20Tries) 
 
-### Sword
-
-* [⾯试需要的基础知识](sword/ch2)
-* [高质量的代码](sword/ch3)
-* [解决面试题的思路](sword/ch4)
-* [优化时间和空间效率](sword/ch5)
-* [面试中的各项能力](sword/ch6)
-* [两个面试案例](sword/ch7)
