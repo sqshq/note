@@ -1,3 +1,4 @@
+* [169. Majority Element.md](../../Leetcode/169.%20Majority%20Element)
 * [215. Kth Largest Element in an Array.md](../../Leetcode/215.%20Kth%20Largest%20Element%20in%20an%20Array)
 * [240. Search a 2D Matrix II.md](../../Leetcode/240.%20Search%20a%202D%20Matrix%20II)
 * [241. Different Ways to Add Parentheses.md](../../Leetcode/241.%20Different%20Ways%20to%20Add%20Parentheses)

@@ -12,3 +12,6 @@
 * [56. Merge Intervals.md](../../Leetcode/56.%20Merge%20Intervals)
 * [57. Insert Interval.md](../../Leetcode/57.%20Insert%20Interval)
 * [75. Sort Colors.md](../../Leetcode/75.%20Sort%20Colors)
+* [Bucket Sort.md](../../Algorithm/其他/Bucket%20Sort)
+* [Topic 11 - String Sort.md](../../Algorithm/Princeton/Topic%2011%20-%20String%20Sort)
+* [Topic 3 - Sorting.md](../../Algorithm/Princeton/Topic%203%20-%20Sorting)

@@ -26,7 +26,7 @@ def build_tags(path):
             continue
         # it is a directory
         if (os.path.isdir(file_path)):
-            if filename in Invalid_dir:
+            if filename not in Invalid_dir:
                 all_tags.extend(build_tags(file_path))
         # it is a markdown file
         else:
@@ -55,8 +55,11 @@ def write_tag(path, tags):
     tags_map = build_index_of_tags(tags);
     remove_invalid_tags(tags_map)
     for tag in tags_map:
-        with codecs.open(os.path.join(path, tag) + '.md', mode='w', encoding="utf-8") as f:
-            f.write(process_tag_info(tags_map[tag]))
+        # 只生成出现频数大于5的标签
+        if (len(tags_map[tag]) > 3):
+            print(tag)
+            with codecs.open(os.path.join(path, tag) + '.md', mode='w', encoding="utf-8") as f:
+                f.write(process_tag_info(tags_map[tag]))
 
 def process_tag_info(tag_info):
     """

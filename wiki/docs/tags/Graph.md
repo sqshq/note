@@ -10,3 +10,5 @@
 * [743. Network Delay Time.md](../../Leetcode/743.%20Network%20Delay%20Time)
 * [785. Is Graph Bipartite?.md](../../Leetcode/785.%20Is%20Graph%20Bipartite?)
 * [841. Keys and Rooms.md](../../Leetcode/841.%20Keys%20and%20Rooms)
+* [Topic 9 - Minimum Spanning Tree and Shortest Path.md](../../Algorithm/Princeton/Topic%209%20-%20Minimum%20Spanning%20Tree%20and%20Shortest%20Path)
+* [graph.md](../../Algorithm/Stanford/graph)

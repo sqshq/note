@@ -6,6 +6,3 @@
 * [7 Interrupt and Exception Handling.md](../../OS/CSE521/7%20Interrupt%20and%20Exception%20Handling)
 * [8 contect switching.md](../../OS/CSE521/8%20contect%20switching)
 * [9 Threads and Thread Implementations.md](../../OS/CSE521/9%20Threads%20and%20Thread%20Implementations)
-* [POSIX.md](../../OS/POSIX)
-* [实现操作系统1 - 配置.md](../../OS/实现操作系统1%20-%20配置)
-* [超线程.md](../../OS/超线程)

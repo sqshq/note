@@ -15,5 +15,5 @@ top: 1
 * 常用软件配置安装
 
 Name: 王振华
-BLOG: [http://larryim.cc](http://larryim.cc)
+BLOG: [https://techlarry.github.io](https://techlarry.github.io)
 

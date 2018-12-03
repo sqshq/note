@@ -1,1 +1,0 @@
-### **Thinking in Java 7 - Access Control**

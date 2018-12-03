@@ -24,3 +24,5 @@
 * [599. Minimum Index Sum of Two Lists.md](../../Leetcode/599.%20Minimum%20Index%20Sum%20of%20Two%20Lists)
 * [76. Minimum Window Substring.md](../../Leetcode/76.%20Minimum%20Window%20Substring)
 * [760. Find Anagram Mappings.md](../../Leetcode/760.%20Find%20Anagram%20Mappings)
+* [Topic 7 - Hash Table.md](../../Algorithm/Princeton/Topic%207%20-%20Hash%20Table)
+* [hashtable.md](../../Algorithm/Stanford/hashtable)

@@ -1,1 +1,0 @@
-* [GCC.md](../../Miscellaneous/GCC)

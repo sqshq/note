@@ -1,5 +1,6 @@
 * [136. Single Number.md](../../Leetcode/136.%20Single%20Number)
 * [137. Single Number II.md](../../Leetcode/137.%20Single%20Number%20II)
+* [169. Majority Element.md](../../Leetcode/169.%20Majority%20Element)
 * [187. Repeated DNA Sequences.md](../../Leetcode/187.%20Repeated%20DNA%20Sequences)
 * [190. Reverse Bits.md](../../Leetcode/190.%20Reverse%20Bits)
 * [191. Number of 1 Bits.md](../../Leetcode/191.%20Number%20of%201%20Bits)

@@ -1,4 +1,0 @@
-#!/bin/bash
-notes-build
-newpost "note os update"
-echo "Complete!"

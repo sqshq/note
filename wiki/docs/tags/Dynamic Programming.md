@@ -31,3 +31,4 @@
 * [91. Decode Ways.md](../../Leetcode/91.%20Decode%20Ways)
 * [95. Unique Binary Search Trees II.md](../../Leetcode/95.%20Unique%20Binary%20Search%20Trees%20II)
 * [96. Unique Binary Search Trees.md](../../Leetcode/96.%20Unique%20Binary%20Search%20Trees)
+* [dynamicprogramming.md](../../Algorithm/Stanford/dynamicprogramming)

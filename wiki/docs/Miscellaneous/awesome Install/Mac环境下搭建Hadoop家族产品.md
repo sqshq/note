@@ -289,7 +289,7 @@ Kafka使用了scala和java语言，所以应该首先安装scala。到[scala官�
 ## 7 最简便的安装方式
 
 
-其实最简单的安装莫过于Vagrant方案了，搭建Vagrant虚拟机的过程见我的博文[vagrant搭建ubuntu](http://larryim.cc/wiki/2017/12/30/awesome-Install-环境-vagrant搭建ubuntu/)，在选择配置文件的时候，选择这里的[配置文件](https://github.com/datacell/bigdatabase/tree/bartemius_v1.0.0/scripts/boxes/bartemius/1.0.0/Vagrantfile)。下载好配置文件后，在终端切换到配置文件所在文件夹，输入命令行
+其实最简单的安装莫过于Vagrant方案了，搭建Vagrant虚拟机的过程见我的博文[vagrant搭建ubuntu](https://techlarry.github.io/wiki/2017/12/30/awesome-Install-环境-vagrant搭建ubuntu/)，在选择配置文件的时候，选择这里的[配置文件](https://github.com/datacell/bigdatabase/tree/bartemius_v1.0.0/scripts/boxes/bartemius/1.0.0/Vagrantfile)。下载好配置文件后，在终端切换到配置文件所在文件夹，输入命令行
 
 ```bash
 vagrant up

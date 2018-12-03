@@ -1,5 +1,10 @@
 site_name: Zhenhua's Wiki
 
+repo_name: GitHub
+repo_url: https://github.com/techlarry/note
+edit_uri: edit/master/wiki/docs
+
+
 theme:
   name: 'material'
   palette:
@@ -28,3 +33,4 @@ markdown_extensions:
   - toc:
       permalink: true
   - pymdownx.superfences
+  - pymdownx.inlinehilite ## https://squidfunk.github.io/mkdocs-material/extensions/pymdown/

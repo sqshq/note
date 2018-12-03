@@ -8,6 +8,7 @@
 * [204. Count Primes.md](../../Leetcode/204.%20Count%20Primes)
 * [224. Basic Calculator.md](../../Leetcode/224.%20Basic%20Calculator)
 * [231. Power of Two.md](../../Leetcode/231.%20Power%20of%20Two)
+* [233. Number of Digit One.md](../../Leetcode/233.%20Number%20of%20Digit%20One)
 * [258. Add Digits.md](../../Leetcode/258.%20Add%20Digits)
 * [263. Ugly Number.md](../../Leetcode/263.%20Ugly%20Number)
 * [264. Ugly Number II.md](../../Leetcode/264.%20Ugly%20Number%20II)

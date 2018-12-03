@@ -21,3 +21,4 @@
 * [69. Sqrt(x).md](../../Leetcode/69.%20Sqrt(x))
 * [74. Search a 2D Matrix.md](../../Leetcode/74.%20Search%20a%202D%20Matrix)
 * [81. Search in Rotated Sorted Array II.md](../../Leetcode/81.%20Search%20in%20Rotated%20Sorted%20Array%20II)
+* [Topic 5 - Symbol Tables.md](../../Algorithm/Princeton/Topic%205%20-%20Symbol%20Tables)
