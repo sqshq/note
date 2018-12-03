@@ -1,0 +1,19 @@
+#!/bin/bash
+cd /Users/larry/note-os
+
+source activate python27
+set -e
+
+echo "index.py: building contents pages..."
+python index.py
+
+echo "mkdocs build --clean"
+echo "building .... "
+mkdocs build --clean -q --site-dir=/Users/larry/techlarry.github.io/note-os/
+#mkdocs build --dirty -q
+echo "building complete!"
+
+
+#cat > site/CNAME <<EOF
+#larryim.cc
+#EOF

@@ -1,0 +1,10 @@
+{
+  "name" : "wiki",
+  "fileExtension" : ".md",
+  "autoUploadInsertedImageKey" : "qiniu-https:\/\/upload-z2.qiniup.com",
+  "autoUploadInsertedImage" : false,
+  "folderType" : 10,
+  "mediaFloder" : "figures",
+  "orderBy" : 0,
+  "newlinesToBR" : 0
+}

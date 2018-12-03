@@ -1,0 +1,5 @@
+#!/bin/bash
+cd ~/techlarry.github.io
+git add .
+git commit -m "$*"
+git push origin master

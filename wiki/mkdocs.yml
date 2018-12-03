@@ -1,0 +1,30 @@
+site_name: Zhenhua's Wiki
+
+theme:
+  name: 'material'
+  palette:
+    primary: 'indigo'
+    accent: 'indigo'
+  feature:
+    tabs: true
+  custom_dir: 'custom_theme/'
+
+extra_css:
+    - css/extra.css
+
+extra:
+  search:
+    language: 'en, jp'
+    tokenizer: '[\s\-\.]+'
+
+
+extra_javascript:
+  - 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'
+
+markdown_extensions:
+  - pymdownx.arithmatex
+  - codehilite
+  - admonition
+  - toc:
+      permalink: true
+  - pymdownx.superfences
