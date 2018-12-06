@@ -150,7 +150,7 @@ public class RemoteLoader {
 
 #### Example - Runnable
 
-Runnable interface uses command pattern. It allows the thread pool to execute the command even though the thread pool class itself was written without any knowledge of the specific tasks for which it would be used.
+<C>Runnable</C> interface uses command pattern. It allows the thread pool to execute the command even though the thread pool class itself was written without any knowledge of the specific tasks for which it would be used.
 
 ```Java tab="Runnable"
 
