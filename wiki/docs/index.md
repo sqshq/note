@@ -1,5 +1,27 @@
 ### docs 
 
+#### Machine Learning 
+
+#### 面向程序员的数据挖掘指南 
+
+* [1 推荐系统入门](Machine%20Learning/面向程序员的数据挖掘指南/1%20推荐系统入门) 
+* [2 隐式评价和基于物品的过滤算法](Machine%20Learning/面向程序员的数据挖掘指南/2%20隐式评价和基于物品的过滤算法) 
+* [3 分类](Machine%20Learning/面向程序员的数据挖掘指南/3%20分类) 
+* [4 进一步探索分类](Machine%20Learning/面向程序员的数据挖掘指南/4%20进一步探索分类) 
+* [5 朴素贝叶斯](Machine%20Learning/面向程序员的数据挖掘指南/5%20朴素贝叶斯) 
+* [6 朴素贝叶斯算法和非结构化文本](Machine%20Learning/面向程序员的数据挖掘指南/6%20朴素贝叶斯算法和非结构化文本) 
+* [7 聚类](Machine%20Learning/面向程序员的数据挖掘指南/7%20聚类) 
+
+#### CMU10601 
+
+* [1 Intro to ML](Machine%20Learning/CMU10601/1%20Intro%20to%20ML) 
+* [2 Decision Tree learning](Machine%20Learning/CMU10601/2%20Decision%20Tree%20learning) 
+* [3 Probability and Estimation](Machine%20Learning/CMU10601/3%20Probability%20and%20Estimation) 
+* [4 Naive Bayes](Machine%20Learning/CMU10601/4%20Naive%20Bayes) 
+* [5 Gaussian Naive Bayes](Machine%20Learning/CMU10601/5%20Gaussian%20Naive%20Bayes) 
+* [6 Logistic Regression](Machine%20Learning/CMU10601/6%20Logistic%20Regression) 
+* [7 Linear Regression](Machine%20Learning/CMU10601/7%20Linear%20Regression) 
+
 ### Java 
 
 #### Head First设计模式 
@@ -8,7 +30,7 @@
 * [2 Observer Pattern](Java/Head%20First设计模式/2%20Observer%20Pattern) 
 * [3 Decorator Pattern](Java/Head%20First设计模式/3%20Decorator%20Pattern) 
 * [4 Factory Pattern](Java/Head%20First设计模式/4%20Factory%20Pattern) 
-* [5 Singleton Patter](Java/Head%20First设计模式/5%20Singleton%20Patter) 
+* [5 Singleton Pattern](Java/Head%20First设计模式/5%20Singleton%20Pattern) 
 * [6 Command Pattern](Java/Head%20First设计模式/6%20Command%20Pattern) 
 * [7 Adapter and Facade Pattern](Java/Head%20First设计模式/7%20Adapter%20and%20Facade%20Pattern) 
 * [8 Template Method Pattern](Java/Head%20First设计模式/8%20Template%20Method%20Pattern) 
@@ -17,54 +39,81 @@
 * [11 Proxy Patter](Java/Head%20First设计模式/11%20Proxy%20Patter) 
 * [12 Compound Patterns](Java/Head%20First设计模式/12%20Compound%20Patterns) 
 * [13 Better Living with Patterns](Java/Head%20First设计模式/13%20Better%20Living%20with%20Patterns) 
+* [14 Appendix FlyWeight Pattern](Java/Head%20First设计模式/14%20Appendix%20FlyWeight%20Pattern) 
 
 #### Head First Java 
 
-* [17 Packages, Jars and Deployment](Java/Head%20First%20Java/17%20Packages,%20Jars%20and%20Deployment) 
-* [8 Interfaces and Abstract Classes](Java/Head%20First%20Java/8%20Interfaces%20and%20Abstract%20Classes) 
 * [1 Dive in A Quick Dip](Java/Head%20First%20Java/1%20Dive%20in%20A%20Quick%20Dip) 
-* [6 Get to know the Java API](Java/Head%20First%20Java/6%20Get%20to%20know%20the%20Java%20API) 
-* [16 Collections and Generics](Java/Head%20First%20Java/16%20Collections%20and%20Generics) 
-* [15 Networking and Threads](Java/Head%20First%20Java/15%20Networking%20and%20Threads) 
-* [9 Constructors and Garbage Collection](Java/Head%20First%20Java/9%20Constructors%20and%20Garbage%20Collection) 
-* [13 Using Swing](Java/Head%20First%20Java/13%20Using%20Swing) 
-* [14 Serialization and File IO](Java/Head%20First%20Java/14%20Serialization%20and%20File%20IO) 
-* [5 Writing a Program](Java/Head%20First%20Java/5%20Writing%20a%20Program) 
-* [12 Getting GUI](Java/Head%20First%20Java/12%20Getting%20GUI) 
-* [7 Inheritance and polymorphism](Java/Head%20First%20Java/7%20Inheritance%20and%20polymorphism) 
-* [11 Exception Handling](Java/Head%20First%20Java/11%20Exception%20Handling) 
-* [Appendix](Java/Head%20First%20Java/Appendix) 
+* [2 Classes and Objects](Java/Head%20First%20Java/2%20Classes%20and%20Objects) 
 * [3 Primitives and references](Java/Head%20First%20Java/3%20Primitives%20and%20references) 
 * [4 Methods use instance variables](Java/Head%20First%20Java/4%20Methods%20use%20instance%20variables) 
-* [18 Remote deploy with RMI](Java/Head%20First%20Java/18%20Remote%20deploy%20with%20RMI) 
-* [2 Classes and Objects](Java/Head%20First%20Java/2%20Classes%20and%20Objects) 
+* [5 Writing a Program](Java/Head%20First%20Java/5%20Writing%20a%20Program) 
+* [6 Get to know the Java API](Java/Head%20First%20Java/6%20Get%20to%20know%20the%20Java%20API) 
+* [7 Inheritance and polymorphism](Java/Head%20First%20Java/7%20Inheritance%20and%20polymorphism) 
+* [8 Interfaces and Abstract Classes](Java/Head%20First%20Java/8%20Interfaces%20and%20Abstract%20Classes) 
+* [9 Constructors and Garbage Collection](Java/Head%20First%20Java/9%20Constructors%20and%20Garbage%20Collection) 
 * [10 Numbers and Statics](Java/Head%20First%20Java/10%20Numbers%20and%20Statics) 
+* [11 Exception Handling](Java/Head%20First%20Java/11%20Exception%20Handling) 
+* [12 Getting GUI](Java/Head%20First%20Java/12%20Getting%20GUI) 
+* [13 Using Swing](Java/Head%20First%20Java/13%20Using%20Swing) 
+* [14 Serialization and File IO](Java/Head%20First%20Java/14%20Serialization%20and%20File%20IO) 
+* [15 Networking and Threads](Java/Head%20First%20Java/15%20Networking%20and%20Threads) 
+* [16 Collections and Generics](Java/Head%20First%20Java/16%20Collections%20and%20Generics) 
+* [17 Packages, Jars and Deployment](Java/Head%20First%20Java/17%20Packages,%20Jars%20and%20Deployment) 
+* [18 Remote deploy with RMI](Java/Head%20First%20Java/18%20Remote%20deploy%20with%20RMI) 
+* [19 Appendix](Java/Head%20First%20Java/19%20Appendix) 
+
+#### Java多线程设计模式 
+
+* [1 Single Threaded Execution模式](Java/Java多线程设计模式/1%20Single%20Threaded%20Execution模式) 
+* [序章1 Java线程](Java/Java多线程设计模式/序章1%20Java线程) 
+* [2 Immutable模式](Java/Java多线程设计模式/2%20Immutable模式) 
+* [序章2 多线程程序的评价标准](Java/Java多线程设计模式/序章2%20多线程程序的评价标准) 
+* [3 Guarded Suspension模式](Java/Java多线程设计模式/3%20Guarded%20Suspension模式) 
+* [4 Balking模式](Java/Java多线程设计模式/4%20Balking模式) 
+* [5 Producer-Consumer模式](Java/Java多线程设计模式/5%20Producer-Consumer模式) 
+* [6 Read-Write Lock模式](Java/Java多线程设计模式/6%20Read-Write%20Lock模式) 
+
+#### Effective Java 
+
+* [1 Introduction](Java/Effective%20Java/1%20Introduction) 
+* [2 Creating and Destroying Objects](Java/Effective%20Java/2%20Creating%20and%20Destroying%20Objects) 
+* [3 Methods Common to All Objects](Java/Effective%20Java/3%20Methods%20Common%20to%20All%20Objects) 
+* [4 Classes and interfaces](Java/Effective%20Java/4%20Classes%20and%20interfaces) 
+* [5 Generics](Java/Effective%20Java/5%20Generics) 
+* [6 Enums and Annotations](Java/Effective%20Java/6%20Enums%20and%20Annotations) 
+* [7 Lambdas and Streams](Java/Effective%20Java/7%20Lambdas%20and%20Streams) 
+* [8 Methods](Java/Effective%20Java/8%20Methods) 
+* [9 General Programming](Java/Effective%20Java/9%20General%20Programming) 
+* [10 Exceptions](Java/Effective%20Java/10%20Exceptions) 
+* [11 Concurrency](Java/Effective%20Java/11%20Concurrency) 
+* [12 Serialization](Java/Effective%20Java/12%20Serialization) 
 
 #### 深入理解Java虚拟机 
 
 * [1 走进Java](Java/深入理解Java虚拟机/1%20走进Java) 
-* [11 晚期(Java/深入理解Java虚拟机/运行期)优化](Java/深入理解Java虚拟机/11%20晚期(Java/深入理解Java虚拟机/运行期)优化) 
 * [2 Java内存区域与内存溢出正常](Java/深入理解Java虚拟机/2%20Java内存区域与内存溢出正常) 
-* [6 类文件结构](Java/深入理解Java虚拟机/6%20类文件结构) 
-* [13 线程安全与锁优化](Java/深入理解Java虚拟机/13%20线程安全与锁优化) 
-* [12 Java内存模型与线程](Java/深入理解Java虚拟机/12%20Java内存模型与线程) 
+* [3 垃圾收集器与内存分配策略](Java/深入理解Java虚拟机/3%20垃圾收集器与内存分配策略) 
 * [4 虚拟机性能监控与故障处理工具](Java/深入理解Java虚拟机/4%20虚拟机性能监控与故障处理工具) 
 * [5 调优案例分析与实战](Java/深入理解Java虚拟机/5%20调优案例分析与实战) 
-* [8 虚拟机字节码执行引擎](Java/深入理解Java虚拟机/8%20虚拟机字节码执行引擎) 
+* [6 类文件结构](Java/深入理解Java虚拟机/6%20类文件结构) 
 * [7 虚拟机类加载机制](Java/深入理解Java虚拟机/7%20虚拟机类加载机制) 
-* [3 垃圾收集器与内存分配策略](Java/深入理解Java虚拟机/3%20垃圾收集器与内存分配策略) 
+* [8 虚拟机字节码执行引擎](Java/深入理解Java虚拟机/8%20虚拟机字节码执行引擎) 
 * [9 类加载及执行子系统的案例与实战](Java/深入理解Java虚拟机/9%20类加载及执行子系统的案例与实战) 
-* [AppendixC](Java/深入理解Java虚拟机/AppendixC) 
 * [10 早期(Java/深入理解Java虚拟机/编译期)优化](Java/深入理解Java虚拟机/10%20早期(Java/深入理解Java虚拟机/编译期)优化) 
+* [11 晚期(Java/深入理解Java虚拟机/运行期)优化](Java/深入理解Java虚拟机/11%20晚期(Java/深入理解Java虚拟机/运行期)优化) 
+* [12 Java内存模型与线程](Java/深入理解Java虚拟机/12%20Java内存模型与线程) 
+* [13 线程安全与锁优化](Java/深入理解Java虚拟机/13%20线程安全与锁优化) 
+* [14 AppendixC](Java/深入理解Java虚拟机/14%20AppendixC) 
 
 #### Java编程思想 
 
 * [1 Introduction](Java/Java编程思想/1%20Introduction) 
 * [2 Introduction to Objects](Java/Java编程思想/2%20Introduction%20to%20Objects) 
 * [3 Everything is an Object](Java/Java编程思想/3%20Everything%20is%20an%20Object) 
-* [Chapter 4 Operators](Java/Java编程思想/Chapter%204%20Operators) 
+* [4 Operators](Java/Java编程思想/4%20Operators) 
 * [5 Controlling Execution](Java/Java编程思想/5%20Controlling%20Execution) 
-* [6 Initialization & Cleanup](Java/Java编程思想/6%20Initialization%20&%20Cleanup) 
+* [6 Initialization and Cleanup](Java/Java编程思想/6%20Initialization%20and%20Cleanup) 
 * [7 Access Control](Java/Java编程思想/7%20Access%20Control) 
 * [8 Reusing Classes](Java/Java编程思想/8%20Reusing%20Classes) 
 * [9 Polymorphism](Java/Java编程思想/9%20Polymorphism) 
@@ -94,6 +143,15 @@
 * [solution](Algorithm/剑指Offer/solution) 
 * [2 ⾯试需要的基础知识](Algorithm/剑指Offer/2%20⾯试需要的基础知识) 
 * [4 解决面试题的思路](Algorithm/剑指Offer/4%20解决面试题的思路) 
+
+#### 其他 
+
+* [水塘抽样](Algorithm/其他/水塘抽样) 
+* [Exhaustive Search and Backtracking](Algorithm/其他/Exhaustive%20Search%20and%20Backtracking) 
+* [Bucket Sort](Algorithm/其他/Bucket%20Sort) 
+* [Recursion](Algorithm/其他/Recursion) 
+* [Divide and Conquer](Algorithm/其他/Divide%20and%20Conquer) 
+* [Bloom Filter](Algorithm/其他/Bloom%20Filter) 
 
 #### Stanford 
 
@@ -146,15 +204,15 @@
 * [1 Introduction](OS/操作系统概念/1%20Introduction) 
 * [2 Operating System structures](OS/操作系统概念/2%20Operating%20System%20structures) 
 * [3 Processes](OS/操作系统概念/3%20Processes) 
-* [4 Threads & Concurrency](OS/操作系统概念/4%20Threads%20&%20Concurrency) 
+* [4 Threads and Concurrency](OS/操作系统概念/4%20Threads%20and%20Concurrency) 
 * [5 CPU Scheduling](OS/操作系统概念/5%20CPU%20Scheduling) 
 * [6 Synchronization Tools](OS/操作系统概念/6%20Synchronization%20Tools) 
 * [7 Synchronization Examples](OS/操作系统概念/7%20Synchronization%20Examples) 
 * [8 DeadLocks](OS/操作系统概念/8%20DeadLocks) 
 * [9 Virtual Memory](OS/操作系统概念/9%20Virtual%20Memory) 
 * [10 Virtual Memory](OS/操作系统概念/10%20Virtual%20Memory) 
-* [11 - Mass-Storage Structure](OS/操作系统概念/11%20-%20Mass-Storage%20Structure) 
-* [13 - File System Interface](OS/操作系统概念/13%20-%20File%20System%20Interface) 
+* [11 Mass-Storage Structure](OS/操作系统概念/11%20Mass-Storage%20Structure) 
+* [13 File System Interface](OS/操作系统概念/13%20File%20System%20Interface) 
 * [17 Protection](OS/操作系统概念/17%20Protection) 
 
 ### Big Data 
@@ -172,16 +230,6 @@
 * [9 Spark SQL](Big%20Data/Spark快速大数据分析/9%20Spark%20SQL) 
 * [10 Spark Streaming](Big%20Data/Spark快速大数据分析/10%20Spark%20Streaming) 
 * [11 Machine Learning with MLlib](Big%20Data/Spark快速大数据分析/11%20Machine%20Learning%20with%20MLlib) 
-
-#### 面向程序员的数据挖掘指南 
-
-* [1 推荐系统入门](Big%20Data/面向程序员的数据挖掘指南/1%20推荐系统入门) 
-* [2 隐式评价和基于物品的过滤算法](Big%20Data/面向程序员的数据挖掘指南/2%20隐式评价和基于物品的过滤算法) 
-* [3 分类](Big%20Data/面向程序员的数据挖掘指南/3%20分类) 
-* [4 进一步探索分类](Big%20Data/面向程序员的数据挖掘指南/4%20进一步探索分类) 
-* [5 朴素贝叶斯](Big%20Data/面向程序员的数据挖掘指南/5%20朴素贝叶斯) 
-* [6 朴素贝叶斯算法和非结构化文本](Big%20Data/面向程序员的数据挖掘指南/6%20朴素贝叶斯算法和非结构化文本) 
-* [7 聚类](Big%20Data/面向程序员的数据挖掘指南/7%20聚类) 
 
 #### Hadoop权威指南 
 

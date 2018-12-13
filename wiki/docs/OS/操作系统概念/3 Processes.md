@@ -289,7 +289,8 @@ int main()
 		exit(-1);
 	}
 
-	/* now map the shared memory segment in the address space of the process */
+	/* now map the shared memory segment 
+	 in the address space of the process */
 	ptr = mmap(0,SIZE, PROT_READ, MAP_SHARED, shm_fd, 0);
 	if (ptr == MAP_FAILED) {
 		printf("Map failed\n");
@@ -351,7 +352,8 @@ mach msg(&message.header, // message header
          sizeof(message), // size of message sent
          0, // maximum size of received message - unnecessary
          MACH_PORT_NULL, // name of receive port - unnecessary
-         MACH_MSG_TIMEOUT_NONE, // no time outs MACH PORT NULL // no notify port
+         // no time outs MACH PORT NULL // no notify port
+         MACH_MSG_TIMEOUT_NONE, 
 );
 
 /* Server Code */

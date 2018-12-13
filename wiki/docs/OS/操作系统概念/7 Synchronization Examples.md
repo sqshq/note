@@ -7,7 +7,7 @@ date: 2017-10-30
 ### 1 Classic Problems of Synchronization
 #### The Bounded Buffer Problem
 
-We consider the producer-consumer problem with [bounded buffer](ch3/#5-ipc-in-shared-memory-system). The producer and consumer processes share the following data structures:
+We consider the producer-consumer problem with [bounded buffer](3 Processes.md). The producer and consumer processes share the following data structures:
 
 ```c
 int n;
@@ -60,7 +60,7 @@ Suppose that a database is to be shared among several concurrent processes.
 * If two readers access the shared data simultaneously, no adverse effects will result.
 * If a writer and some other processes (either a reader or a writer) access the database simultaneously, chaos may ensue.
 
-Three variables are used: **`mutex`**, **`rw_mutex`**, **`readcnt`** to implement solution.
+Three variables are used: `mutex`, `rw_mutex`, `readcnt` to implement solution.
 
 ```c
 semaphore rw_mutex = 1; 
@@ -68,9 +68,9 @@ semaphore mutex = 1;
 int read count = 0;
 ```
 
-* semaphore **`mutex`**:  used to ensure mutual exclusion when `readcnt` is updated i.e. when any reader enters or exit from the critical section.
-* semaphore **`rw_mutex`**: used by both readers and writers.
-* int **`readcnt`**: the number of processes performing read in the critical section, initially 0.
+* semaphore `mutex`:  used to ensure mutual exclusion when `readcnt` is updated i.e. when any reader enters or exit from the critical section.
+* semaphore `rw_mutex`: used by both readers and writers.
+* int `readcnt`: the number of processes performing read in the critical section, initially 0.
 
 Writer processes:
 
@@ -217,7 +217,7 @@ pthread mutex_unlock(&mutex);
 #### POSIX Spinlocks
 
 ```c
-// 初始化自旋锁： 用来申请使用自旋锁所需要的资源并且将它初始化为非锁定状态
+// 初始化自旋锁：用来申请使用自旋锁所需要的资源并且将它初始化为非锁定状态
 int pthread_spin_init(pthread_spinlock_t *, int);
 // 获得一个自旋锁：如果该自旋锁当前没有被其它线程所持有，则调用该函数的线程获得该自旋锁.
 // 否则该函数在获得自旋锁之前不会返回。
@@ -242,19 +242,19 @@ Both Linux and macOS systems provide POSIX named semaphores.
 #include <semaphore.h>
 sem_t *sem;
 
-/* Create the semaphore and initialize it to 1 * Here, we are naming the semaphore SEM.
-* The O_CREAT flag indicates that the semaphore will be created if it does not already exist.
-* The parameter 0666 indicates that the semaphore has read/write access for other processes.
+/* Create the semaphore and initialize it to 1 * Here, 
+ * we are naming the semaphore SEM.
+* The O_CREAT flag indicates that the semaphore will be created 
+* if it does not already exist.
+* The parameter 0666 indicates that the semaphore has 
+* read/write access for other processes.
 * The parameter 1 indicates that the semaphore is initialized to 1.
 */
-
 sem = sem_open("SEM", O_CREAT, 0666, 1);
-
 /* acquire the semaphore */
 sem_wait(sem);
-
 /* critical section */
-
+........
 /* release the semaphore */
 sem_post(sem);
 ```
@@ -320,26 +320,26 @@ try {
 
 #### Semaphores
 
-The Java API also provides a counting semaphore. The constructor for the semaphore appears as
+The Java API also provides a counting semaphore. The constructor for the semaphore is
 
 ```Java
-Semaphore(int value);
+// Creates a Semaphore with the given number of permits
+public Semaphore(int permits) {
 ```
 
-where <C>value</C> specifies the initial value of the semaphore ( a negative value is allowed). The <C>acquire</C> method throws an <C>InterruptedException</C> if the acquiring thread is interrupted.
+where <C>permits</C> specifies the initial value of the semaphore (a negative value is allowed). The <C>acquire</C> method throws an <C>InterruptedException</C> if the acquiring thread is interrupted.
 
 
-The following example illustrates using a semaphore for mutual exclusion:
+The following example illustrates a semaphore for mutual exclusion:
 
 ```Java
 Semaphore sem = new Semaphore(1);
-
 try { 
     sem.acquire();
      /* critical section */ 
 } catch (InterruptedException ex) { 
 } finally {
-    sem.release(); 
+    sem.release();  // remember to release
 }
 ```
 
@@ -370,42 +370,45 @@ Suppose we have a bounded buffer which supports <C>put</C> and <C>take</C> metho
 
 
 ```Java
-class BoundedBuffer {
-   final Lock lock = new ReentrantLock();
-   final Condition notFull  = lock.newCondition(); 
-   final Condition notEmpty = lock.newCondition(); 
+public class BoundedBuffer<E> {
+    private final Lock lock = new ReentrantLock();
+    private final Condition notFull  = lock.newCondition();
+    private final Condition notEmpty = lock.newCondition();
+    private E[] items;
+    private int putptr, takeptr, count;
 
-   final Object[] items = new Object[100];
-   int putptr, takeptr, count;
+    public BoundedBuffer(int capacity) {
+        items = (E[]) new Object[capacity];
+    }
 
-   public void put(Object x) throws InterruptedException {
-     lock.lock();
-     try {
-       while (count == items.length)
-         notFull.await();
-       items[putptr] = x;
-       if (++putptr == items.length) putptr = 0;
-       ++count;
-       notEmpty.signal();
-     } finally {
-       lock.unlock();
-     }
-   }
+    public void put(E x) throws InterruptedException {
+        lock.lockInterruptibly();
+        try {
+            while (count == items.length)
+                notFull.await();
+            items[putptr] = x;
+            if (++putptr == items.length) putptr = 0;
+            ++count;
+            notEmpty.signal();
+        } finally {
+            lock.unlock();
+        }
+    }
 
-   public Object take() throws InterruptedException {
-     lock.lock();
-     try {
-       while (count == 0)
-         notEmpty.await();
-       Object x = items[takeptr];
-       if (++takeptr == items.length) takeptr = 0;
-       --count;
-       notFull.signal();
-       return x;
-     } finally {
-       lock.unlock();
-     }
-   }
+    public E take() throws InterruptedException {
+        lock.lockInterruptibly();
+        try {
+            while (count == 0)
+                notEmpty.await();
+            E x = items[takeptr];
+            if (++takeptr == items.length) takeptr = 0;
+            --count;
+            notFull.signal();
+            return x;
+        } finally {
+            lock.unlock();
+        }
+    }
 }
 ```
 
@@ -438,14 +441,12 @@ class Counter {
 }
 ```
 
-One way to keep <C>Counter</C> free from race condition, is to make its methods as <C>synchronized<C> methods. Another way is to replace the <C>int</C> filed with an <C>AtomicInteger</C>:
+One way to keep <C>Counter</C> free from race condition, is to make its methods as <C>synchronized</C> methods. Another way is to replace the <C>int</C> filed with an <C>AtomicInteger</C>:
 
-```
-import import java.util.concurrent.atomic.AtomicInteger;
-
-class AtomicCounter {
+```Java
+import java.util.concurrent.atomic.AtomicInteger;
+public class AtomicCounter {
     private AtomicInteger c = new AtomicInteger(0);
-
     public void increment() {
         c.incrementAndGet();
     }

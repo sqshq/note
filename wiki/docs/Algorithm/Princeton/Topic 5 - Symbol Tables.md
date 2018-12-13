@@ -40,7 +40,7 @@ Pros and cons of symbol-table implementations:
 ### Elementary Implementations
 
 
-#### Sequential Search (unordered list)
+#### Sequential Search
 
 Sequential search in a linked list:
 
@@ -51,145 +51,110 @@ Sequential search in a linked list:
 ![](figures/SequentialSearchST.png)
 
 
-<details> <summary><big><font color="blue">Click Here To View Code</font></big></summary>
-```Java
-public class SequentialSearchST<Key, Value> {
-
-    private Node first;
-    private int size;
-
-    /**
-     * create a symbol table
-     */
-    public SequentialSearchST() {
-    }
-
-    /**
-     * put key-value pair into the table.
-     * remove key from table if value is null.
-     * @param key: key
-     * @param val: value
-     * @throws IllegalArgumentException if key is null
-     */
-    public void put(Key key, Value val) {
-        // if key is null
-        if (key == null) throw new IllegalArgumentException("Key is null");
-        // Search for key. Update value if found; grow table if new.
-        for (Node cur = first; cur != null; cur = cur.next) {
-            if (cur.key.equals(key)) {
-                cur.value = val; // Search hit: update val.
-                return;
+??? Implementation
+    
+    ```Java
+    public class SequentialSearchST<Key, Value> {
+        private Node first;
+        private int size;
+    
+        // create a symbol table
+        public SequentialSearchST() {
+        }
+    
+        // put key-value pair into the table.
+        public void put(Key key, Value val) {
+            // if key is null
+            if (key == null) 
+                throw new IllegalArgumentException("Key is null");
+            // Search for key.
+            // Update value if found; grow table if new.
+            for (Node cur = first; cur != null; cur = cur.next) {
+                if (cur.key.equals(key)) {
+                    cur.value = val; // Search hit: update val.
+                    return;
+                }
             }
+            // Search miss: add new node.
+            first = new Node(key, val, first); 
+            size++;
         }
-        first = new Node(key, val, first); // Search miss: add new node.
-        size++;
-    }
-
-    /**
-     * Value paired with key.
-     * (null if key is absent)
-     * @param key: key
-     * @return Value paired with key
-     */
-    public Value get(Key key) {
-        // Search for key
-        for (Node cur = first; cur != null; cur = cur.next) {
-            if (cur.key.equals(key)) {
-                return cur.value; // search hit
-            }
+    
+        //  Value paired with key.
+        public Value get(Key key) {
+            // Search for key
+            for (Node cur = first; cur != null; cur = cur.next)
+                if (cur.key.equals(key))
+                    return cur.value; // search hit
+            return null; // search miss
         }
-        return null; // search miss
-    }
-
-    /**
-     * remove key (and its value) from table
-     * @param key: a key to delete
-     * @throws IllegalArgumentException if key is null
-     */
-    public void delete(Key key) {
-        // if key is null
-        if (key == null) throw new IllegalArgumentException("Key is null");
-
-        // delete first
-        if (first.key.equals(key)) {
-            Node toDelete = first;
-            first = first.next;
-            first.next = null; // prevent loitering
-            size--;
-            return;
-        }
-
-        // search for key in the rest of the linkedlist
-        for (Node cur = first; cur.next != null; cur = cur.next) {
-            if (cur.next.key.equals(key)) { // search hit
-                Node toDelete = cur.next;
-                cur.next = cur.next.next;
-                toDelete.next = null; // prevent loitering
+    
+        // remove key (and its value) from table
+        public void delete(Key key) {
+            // if key is null
+            if (key == null) 
+                throw new IllegalArgumentException("Key is null");
+    
+            // delete first
+            if (first.key.equals(key)) {
+                Node toDelete = first;
+                first = first.next;
+                first.next = null; // prevent loitering
                 size--;
                 return;
             }
+    
+            // search for key in the rest of the linkedlist
+            for (Node cur = first; cur.next != null; cur = cur.next) {
+                if (cur.next.key.equals(key)) { // search hit
+                    Node toDelete = cur.next;
+                    cur.next = cur.next.next;
+                    toDelete.next = null; // prevent loitering
+                    size--;
+                    return;
+                }
+            }
+        }
+    
+        //  is there a value paired with key?
+        public boolean contains(Key key) {
+            return get(key) == null;
+        }
+    
+        // is the table empty?
+        public boolean isEmpty() {
+            return size() == 0;
+        }
+    
+        // number of key-value pairs in the table
+        public int size() {
+            return size;
+        }
+    
+        // all the keys in the table
+        public Iterable<Key> keys() {
+            List<Key> keyList = new ArrayList<>();
+            for (Node cur = first; cur != null; cur = cur.next)
+                keyList.add(cur.key);
+            return keyList;
+        }
+    
+        // Node for LinkedList
+        private class Node {
+            Key key;
+            Value value;
+            Node next;
+            Node(Key key, Value value, Node next) {
+                this.key = key;
+                this.value = value;
+                this.next = next;
+            }
         }
     }
-
-    /**
-     * is there a value paired with key?
-     * @param key: a key
-     * @return true, if the key exists.
-     *
-     */
-    public boolean contains(Key key) {
-        return get(key) == null;
-    }
-
-    /**
-     * is the table empty?
-     * @return true, if empty.
-     */
-    public boolean isEmpty() {
-        return size() == 0;
-    }
-
-    /**
-     * number of key-value pairs in the table
-     * @return the size of the symbol table
-     */
-    public int size() {
-        return size;
-    }
-
-    /**
-     * all the keys in the table
-     * @return an iterable of keys
-     */
-    public Iterable<Key> keys() {
-        List<Key> keyList = new ArrayList<>();
-        for (Node cur = first; cur != null; cur = cur.next) {
-            keyList.add(cur.key);
-        }
-        return keyList;
-
-    }
-
-    /**
-     * Node for LinkedList
-     */
-    private class Node {
-        Key key;
-        Value value;
-        Node next;
-        Node(Key key, Value value, Node next) {
-            this.key = key;
-            this.value = value;
-            this.next = next;
-        }
-    }
-
-}
-```
-</details>
+    ```
 
 
-#### Binary Search (ordered array)
+#### Binary Search
 
 Next, we consider a full implementation of our ordered symbol-table API. The underlying data structure is a pair of parallel arrays, one for the keys and one for the values.
 
@@ -197,65 +162,63 @@ Next, we consider a full implementation of our ordered symbol-table API. The und
 * For <C>get()</C>, the rank tells us precisely where the key is to be found if it is in the table (and, if it is not there, that it is not in the table).
 * For <C>put()</C>, the rank tells us precisely where to update the value when the key is in the table, and precisely where to put the key when the key is not in the table.
 
-<details> <summary><big><font color="blue">Click Here To View Code</font></big></summary>
+??? Implementation
 
-```Java
-public class BinarySearchST<K extends Comparable<K>, V> {
-
-    private K[] keys;
-    private V[] vals;
-    private int size;
-
-    /**
-     * create a symbol table.
-     * @param capacity: the size of the symbol table
-     */
-    @SuppressWarnings("unchecked")
-    public BinarySearchST(int capacity) {
-        keys = (K[]) new Comparable[capacity];
-        vals = (V[]) new Object[capacity];
-    }
-
-    /**
-     * put key-value pair into the table.
-     * remove key from table if value is null.
-     * @param key: key
-     * @param val: value
-     * @throws IllegalArgumentException if key is null
-     */
-    public void put(K key, V val) {
-        // search for key.
-        int i = rank(key);
-        // update value if found
-        if (i < size && keys[i].compareTo(key) == 0) {
-            vals[i] = val;
-            return;
+    ```Java
+    public class BinarySearchST<K extends Comparable<K>, V> {
+    
+        private K[] keys;
+        private V[] vals;
+        private int size;
+    
+        /**
+         * create a symbol table.
+         * @param capacity: the size of the symbol table
+         */
+        @SuppressWarnings("unchecked")
+        public BinarySearchST(int capacity) {
+            keys = (K[]) new Comparable[capacity];
+            vals = (V[]) new Object[capacity];
         }
-        // grow table if new
-        for (int j = size; j > i; j--) {
-            keys[j] = keys[j-1];
-            vals[j] = vals[j-1];
-            size++;
+    
+        /**
+         * put key-value pair into the table.
+         * remove key from table if value is null.
+         * @param key: key
+         * @param val: value
+         * @throws IllegalArgumentException if key is null
+         */
+        public void put(K key, V val) {
+            // search for key.
+            int i = rank(key);
+            // update value if found
+            if (i < size && keys[i].compareTo(key) == 0) {
+                vals[i] = val;
+                return;
+            }
+            // grow table if new
+            for (int j = size; j > i; j--) {
+                keys[j] = keys[j-1];
+                vals[j] = vals[j-1];
+                size++;
+            }
+        }
+    
+        /**
+         * V paired with key.
+         * (null if key is absent)
+         * @param key: key
+         * @return V paired with key
+         */
+        public V get(K key) {
+            if (isEmpty()) return null;
+            int i = rank(key);
+            if (i < size && keys[i].compareTo(key) == 0)
+                return vals[i]; // search hit
+            return null; // search miss
         }
     }
-
-    /**
-     * V paired with key.
-     * (null if key is absent)
-     * @param key: key
-     * @return V paired with key
-     */
-    public V get(K key) {
-        if (isEmpty()) return null;
-        int i = rank(key);
-        if (i < size && keys[i].compareTo(key) == 0)
-            return vals[i]; // search hit
-        return null; // search miss
-    }
-}
-```
-
-</details>
+    ```
 
 <hh>Binary Search</hh>
 

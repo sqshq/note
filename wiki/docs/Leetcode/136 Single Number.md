@@ -28,7 +28,7 @@ Output: 4
 ```
 
 
-#### Java
+#### 分析
 
 这道题目涉及位操作。`^`(`xor`, 异或):  当两个位不同时，输出true/1。异或的真值表：
 
@@ -51,7 +51,7 @@ n ^ n = 0
 
 如果把题目中的所有整数接连异或，由于出现两次的数字异或结果为0，最后剩下的就是出现一次的数字。
 
-```Java
+```Java tab="Java"
 public int singleNumber(int[] nums) {
     int res = 0;
     for (int num : nums)
@@ -61,24 +61,16 @@ public int singleNumber(int[] nums) {
 ```
 
 
-
-
-
-
-
-#### Python
-
-```python
-class Solution(object):
-    def singleNumber(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        n = 0
-        for num in nums:
-            n = n^num
-        return n     
+```python tab="Python"
+def singleNumber(self, nums):
+    """
+    :type nums: List[int]
+    :rtype: int
+    """
+    n = 0
+    for num in nums:
+        n = n^num
+    return n     
 ```
 
 

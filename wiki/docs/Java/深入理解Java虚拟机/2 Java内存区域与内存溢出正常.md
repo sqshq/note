@@ -12,12 +12,12 @@ date: 2017-10-30
 
 根据《Java虚拟机规范(Java SE 7版)》的规定， Java虚拟机所管理的内存将会包括以下⼏个运⾏时数据区域。
 
-![](figures/Java虚拟机运行时数据区larry.png)
+![](figures/java_runtime_data_area.png)
 
 
 [http://blog.jamesdbloom.com/JVMInternals.html]
 
-![](figures/15353365511956.png)
+![](figures/jvm_internals.png)
 
 #### 程序计数器
 
@@ -224,7 +224,7 @@ Heap dump file created [29129293 bytes in 0.350 secs]
 !!! note
     可以使用Eclipse Memory Analyzer打开堆转储快照⽂件。The Eclipse Memory Analyzer is a fast and feature-rich Java heap analyzer that helps you find memory leaks and reduce memory consumption.[Official Website](http://www.eclipse.org/mat/)
     
-    ![Eclipse Memory Analyse](figures/Eclipse%20Memory%20Analyser.png)
+    ![Eclipse Memory Analyse](figures/Eclipse_Memory_Analyser.png)
 
 
 

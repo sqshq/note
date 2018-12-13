@@ -4,13 +4,10 @@ toc: false
 date: 2017-10-30
 ---
 
-...to be continued
-
-
 
 Java不仅仅是一门编程语言，它还是一个由一系列计算机软件和规范形成的技术体系，这个技术体系提供了完整的用于软件开发和跨平台部署的支持环境。
 
-![Java技术体系](figures/Java%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB.png)
+![Java技术体系](figures/Java-ji-shu-ti-xi.png)
 
 
 **按照技术所服务的领域**来划分，Java技术体系可以分为4个平台，分别为：
@@ -20,9 +17,15 @@ Java不仅仅是一门编程语言，它还是一个由一系列计算机软件�
 * **Java SE**（Standard Edition）：支持面向桌面级应用（如Windows下的应用程序）的Java平台，提供了完整的Java核心API，这个版本以前称为J2SE。
 * **Java EE**（Enterprise Edition）：支持使用多层架构的企业应用（如ERP、CRM应用）的Java平台，除了提供Java SE API外，还对其做了大量的扩充并提供了相关的部署支持，这个版本以前称为J2EE。
 
+!!! note
+    JDK是java的开发工具包，JDK不分javaME, javaSE和javaEE, 所在oracle的官网上只要下载JavaSE对应的版本JDK即可。
+
+
+
+
 ### Java发展史
 
-![](figures/15346387498727.png)
+![](figures/java_history.png)
 
 * JDK 1.0: Java虚拟机、Applet、AWT等；
 * JDK 1.1：JAR文件格式、JDBC、JavaBeans、RMI、内部类、反射；

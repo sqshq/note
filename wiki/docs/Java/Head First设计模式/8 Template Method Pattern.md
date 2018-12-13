@@ -8,7 +8,7 @@ date: 2017-10-30
 ### 1 Template Method Pattern
 #### Template Method Pattern defined
 
-> The Template Method Pattern(模版方法模式) defines the skeleton of an algorithm in a method, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm’s structure.
+> The Template Method Pattern(模版方法模式) *defines the skeleton* of an algorithm in a method, deferring some steps to subclasses. Template Method lets subclasses *redefine certain steps* of an algorithm without changing the algorithm’s structure.
 
 This pattern is all about creating a template for an algorithm. A template is  a method that defines an algorithm as a set of steps. One or more of these steps is deﬁned to be abstract and implemented by a subclass. This ensures the algorithm’s structure stays unchanged, while subclasses provide some part of the implementation.
 
@@ -223,6 +223,20 @@ public abstract class InputStream implements Closeable {
     public abstract int read() throws IOException;
     ...
 ```
+
+#### Example: Abstract Collection classes
+
+All non-abstract methods of <C>java.util.AbstractList</C>, <C>java.util.AbstractSet</C> and <C>java.util.AbstractMap</C>.
+
+```Java
+// This class provides a skeletal implementation of the List
+// interface to minimize the effort required to implement this interface
+// backed by a "random access" data store.
+public abstract class AbstractList<E> extends 
+        AbstractCollection<E> implements List<E> {}
+}
+```
+
 
 ### 2 The Hollywood Principle
 

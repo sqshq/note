@@ -2,7 +2,7 @@
 * [155. Min Stack.md](../../Leetcode/155.%20Min%20Stack)
 * [170. TwoSum III.md](../../Leetcode/170.%20TwoSum%20III)
 * [173. Binary Search Tree Iterator.md](../../Leetcode/173.%20Binary%20Search%20Tree%20Iterator)
-* [225.  mplementStackUsingQueues.md](../../Leetcode/225.%20%20mplementStackUsingQueues)
+* [225. Implement Stack using Queues.md](../../Leetcode/225.%20Implement%20Stack%20using%20Queues)
 * [232. Implement Queue using Stacks.md](../../Leetcode/232.%20Implement%20Queue%20using%20Stacks)
 * [295. Find Median from Data Stream.md](../../Leetcode/295.%20Find%20Median%20from%20Data%20Stream)
 * [297. Serialize and Deserialize Binary Tree.md](../../Leetcode/297.%20Serialize%20and%20Deserialize%20Binary%20Tree)

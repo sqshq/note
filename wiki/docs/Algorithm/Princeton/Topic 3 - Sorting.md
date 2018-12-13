@@ -136,7 +136,8 @@ public static void sort(Comparable[] a) {
     sort(a, aux, 0, a.length - 1);
 }
 
-private static void sort(Comparable[] a, Comparable[] aux, int lo, int hi) {
+private static void sort(Comparable[] a, Comparable[] aux, 
+                            int lo, int hi) {
     if (hi <= lo) return;   
     int mid = lo + (hi - lo) / 2;
     sort(a, aux, lo, mid);          // Sort left half.
@@ -155,11 +156,12 @@ private static void sort(Comparable[] a, Comparable[] aux, int lo, int hi) {
 
 ```Java
 // Merge a[lo..mid] with a[mid+1..hi].
-private static void merge(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) {
-    for (int k = lo; k <= hi; k++)          // Copy a[lo..hi] to aux[lo..hi].
+private static void merge(Comparable[] a, Comparable[] aux, 
+                                int lo, int mid, int hi) {
+    for (int k = lo; k <= hi; k++)  // Copy a[lo..hi] to aux[lo..hi].          
         aux[k] = a[k]; 
     int i = lo, j = mid + 1;
-    for (int k = lo; k <= hi; k++) {        // Merge back to a[lo..hi].
+    for (int k = lo; k <= hi; k++) {  // Merge back to a[lo..hi].
         if (i > mid)                            a[k] = aux[j++];
         else if (j > hi)                        a[k] = aux[i++];
         else if (aux[j].compareTo(aux[i]) < 0)  a[k] = aux[j++];
@@ -306,10 +308,8 @@ private static int partition(Comparable a[], int lo, int hi) {
         // find item on right to swap
         while (less(a[lo], a[--j]))
             if (j == lo) break;
-
         // check if pointers cross
         if (i >= j) break;
-
         // swap
         exch(a, i, j);
     }
@@ -320,6 +320,31 @@ private static int partition(Comparable a[], int lo, int hi) {
     return j;       // with a[lo..j-1] <= a[j] <= a[j+1..hi].
 }
 ```
+
+!!! note
+    为什么<C>partition</C>要使用++i，而不是i++，例如
+    
+    ```Java
+    while (i < hi && less(a[i], a[lo])) i++
+    ```
+    这是因为当数组元素相同时，例如[3,3,3,3,3,3,3,3,3]，i++的做法永远无法前进，会选入死循环。或者采用如下写法：
+    
+    ```Java
+    private int partition(int[] nums, int lo, int hi) {
+        int pivot = nums[lo];
+        // 注意i, j的起始点也变了
+        int i = lo + 1, j = hi;
+        while (true) {
+            // 把 < 改成 <=
+            while (i < hi && nums[i] <= pivot) i++;
+            while (j > lo && nums[j] >= pivot) j--;
+            if (i >= j) break;
+            swap(nums, i, j);
+        }
+        swap(nums, lo, j);
+        return j;
+    }
+    ```
 
 #### Analysis
 
@@ -335,7 +360,82 @@ Quicksort is an **in-place** sorting algorithm, but is **not stable**.
     Quicksort is the **fastest** general-purpose sort.
     
     Evidence: This hypothesis is supported by countless implementations of quicksort on countless computer systems since its invention decades ago. Generally, the reason that quicksort is fastest is that it has only a few instructions in its inner loop (and it does well with cache memories because it most often references data sequentially) so that its running time is $\sim c N \lg N$ with the value of c smaller than the corresponding constants for other linearithmic sorts. With 3-way partitioning, quicksort becomes linear for certain key distributions likely to arise in practice, where other sorts are linearithmic.
-    
+ 
+ 
+#### 3-Way Partition
+   
+Problem: With duplicate keys, quickSort goes quadratic unless partitioning stops on equal keys!
+
+Solution: 3-way partitioning.
+
+
+Goal. Partition array into 3 parts so that:
+
+* Entries between $lt$ and $gt$ equal to partition item $v$. 
+* No larger entries to left of $lt$.
+* No smaller entries to right of $gt$.
+
+![3-way-partition-before-afte](figures/3-way-partition-before-after.png)
+
+
+Let $v$ be partitioning item $a[lo]$. Scan $i$ from left to right.
+
+* ($a[i] < v$): exchange $a[lt]$ with $a[i]$; increment both $lt$ and $i$
+* ($a[i] > v$): exchange $a[gt]$ with $a[i]$; decrement $gt$
+* ($a[i] == v$): increment $i$
+
+
+![quick-3-way](figures/quick-3-way.gif)
+
+
+```Java
+private static void quick3WaySort(Comparable[] a, int lo, int hi) { 
+    if (hi <= lo) return; 
+    int lt = lo, i = lo + 1, gt = hi; 
+    Comparable v = a[lo]; 
+    while (i <= gt) { 
+        int cmp = a[i].compareTo(v); 
+        if (cmp < 0)        exch(a, lt++, i++); 
+        else if (cmp > 0)   exch(a, i, gt--); 
+        else i++; 
+    } // Now a[lo..lt-1] < v = a[lt..gt] < a[gt+1..hi]. 
+    sort(a, lo, lt - 1); 
+    sort(a, gt + 1, hi);
+}
+```
+
+
+
+### Quick-select
+
+Goal. Given an array of $N$ items, find a $k$th smallest item.
+ 
+Partition array so that:
+ 
+* Entry $a[j]$ is in place.
+* No larger entry to the left of $j$. 
+* No smaller entry to the right of $j$.
+ 
+Repeat in one subarray, depending on $j$; finished when $j$ equals $k$.
+ 
+```Java
+public Comparable quickSelect(Comparable[] a, int k) { 
+    StdRandom.shuffle(a); 
+    int lo = 0, hi = a.length - 1; 
+    while (hi > lo) {
+        int j = partition(a, lo, hi);
+        if      (j < k)     lo = j + 1; 
+        else if (j > k)     hi = j - 1;
+        else                return a[k]; 
+    } 
+    return a[k];
+}
+```
+
+#### Analysis
+
+Quick-select takes *linear time* on average.
+ 
 ### Java System Sorts
 
 <C>Arrays.sort()</C>
@@ -438,7 +538,8 @@ public class FastCollinearPoints {
         Arrays.sort(points);
         for (int i = 0; i < points.length - 1; i++)
             if (points[i].compareTo(points[i + 1]) == 0)
-                throw new IllegalArgumentException("Some of Points are repeat.");
+                throw new 
+                IllegalArgumentException("Some of Points are repeat.");
 
         // find line segments
         lineSegments = new ArrayList<>();
@@ -463,7 +564,8 @@ public class FastCollinearPoints {
             end = start + 1;
             // when the slope is the same, keep extending the sliding window
             while (end < pointsSortedBySlope.length
-                    && p.slopeTo(pointsSortedBySlope[start]) == p.slopeTo(pointsSortedBySlope[end]))
+                    && p.slopeTo(pointsSortedBySlope[start]) ==
+                            p.slopeTo(pointsSortedBySlope[end]))
                 end++;
             // find line segments which have at leat 4 points
             if (end - start >= 3) {
@@ -476,7 +578,8 @@ public class FastCollinearPoints {
                 // And this solve the problem without extra memory
                 // or the use of hash set.
                 if (p.compareTo(pointsSortedBySlope[start]) < 0)
-                    lineSegments.add(new LineSegment(p, pointsSortedBySlope[end - 1]));
+                    lineSegments.add(new LineSegment(p, 
+                                pointsSortedBySlope[end - 1]));
                 // jump to unvisited points
                 start = end - 3;
             } // end if
@@ -487,7 +590,6 @@ public class FastCollinearPoints {
     // Return the number of line segments
     public int numberOfSegments() {
         return lineSegments.size();
-   
 
     // Return line segments.
     public LineSegment[] segments() {

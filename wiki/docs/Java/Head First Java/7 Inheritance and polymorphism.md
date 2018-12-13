@@ -118,8 +118,10 @@ Animal[] animals = new Animal[3];
 animals [0] = new Dog(); // the reference and the object are different
 animals [1] = new Cat();
 animals [2] = new Lion();
-// You get to loop through the array and call one of the Animal-class methods, and every object does the right thing!
-for (int i=0; i< animals.length; i++) {
+// You get to loop through the array 
+// and call one of the Animal-class methods, 
+// and every object does the right thing!
+for (int i = 0; i < animals.length; i++) {
     animals[i].eat();
     animals[i].roam();
 }
@@ -141,8 +143,8 @@ class PetOwner {
         Dog d = new Dog(); 
         Hippo h = new Hippo(); 
         // The vet's giveShot() method can take any Animal you give it.
-        // As long as the object you pass in as the argument is a subclass of Animal, 
-        // it'll work.
+        // As long as the object you pass in as the argument 
+        // is a subclass of Animal,  it'll work.
         v.giveShot(d); 
         v.giveShot(h);
 }

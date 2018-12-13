@@ -26,3 +26,50 @@ h4 {
     color: #f04c5c;
     display: block;
 }
+
+/* added by wangzhenhua */
+important {
+  /* color: #f04c5c; */
+  color: red;
+  font-size: 18px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+/* code */
+/*C {
+    font-family: Monaco,Courier,"Courier New";
+    font-size: 12px;
+    font-weight: bold;
+}
+*/
+
+C {
+  padding: 2px 4px;
+  font-size: 90%;
+  color: #c7254e;
+  white-space: nowrap;
+  background-color: #f9f2f4;
+  border-radius: 4px;
+  font-family: Monaco, Menlo, monospace;
+  box-sizing: border-box;
+}
+
+
+
+/* big code */
+CB {
+    font-family: Monaco,Courier,"Courier New";
+    font-size: 15px;
+}
+
+/*
+hh {
+  color: green;
+  font-size: 18px;
+}
+*/
+
+red {
+  font-color: red;
+}

@@ -8,7 +8,7 @@ import re
 
 # escape these directories when scanning
 Invalid_dir = {'custom_theme', 'tags', 'css', '爬虫', 'Mila', 'Prob',
-	 'Projects', 'Java多线程', '其他', 'Leetcode', 'Miscellaneous', 'Tags', 'cpj', 'CSE521'}
+	 'Projects', 'Java多线程', 'Leetcode', 'Miscellaneous', 'Tags', 'cpj', 'CSE521'}
 # top_categeory
 
 top_categeory = {'Java', 'Algorithm', 'OS', 'Big Data'}

@@ -6,7 +6,7 @@ Rename markdown files, to keep filename consistent with title of the article
 """
 
 # escape these directories when scanning
-Invalid_dir = {'custom_theme', 'tags', 'css'}
+Invalid_dir = {'custom_theme', 'tags', 'css', 'figures'}
 Invlaid_files = {'index.md'}
 
 
@@ -47,8 +47,11 @@ def rename_files(path):
                 continue
             title = extract_title(file_path)
             if title and len(title) > 2: # have title ? a valid title ?
+                if filename == title + '.md': # filename is consistent with title
+                    continue
+                # otherwise rename filename (title.md)
                 new_file_path = construct_new_title(path, title)
-                print(new_file_path)
+                print("Rename: %s  ->  %s" % (filename, title))
                 os.rename(file_path, new_file_path)
 
     return 
@@ -58,9 +61,6 @@ def construct_new_title(path, title):
     构建新的markdown文件名
     """
     return os.path.join(path, title + '.md') # 加上md后缀
-    
-
-
 
 
 def extract_title(path):

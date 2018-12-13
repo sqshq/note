@@ -4,8 +4,9 @@ import codecs
 """
 Replace every pair of word for markdown files in given path
 """
-keywords = {"http://larryim.cc":"https://techlarry.github.io", "http://larryim.cc/wiki/2017/10/30/":"https://techlarry.github.io/wiki/Leetcode/", "fct_label":"tab"}
-Invalid_dir = ["extra_css", "extra_javascript", "custom_theme"]
+#keywords = {"http://larryim.cc":"https://techlarry.github.io", "http://larryim.cc/wiki/2017/10/30/":"https://techlarry.github.io/wiki/Leetcode/", "fct_label":"tab"}
+#keywords = {"##### 分析":"#### 分析"}
+Invalid_dir = {"extra_css", "extra_javascript", "custom_theme"}
 
 def replace_keyword(path):
     """

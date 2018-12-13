@@ -10,6 +10,15 @@
 * [2 ⾯试需要的基础知识](剑指Offer/2%20⾯试需要的基础知识) 
 * [4 解决面试题的思路](剑指Offer/4%20解决面试题的思路) 
 
+#### 其他 
+
+* [水塘抽样](其他/水塘抽样) 
+* [Exhaustive Search and Backtracking](其他/Exhaustive%20Search%20and%20Backtracking) 
+* [Bucket Sort](其他/Bucket%20Sort) 
+* [Recursion](其他/Recursion) 
+* [Divide and Conquer](其他/Divide%20and%20Conquer) 
+* [Bloom Filter](其他/Bloom%20Filter) 
+
 #### Stanford 
 
 * [Topic - Graph](Stanford/Topic%20-%20Graph) 

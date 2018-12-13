@@ -5,27 +5,27 @@ date: 2017-10-30
 tags: [Java]
 ---
 
-Maven is a build tool which automatically manages dependencies, source C compilation, test compilation, and test execution.
+Maven is a build tool which automatically manages dependencies, source compilation, test compilation, and test execution.
 
-## Compiling with Maven from the Command Line
+### Compiling
+#### Compiling with Maven from the Command Line
 
-If you wish to compile the source C using Maven from the command line, simply issue the following command from the command line from inside the root directory:
+If you wish to compile the source using Maven from the command line, simply issue the following command from the command line from inside the root directory:
 
  ```bash
  $ mvn compile
  ```
  
-## Compiling with Maven from IntelliJ
+#### Compiling with Maven from IntelliJ
+
+[Maven-Intellij IDEA](https://www.jetbrains.com/help/idea/maven-support.html)
 
 Go to `File > New > Project from Existing Sources...` and select the root directory. You should receive an "Import Project" prompt like the one shown below. Select the "Import project from external model" radio button, select "Maven" from the list below, and click through the following prompts to complete the import.
 
-![maven_import_project](http://or9a8nskt.bkt.clouddn.com/maven_import_project.png)
-
 Open the Maven Projects pane by navigating to "View > Tool Windows > Maven Projects".
 
-![maven project](http://or9a8nskt.bkt.clouddn.com/maven project.png)
-
-## 一个基本maven项目的pom.xml配置
+### 配置
+#### 一个基本maven项目的pom.xml配置
 
 
 第一部分,项目坐标，信息描述等
@@ -105,9 +105,3 @@ Open the Maven Projects pane by navigating to "View > Tool Windows > Maven Proje
 * group id+artifact id+version：插件在仓库中的坐标
 * configuration：设置插件的参数值
 
-
-## 本地仓库
-
-运行机制：
-
-![](http://or9a8nskt.bkt.clouddn.com/15375008510817.jpg)

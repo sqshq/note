@@ -238,7 +238,7 @@ wait(S){
     while (S <= 0)
         ;// busy wait
     S--;
-{
+}
 ```
 
 The definition of <C>signal()</C> is as follows:
@@ -260,7 +260,7 @@ Operating systems often distinguish between counting and binary semaphores.é€šå¸
 Counting semaphores can be used to control access to  a given resource consisting of a finite number of instances.
 
 * The semaphore is initialized to the number of resources available. 
-* Each process that wishes to use a resource performs a `wait() `operation on the semaphore (thereby decrementing the count). 
+* Each process that wishes to use a resource performs a <C>wait()</C> operation on the semaphore (thereby decrementing the count). 
 * When a process releases a resource, it performs a <C>signal()</C> operation (incrementing the count). 
 * When the count for the semaphore goes to 0, all resources are being used. After that, processes that wish to use a resource will block until the count becomes greater than 0.
 

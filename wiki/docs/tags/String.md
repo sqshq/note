@@ -8,6 +8,7 @@
 * [344. Reverse String.md](../../Leetcode/344.%20Reverse%20String)
 * [345. Reverse Vowels of a String.md](../../Leetcode/345.%20Reverse%20Vowels%20of%20a%20String)
 * [38. Count and Say.md](../../Leetcode/38.%20Count%20and%20Say)
+* [387. First Unique Character in a String.md](../../Leetcode/387.%20First%20Unique%20Character%20in%20a%20String)
 * [43. Multiply Strings.md](../../Leetcode/43.%20Multiply%20Strings)
 * [49. Group Anagrams.md](../../Leetcode/49.%20Group%20Anagrams)
 * [58. Length of Last Word.md](../../Leetcode/58.%20Length%20of%20Last%20Word)

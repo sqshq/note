@@ -5,6 +5,8 @@
 * [242. Valid Anagram.md](../../Leetcode/242.%20Valid%20Anagram)
 * [252. Meeting Rooms.md](../../Leetcode/252.%20Meeting%20Rooms)
 * [253. Meeting Rooms II.md](../../Leetcode/253.%20Meeting%20Rooms%20II)
+* [280. Wiggle Sort.md](../../Leetcode/280.%20Wiggle%20Sort)
+* [324. Wiggle Sort II.md](../../Leetcode/324.%20Wiggle%20Sort%20II)
 * [349. Intersection of Two Arrays.md](../../Leetcode/349.%20Intersection%20of%20Two%20Arrays)
 * [350. Intersection of Two Arrays II.md](../../Leetcode/350.%20Intersection%20of%20Two%20Arrays%20II)
 * [384. Shuffle an Array.md](../../Leetcode/384.%20Shuffle%20an%20Array)

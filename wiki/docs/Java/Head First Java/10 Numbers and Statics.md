@@ -133,16 +133,18 @@ Name convection: *Constant variables names should be in all caps!*
 `final` variables in Java must be initialized.
 
 ```Java
-final class initialize_final
-{
-    private int x; // x will have a default value without initialization.
-    private final int y = 0; //y must be initialized.
-    private final int z; //ERROR! y must be initialized.
-    private static final int h;  //h must be initialized.
+final class initialize_final {
+    // x will have a default value without initialization.
+    private int x; 
+    // y must be initialized.
+    private final int y = 0; 
+    //ERROR! z must be initialized.
+    private final int z;
+    // h must be initialized.
+    private static final int h;  
 
-    static
-    {
-        h = 10;  //static final variable can be initialized here. See details in next section.
+    static { //static final variable can be initialized here.
+        h = 10;
     }
 }
 //output: Error: variable z not initialized in the default constructor.
@@ -155,7 +157,6 @@ A **static block**(静态块) or **static initializer**(静态初始化程序) i
 ```Java
 public class Bar {
     public static final double BAR_SIGN;
-    
     static {
         // this code runs as soon as the class is loaded,
         // before any static method is called,
@@ -348,7 +349,8 @@ Examples of working with a Calendar object:
 
 ```Java
 Calendar c = Calendar.getInstance(); 
-c.set(2004,0,7,15,40); // set time to Jan 7, 2004 at 15:40 (Notice the month is zero-based)
+// set time to Jan 7, 2004 at 15:40 (Notice the month is zero-based)
+c.set(2004,0,7,15,40);
 long day1 = c.getTimeInMillis();
 day1 += 1000 * 60 * 60; 
 c.setTimeInMillis(day1); 

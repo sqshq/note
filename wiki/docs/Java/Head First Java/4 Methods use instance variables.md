@@ -46,9 +46,8 @@ By forcing everybody to call a setter method, we can protect variables from unac
 theCat.height = 0 //yikes! we can't let this happen
 
 public void setHeight(int ht){
-    if (ht>9){ // we put in checks to guarantee a minimum cat height.
-        height=ht;
-    }
+    // we put in checks to guarantee a minimum cat height.
+    if (ht > 9) height=ht;
 }
 ```
 
@@ -119,7 +118,8 @@ class AddThing {
     int a;  // instance variable: it have a default value.
     int b = 12; // instance variable
     public int add() { 
-        int total = a + b;  // local variable: it must be initialized before use!
+        // local variable: it must be initialized before use!
+        int total = a + b;         
         return total;
     }
 }
