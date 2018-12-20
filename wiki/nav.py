@@ -4,14 +4,16 @@ import re
 
 """
 给每个文件夹生成一个导航文件
+
+文件夹中的markdown文件必须大于等于3个
 """
 
 # escape these directories when scanning
-Invalid_dir = {'custom_theme', 'tags', 'css', '爬虫', 'Mila', 'Prob',
+Invalid_dir = {'custom_theme', 'tags', 'css', 'figures', 'Mila', 'Prob',
 	 'Projects', 'Java多线程', 'Leetcode', 'Miscellaneous', 'Tags', 'cpj', 'CSE521'}
 # top_categeory
 
-top_categeory = {'Java', 'Algorithm', 'OS', 'Big Data'}
+top_categeory = {'Java', 'Algorithm', 'OS', 'Big Data', 'Data Science'}
 
 # to remove
 path_to_remove = r"/Users/larry/techlarry/wiki/docs/"
@@ -64,7 +66,7 @@ def reindex(path):
         write_index_books(path, index_books)
         return index_books
 
-    elif chapters and len(chapters) > 3:
+    elif chapters and len(chapters) >= 3:
         index_chapters = create_index_chapters(path, chapters)
         write_index_chapters(path, index_chapters)
         return index_chapters

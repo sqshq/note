@@ -26,3 +26,10 @@ print('.', end='')
 
 `var = "1\2\3\4"` will interpret backslashes as escapes, create the string `'1\x02\x03\x04'` (a four-character string), then assign this string to the variable `var`.
 
+#### Python pause
+
+```Python
+import time
+time.sleep(amount)
+```
+

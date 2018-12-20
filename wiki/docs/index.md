@@ -1,27 +1,5 @@
 ### docs 
 
-#### Machine Learning 
-
-#### 面向程序员的数据挖掘指南 
-
-* [1 推荐系统入门](Machine%20Learning/面向程序员的数据挖掘指南/1%20推荐系统入门) 
-* [2 隐式评价和基于物品的过滤算法](Machine%20Learning/面向程序员的数据挖掘指南/2%20隐式评价和基于物品的过滤算法) 
-* [3 分类](Machine%20Learning/面向程序员的数据挖掘指南/3%20分类) 
-* [4 进一步探索分类](Machine%20Learning/面向程序员的数据挖掘指南/4%20进一步探索分类) 
-* [5 朴素贝叶斯](Machine%20Learning/面向程序员的数据挖掘指南/5%20朴素贝叶斯) 
-* [6 朴素贝叶斯算法和非结构化文本](Machine%20Learning/面向程序员的数据挖掘指南/6%20朴素贝叶斯算法和非结构化文本) 
-* [7 聚类](Machine%20Learning/面向程序员的数据挖掘指南/7%20聚类) 
-
-#### CMU10601 
-
-* [1 Intro to ML](Machine%20Learning/CMU10601/1%20Intro%20to%20ML) 
-* [2 Decision Tree learning](Machine%20Learning/CMU10601/2%20Decision%20Tree%20learning) 
-* [3 Probability and Estimation](Machine%20Learning/CMU10601/3%20Probability%20and%20Estimation) 
-* [4 Naive Bayes](Machine%20Learning/CMU10601/4%20Naive%20Bayes) 
-* [5 Gaussian Naive Bayes](Machine%20Learning/CMU10601/5%20Gaussian%20Naive%20Bayes) 
-* [6 Logistic Regression](Machine%20Learning/CMU10601/6%20Logistic%20Regression) 
-* [7 Linear Regression](Machine%20Learning/CMU10601/7%20Linear%20Regression) 
-
 ### Java 
 
 #### Head First设计模式 
@@ -153,6 +131,12 @@
 * [Divide and Conquer](Algorithm/其他/Divide%20and%20Conquer) 
 * [Bloom Filter](Algorithm/其他/Bloom%20Filter) 
 
+#### CS61B 
+
+* [Lab1](Algorithm/CS61B/Lab1) 
+* [Lab2](Algorithm/CS61B/Lab2) 
+* [Lab3](Algorithm/CS61B/Lab3) 
+
 #### Stanford 
 
 * [Topic - Graph](Algorithm/Stanford/Topic%20-%20Graph) 
@@ -174,6 +158,52 @@
 * [Topic 9 - Minimum Spanning Tree and Shortest Path](Algorithm/Princeton/Topic%209%20-%20Minimum%20Spanning%20Tree%20and%20Shortest%20Path) 
 * [Topic 11 - String Sort](Algorithm/Princeton/Topic%2011%20-%20String%20Sort) 
 * [Topic 12 - Tries](Algorithm/Princeton/Topic%2012%20-%20Tries) 
+
+### Data Science 
+
+#### Practical Data Science 
+
+* [Jupyter notebook](Data%20Science/Practical%20Data%20Science/Jupyter%20notebook) 
+* [The data collection process](Data%20Science/Practical%20Data%20Science/The%20data%20collection%20process) 
+* [Relational Data](Data%20Science/Practical%20Data%20Science/Relational%20Data) 
+
+#### 面向程序员的数据挖掘指南 
+
+* [1 推荐系统入门](Data%20Science/面向程序员的数据挖掘指南/1%20推荐系统入门) 
+* [2 隐式评价和基于物品的过滤算法](Data%20Science/面向程序员的数据挖掘指南/2%20隐式评价和基于物品的过滤算法) 
+* [3 分类](Data%20Science/面向程序员的数据挖掘指南/3%20分类) 
+* [4 进一步探索分类](Data%20Science/面向程序员的数据挖掘指南/4%20进一步探索分类) 
+* [5 朴素贝叶斯](Data%20Science/面向程序员的数据挖掘指南/5%20朴素贝叶斯) 
+* [6 朴素贝叶斯算法和非结构化文本](Data%20Science/面向程序员的数据挖掘指南/6%20朴素贝叶斯算法和非结构化文本) 
+* [7 聚类](Data%20Science/面向程序员的数据挖掘指南/7%20聚类) 
+
+#### 爬虫 
+
+* [1 开发环境配置](Data%20Science/爬虫/1%20开发环境配置) 
+* [2 爬虫基础](Data%20Science/爬虫/2%20爬虫基础) 
+* [3 基本库的使用](Data%20Science/爬虫/3%20基本库的使用) 
+* [4 解析库的使用](Data%20Science/爬虫/4%20解析库的使用) 
+* [5 数据存储](Data%20Science/爬虫/5%20数据存储) 
+* [6 Ajax数据爬取](Data%20Science/爬虫/6%20Ajax数据爬取) 
+* [7 动态渲染页面爬取](Data%20Science/爬虫/7%20动态渲染页面爬取) 
+* [8 验证码的识别](Data%20Science/爬虫/8%20验证码的识别) 
+* [9 代理的使用](Data%20Science/爬虫/9%20代理的使用) 
+* [10 模拟登录](Data%20Science/爬虫/10%20模拟登录) 
+* [11 App的爬取](Data%20Science/爬虫/11%20App的爬取) 
+* [12 pyspider框架的使用](Data%20Science/爬虫/12%20pyspider框架的使用) 
+* [13 Scrapy框架的使用](Data%20Science/爬虫/13%20Scrapy框架的使用) 
+* [14 分布式爬虫](Data%20Science/爬虫/14%20分布式爬虫) 
+* [15 分布式爬虫的部署](Data%20Science/爬虫/15%20分布式爬虫的部署) 
+
+#### CMU10601 
+
+* [1 Intro to ML](Data%20Science/CMU10601/1%20Intro%20to%20ML) 
+* [2 Decision Tree learning](Data%20Science/CMU10601/2%20Decision%20Tree%20learning) 
+* [3 Probability and Estimation](Data%20Science/CMU10601/3%20Probability%20and%20Estimation) 
+* [4 Naive Bayes](Data%20Science/CMU10601/4%20Naive%20Bayes) 
+* [5 Gaussian Naive Bayes](Data%20Science/CMU10601/5%20Gaussian%20Naive%20Bayes) 
+* [6 Logistic Regression](Data%20Science/CMU10601/6%20Logistic%20Regression) 
+* [7 Linear Regression](Data%20Science/CMU10601/7%20Linear%20Regression) 
 
 ### OS 
 
@@ -198,6 +228,14 @@
 * [9 虚拟内存](OS/深入了解计算机系统/9%20虚拟内存) 
 * [10 系统级IO](OS/深入了解计算机系统/10%20系统级IO) 
 * [11 网络编程](OS/深入了解计算机系统/11%20网络编程) 
+
+#### 计算机网络 
+
+* [1 计算机网络和因特网](OS/计算机网络/1%20计算机网络和因特网) 
+* [2 应用层](OS/计算机网络/2%20应用层) 
+* [3 传输层](OS/计算机网络/3%20传输层) 
+* [4 网络层](OS/计算机网络/4%20网络层) 
+* [5 链路层](OS/计算机网络/5%20链路层) 
 
 #### 操作系统概念 
 
