@@ -499,9 +499,12 @@ Pf.
 
 ```Java
 public class DijkstraSP {
-    private double[] distTo;          // distTo[v] = distance  of shortest s->v path
-    private DirectedEdge[] edgeTo;    // edgeTo[v] = last edge on shortest s->v path
-    private PriorityQueue<double[]> pq;    // priority queue of vertices
+    // distTo[v] = distance  of shortest s->v path
+    private double[] distTo;   
+    // edgeTo[v] = last edge on shortest s->v path       
+    private DirectedEdge[] edgeTo;   
+    // priority queue of vertices
+    private PriorityQueue<double[]> pq;    
 
     // Computes a shortest-paths tree from the source vertex s 
     // to every other  vertex in the edge-weighted digraph G.
@@ -574,8 +577,10 @@ Suppose that an edge-weighted digraph has no directed cycles. It is easier to fi
 
 ```Java
 public class AcyclicSP {
-    private double[] distTo;         // distTo[v] = distance of shortest s->v path
-    private DirectedEdge[] edgeTo;   // edgeTo[v] = last edge on shortest s->v path
+    // distTo[v] = distance of shortest s->v path
+    private double[] distTo;         
+    // edgeTo[v] = last edge on shortest s->v path
+    private DirectedEdge[] edgeTo;   
 
     // Computes a shortest paths tree from s to every other vertex in
     // the directed acyclic graph G.
@@ -602,11 +607,11 @@ Given a longest-paths problem, create a copy of the given edge-weighted DAG that
 
 #### General edge-weighted digraphs
 
-> A *negative cycle& is a directed cycle whose sum of edge weights is negative.
+> A *negative cycle* is a directed cycle whose sum of edge weights is negative.
 
 There exists a shortest path from $s$ to $v$ in an edge-weighted digraph if and only if there exists at least one directed path from $s$ to $v$ and no vertex on any directed path from $s$ to $v$ is on a negative cycle.
 
-<hh>Bellman-Ford Algorithm</hh> Given source $s$ for any edge-weighted digraph with $V$ vertices and no negative cycles reachable from $s$: Initialize $\text{distTo}[s]$ to 0 and all other $\text{distTo}[]$ values to infinity. Then, considering the digraph’s edges in any order, relax all edges. Make $V$ such passes.
+**Bellman-Ford Algorithm**: Given source $s$ for any edge-weighted digraph with $V$ vertices and no negative cycles reachable from $s$: Initialize $\text{distTo}[s]$ to 0 and all other $\text{distTo}[]$ values to infinity. Then, considering the digraph’s edges in any order, relax all edges. Make $V$ such passes.
 
 ```Java
 for (int i = 0; i < G.V(); i++)

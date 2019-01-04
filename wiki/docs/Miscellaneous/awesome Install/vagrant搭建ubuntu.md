@@ -9,12 +9,12 @@ tags: [vagrant, ubuntu]
 
 
 
-# Mac terminal下的`Vagrant`和 `Ubuntu`环境的安装
+#### Mac terminal下的`Vagrant`和 `Ubuntu`环境的安装
 
 `Vagrant`可以从下面网页链接下载, 选择 ：
 [https://www.vagrantup.com/downloads.html](https://www.vagrantup.com/downloads.html)
 
-安装好了Vagrant，后然后安装Virtualbox，请到[下载网页](https://www.virtualbox.org)直接下载需要的版本。
+安装好了Vagrant，后然后安装Virtual box，请到[下载网页](https://www.virtualbox.org)直接下载需要的版本。
 
 下面安装`Ubuntu`
 （1）打开Mac terminal，运行下面命令，安装`Ubuntu`。
@@ -35,7 +35,9 @@ $ vagrant up
 $ vagrant ssh 
 ```
 
-## 分享文件
+也可以通过点击Virtual Box里面的虚拟机列表手动启动，默认的账号和密码都是vagrant.
+
+#### 共享文件
 
 打开位于配置文件`Vagrantfile`，配置其中的`config.vm.synced_folder`参数,第一个参数是需要位于主机需要同步的文件夹，可以是相对地址。第二个参数是虚拟机上的需要同步的文件夹，必须是绝对地址。
 
@@ -50,7 +52,7 @@ end
 NOTE: By default, Vagrant will share your project directory (the directory with the Vagrantfile) to /vagrant.
 
 
-## 安装和配置`ubuntu`
+#### 安装和配置`ubuntu`
 
 这其实和正常的`ubuntu`系统一样的。一般通过
 
@@ -60,7 +62,7 @@ sudo apt-get install software
 
 安装软件。
 
-### 安装常用软件
+#### 安装常用软件
 
 ```bash
 sudo apt-get update
@@ -73,7 +75,7 @@ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/i
 **`vagrant`虚拟机默认密码是`vagrant`**
 
 
-## 常用命令
+#### 常用命令
 
 ```
 vagrant box add {作者/系统名} {box文件路径}  #添加虚拟机
@@ -94,7 +96,7 @@ vagrant suspend  #暂停虚拟机
 vagrant destroy  #销毁当前虚拟机
 ```
 
-## 加载已经下载/存在的虚拟机
+#### 加载已经下载/存在的虚拟机
 
 有时候虚拟机已经存在，或者你通过其他途径下载虚拟机更快，或者你从朋友那里拷贝了一个虚拟机，那么可不可以直接加载呢？
 

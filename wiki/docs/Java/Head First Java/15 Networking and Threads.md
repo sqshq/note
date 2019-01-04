@@ -14,7 +14,7 @@ All the low-level networking details are taken care of by classes in the <C>java
 
 #### Make a Network Socket Connection
 
-To connect to another machine, We need a <C>Socket</C> connection. A <C>Socket</C> (<C>java.net.Socket</C> is an object that represents a network connection between two machines. A connection is a *relationship* between two machines, where two pieces of software know about each other.
+To connect to another machine, We need a <C>Socket</C> connection. A <C>Socket</C> (<C>java.net.Socket</C>) is an object that represents a network connection between two machines. A connection is a *relationship* between two machines, where two pieces of software know about each other.
 
 To make a Socket connection, you need to know two things about the server: who it is, and which port it’s running on. In other words, **IP address** and **TCP port number**.
 
@@ -44,18 +44,20 @@ To communicate over a <C>Socket</C> connection, you use regular I/O streams. One
 * Make an <C>InputStreamReader</C> chained to the <C>Socket</C>’s low-level (connection) input stream
     * `:::Java InputStreamReader stream = new InputStreamReader(chatSocket.getInputStream());`
 * Make a <C>BufferedReader</C> and read!
-    * `:::Java BufferedReader reader = new BufferedReader(stream); String message = reader.readLine();` 
+    * `:::Java BufferedReader reader = new BufferedReader(stream);` 
+    * `:::Java String message = reader.readLine();` 
 
 ![read data from a Socket](figures/READFROMSOCKETS.png)
 
 **To write data to a Socket, use a <C>PrintWriter</C>**
 
 * Make a <C>Socket</C> connection to the server
-    * `::Java Socket chatSocket = new Socket("127.0.0.1", 5000);`
+    * `:::Java Socket chatSocket = new Socket("127.0.0.1", 5000);`
 * Make an <C>PrintWriter</C> chained to the <C>Socket</C>’s low-level (connection) input stream
     * `:::Java PrintWriter writer = new PrintWriter(chatSocket.getOutputStream());`
 * Write (print) Something!
-    * `:::Java writer.println("message to send); writer.print("another message");` 
+    * `:::Java writer.println("message to send);` 
+    * `:::Java writer.print("another message");` 
 
 
 
@@ -83,17 +85,17 @@ public class MyBlog {
     public void http_request(){
         try{
             Socket s = new Socket("192.30.252.153", 80);
-            InputStreamReader streamReader = new InputStreamReader(s.getInputStream());
+            InputStreamReader streamReader = 
+                new InputStreamReader(s.getInputStream());
             BufferedReader br = new BufferedReader(streamReader);
 
             //注意换行符是\r\n
-            writer.println("GET /index.html HTTP/1.0 \r\n Host: larryim.cc  \r\n   \r\n ");
+            writer.println("GET /index.html HTTP/1.0 \r\n" 
+                    + "Host: larryim.cc  \r\n   \r\n ");
 
             String line = null;
-
-            while ((line= br.readLine())!= null){
+            while ((line= br.readLine())!= null)
                 System.out.println(line);
-            }
             br.close();
         } catch (Exception ex){
             ex.printStackTrace();
@@ -110,11 +112,11 @@ public class MyBlog {
 #### Writing a Simple Server
 
 * Server application makes a ServerSocket, on a specific port
-    * `ServerSocket serverSock = new ServerSocket(4242);`
+    * `:::Java ServerSocket serverSock = new ServerSocket(4242);`
 * Client makes a Socket connection to the server application
-    * `Socket sock = new Socket(“190.165.1.103”, 4242);`
+    * `:::Java Socket sock = new Socket("190.165.1.103", 4242);`
 * Server makes a new Socket to communicate with this client
-    * `Socket sock = serverSock.accept();`
+    * `:::Java Socket sock = serverSock.accept();`
     
 ### 2 Threads
 

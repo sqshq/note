@@ -1,6 +1,5 @@
 ---
 title: Maven
-toc: true
 date: 2017-10-30
 tags: [Java]
 ---
@@ -24,7 +23,54 @@ Go to `File > New > Project from Existing Sources...` and select the root direct
 
 Open the Maven Projects pane by navigating to "View > Tool Windows > Maven Projects".
 
-### 配置
+### POM配置
+详见[POM Reference](https://maven.apache.org/pom.html)
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+ 
+  <!-- The Basics -->
+  <groupId>...</groupId>
+  <artifactId>...</artifactId>
+  <version>...</version>
+  <packaging>...</packaging>
+  <dependencies>...</dependencies>
+  <parent>...</parent>
+  <dependencyManagement>...</dependencyManagement>
+  <modules>...</modules>
+  <properties>...</properties>
+ 
+  <!-- Build Settings -->
+  <build>...</build>
+  <reporting>...</reporting>
+ 
+  <!-- More Project Information -->
+  <name>...</name>
+  <description>...</description>
+  <url>...</url>
+  <inceptionYear>...</inceptionYear>
+  <licenses>...</licenses>
+  <organization>...</organization>
+  <developers>...</developers>
+  <contributors>...</contributors>
+ 
+  <!-- Environment Settings -->
+  <issueManagement>...</issueManagement>
+  <ciManagement>...</ciManagement>
+  <mailingLists>...</mailingLists>
+  <scm>...</scm>
+  <prerequisites>...</prerequisites>
+  <repositories>...</repositories>
+  <pluginRepositories>...</pluginRepositories>
+  <distributionManagement>...</distributionManagement>
+  <profiles>...</profiles>
+</project>
+```
+
 #### 一个基本maven项目的pom.xml配置
 
 
@@ -99,7 +145,6 @@ Open the Maven Projects pane by navigating to "View > Tool Windows > Maven Proje
 ```
 
 * build：项目构建时的配置
-
 * finalName：在浏览器中的访问路径，如果将它改成helloworld，再执行maven--update，这时运行项目的访问路径是 http://localhost:8080/helloworld/, 而不是项目名的  http://localhost:8080/test
 * plugins：插件，之前篇章已经说过，第一个插件是用来设置java版本为1.7，第二个插件是我刚加的，用来设置编码为utf-8
 * group id+artifact id+version：插件在仓库中的坐标

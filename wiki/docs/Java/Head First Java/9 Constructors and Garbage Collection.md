@@ -14,11 +14,11 @@ In Java, programmers care about two areas of memory
 ![STACK_ADN_HEAP](figures/STACK_ADN_HEAP.png)
 
 
-**Instance variables** are declared inside a *class* but not inside a method. Instance variables live inside the object they belong to. So instance variable live on the Heap, inside the object.
+**Instance variables**(实例变量) are declared inside a *class* but not inside a method. Instance variables live inside the object they belong to. So instance variable live on the Heap, inside the object.
 
 ![instance_variable_live_inside_the_obeject](figures/instance_variable_live_inside_the_obeject.png)
 
-**Local variables** are declared inside a *method*, including method parameters. They're temporary, and live only as long as the method is on the stack.
+**Local variables**(局部变量) are declared inside a *method*, including method parameters. They're temporary, and live only as long as the method is on the stack.
 
 What about local variables that are objects?
 

@@ -28,8 +28,7 @@ The Hadoop <C>LocalFileSystem</C> performs client-side checksumming. It is possi
 
 #### ChecksumFileSystem
 
-
-<C>LocalFileSystem</C> extends <C>ChecksumFileSystem</C>, and <C>ChecksumFileSystem</C> is also a wrapper around <C>FileSystem</C> (uses [decorator pattern](https://techlarry.github.io/note-os/hfdp/ch3/#2-decorator-pattern) here). The general idiom is as follows:
+<C>LocalFileSystem</C> extends <C>ChecksumFileSystem</C>, and <C>ChecksumFileSystem</C> is also a wrapper around <C>FileSystem</C> (uses [decorator pattern](../../Java/Head First设计模式/3 Decorator Pattern.md) here). The general idiom is as follows:
 
 ```Java
 FileSystem rawFs = ...
@@ -163,7 +162,7 @@ $ hadoop com.definitivehadoop.compression.MaxTemperatureWithCompression /Users/l
 
 ### 3 Serialization
 
-See concepts of serialization and deserialization in Head First Java [Chapter 14](https://techlarry.github.io/note-os/hfj/ch14) .
+See concepts of serialization and deserialization in Head First Java [Chapter 14](../../Java/Head First Java/14 Serialization and File IO.md) .
 
 *Serialization* is the process of turning structured objects into a byte stream for transmission over a network or for writing to persistent storage. *Deserialization* is the reverse process of turning a byte stream back into a series of structured objects.
 
@@ -182,7 +181,7 @@ In Hadoop, interprocess communication between nodes in the system is implemented
 | Interoperable | support clients written in different languages | read/write using different languages |
 
 
-Hadoop uses its own serialization format, <C>Writables</C>, which is certainly compact and fast, but not so easy to extend or use from languages other than Java. Avro, a serialization system that was designed to overcome some of the limitations of <C>Writables</C>, is covered in [Chapter 12](ch12.md).
+Hadoop uses its own serialization format, <C>Writables</C>, which is certainly compact and fast, but not so easy to extend or use from languages other than Java. Avro, a serialization system that was designed to overcome some of the limitations of <C>Writables</C>, is covered in [Chapter 12](12 Avro.md).
 
 #### The Writable Interface
 
@@ -230,7 +229,7 @@ Text t = new Text("hadoop"); t.set("pig");
 #### Implementing a Custom Writable
 
 !!!tip
-    If you are considering writing a custom <C>Writable</C>, it may be worth trying another serialization framework, like Avro, that allows you to define custom types declaratively.
+​    If you are considering writing a custom <C>Writable</C>, it may be worth trying another serialization framework, like Avro, that allows you to define custom types declaratively.
 
 
 #### Serialization Frameworks
@@ -261,7 +260,7 @@ public interface Serialization<T> {
 ```
 
 !!! note
-    Although it makes it convenient to be able to use standard Java types such as <C>Integer</C> or <C>String</C> in <C>MapReduce</C> programs, Java Object Serialization is not as efficient as <C>Writables</C>, so it’s not worth making this trade-off.
+​    Although it makes it convenient to be able to use standard Java types such as <C>Integer</C> or <C>String</C> in <C>MapReduce</C> programs, Java Object Serialization is not as efficient as <C>Writables</C>, so it’s not worth making this trade-off.
 
 <hh>Serialization IDL</hh>
 

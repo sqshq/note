@@ -4,7 +4,7 @@ toc: false
 date: 2017-10-30
 ---
 
-> The Java Remote Method Invocation (RMI) system allows an object running in one Java virtual machine to invoke methods on an object running in another Java virtual machine. <small>[Java Tutorial](https://docs.oracle.com/javase/tutorial/rmi/index.html)</small>
+> The Java Remote Method Invocation (RMI, 远程方法调用) system allows an object running in one Java virtual machine to invoke methods on an object running in another Java virtual machine. <small>[Java Tutorial](https://docs.oracle.com/javase/tutorial/rmi/index.html)</small>
 
 ### RMI
 
@@ -51,6 +51,9 @@ In RMI, the client helper is a ‘stub’ and the server helper is a ‘skeleton
 
 ### 2 Servlet
 
-Servlets are Java programs that run on (and with) an HTTP web server. When a client uses a web browser to interact with a web page, a request is sent back to the web server. If the request needs the help of a Java servlet, the web server runs the servlet code.
+Servlets are Java programs that run on (and with) an HTTP web server. When a client uses a web browser to interact with a web page, a request is sent back to the web server. If the request needs the help of a Java servlet, the web server runs the servlet code. Servlet code is simply code that runs on the server, to do work as a result of whatever the client requests.
+
+![Servlet_Explanation](figures/Servlet_Explanation.png)
+
 
 ### Jini

@@ -1,8 +1,8 @@
 ### Stanford 
 
-* [Topic - Graph](Topic%20-%20Graph) 
-* [Topic - Heap](Topic%20-%20Heap) 
-* [Topic - Dynamic Programming](Topic%20-%20Dynamic%20Programming) 
-* [Topic - Hash Table](Topic%20-%20Hash%20Table) 
-* [Topic - Greedy Algorithm](Topic%20-%20Greedy%20Algorithm) 
+* [Topic - Dynamic Programming](Topic - Dynamic Programming.md)
+* [Topic - Graph](Topic - Graph.md)
+* [Topic - Greedy Algorithm](Topic - Greedy Algorithm.md)
+* [Topic - Hash Table](Topic - Hash Table.md)
+* [Topic - Heap](Topic - Heap.md)
 

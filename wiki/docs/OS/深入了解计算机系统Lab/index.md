@@ -1,8 +1,8 @@
 ### 深入了解计算机系统Lab 
 
-* [Lab1 Data Lab](Lab1%20Data%20Lab) 
-* [Lab3 Attack Lab](Lab3%20Attack%20Lab) 
-* [Lab4 Cache Lab](Lab4%20Cache%20Lab) 
-* [Lab5 Shell Lab](Lab5%20Shell%20Lab) 
-* [Lab6 Malloc Lab](Lab6%20Malloc%20Lab) 
+* [Lab1 Data Lab](Lab1 Data Lab.md)
+* [Lab3 Attack Lab](Lab3 Attack Lab.md)
+* [Lab4 Cache Lab](Lab4 Cache Lab.md)
+* [Lab5 Shell Lab](Lab5 Shell Lab.md)
+* [Lab6 Malloc Lab](Lab6 Malloc Lab.md)
 

@@ -73,7 +73,7 @@ def process_tag_info(tag_info):
     for filepath in tag_info:
         title = os.path.basename(filepath);
         relateive_path = os.path.join(os.getcwd(), 'docs/')
-        url = filepath.replace(relateive_path, '../../').replace(' ', '%20').replace('.md', '')
+        url = filepath.replace(relateive_path, '../')
         result.append("* [" + title + "](" + url + ")\n")
     result.sort()
     return ''.join(result)

@@ -10,7 +10,6 @@ top: 8
 [Anaconda ](https://www.continuum.io/why-anaconda)(/ˌænə'kɑndə/)是一个用于科学计算的python发行版，支持各种系统，提供了包管理和环境管理的功能。Anaconda 利用`conda`来进行package和environment的管理。
 
 
-
 #### Conda的包管理
 
 `Conda`既是一个工具，也是一个可执行命令，其核心功能是包管理和环境管理。包管理与`pip`使用类似。
@@ -66,43 +65,6 @@ done < requirements.txt
 在`Pycharm`配置里选用`Anaconda`的`python`编译器所在位置即可。 使用Jupyter notebook时，点击Run Cell，它会弹出提示框，要求输入token。接下来在Terminal里运行Jupyter Notebook, 拷贝token以后的字符串到提示框，等待连接完成。
 
 如果已经有jupyter notebook在运行，而且你忘了token的话，可以输入`jupyter notebook list`查询当前运行的notebook。
-
-
-#### Jupyter NoteBook
-
-`Anaconda`默认自带`Jupyter Notebook`，可以很方便的运行Python代码、记录笔记。在terminal输入`jupyter notebook`，会自动新建浏览器页面，也就是notebook。
-
-#### 主题
-
-`Jupyter Notebook`的[主题](https://github.com/dunovank/jupyter-themes)可以调整，首先安装主题:
-
-```
-pip install --upgrade jupyterthemes
-```
-
-选择好主题后，切换主题:
-
-```
-jt -t theme_name -T -N
-```
-
-#### Bash Kernel
-
-`Bash kernel`([Project Link](https://github.com/takluyver/bash_kernel))可以通过pip安装
-
-```
-pip install bash_kernel
-python -m bash_kernel.install
-```
-
-#### Install Python2/3 Kernel
-
-Install install with
-
-```
-python3 -m pip install ipykernel
-python3 -m ipykernel install --user
-```
 
 #### 在PyCharm中配置anaconda的解释器 
 
