@@ -54,47 +54,6 @@ Servlet完全是由JAVA程序代码构成流程控制和事务处理。
 
 Servlet的应用逻辑是在Java文件中，并且完全从表示层中的HTML里分离开来。JSP侧重于视图，Servlet主要用于控制逻辑。 
 
-#### 开发环境准备
-
-* IntelliJ IDEA
-* JDK 1.8
-* Apache-tomcat-8.0.35
-
-下面简单描述下安装apache tomcat的过程：
-
-* 官网下载地址：http://tomcat.apache.org/download-80.cgi
-* 环境变量：设置`CATALINA_HOME`环境变量为Tomcat包的根目录。
-* 启动tomcat: `./startup.sh`
-
-登入首页：输入http://localhost:8080/即可！
-![](figures/15453912010117.png)
-
-选择IntelliJ IDEA的Preference | Application Servers, 选择右侧➕，添加tomcat根目录
-
-![add_tomcat_home_to_intelliJ_idea](figures/add_tomcat_home_to_intelliJ_idea.png)
-
-
-
-
-#### 创建Web应用
-
-在配置完IDEA以后，就可以开始创建Web应用了。 可以参考[IntelliJ IDEA官方文档](http://www.jetbrains.com/help/idea/enabling-web-application-support.html)
-
-
-当创建项目时，选择Java Enterprise, 然后在Additional Libraries and Frameworks下勾选Web Application。
-
-![intelliJ_IDEA_WEB_Application](figures/intelliJ_IDEA_WEB_Application.png)
-另外，在File | Project Structure | Modules右侧dependencies选项卡中添加Tomcat依赖。
-
-选择Run | Edit Configures, 在左侧点击加号➕，添加Tomcat Server配置，选择Local，
-
-![add_tomcat_configures](figures/add_tomcat_configures.png)
-在右侧Deployment选项卡中，点击加号➕，添加部署。
-
-![add_tomcat_depolyment](figures/add_tomcat_depolyment.png)
-
-接下来就可以运行了，选择Run | index.jsp，完成以后，浏览器会自动打开。
-
 
 #### 完整的JSP程序
 
