@@ -249,6 +249,8 @@ public class Singleton {
 
 枚举不仅能避免多线程同步问题，而且还能防止反序列化重新创建新的对象。
 
+关于Enum的用法和原理见[Java编程思想](../Java编程思想/20 Enumerated Types.md)
+
 > This approach is functionally equivalent to the public field approach, except that it is more concise, provides the serialization machinery for free, and provides an ironclad guarantee against multiple instantiation, even in the face of sophisticated serialization or reflection attacks. While this approach has yet to be widely adopted, *a single-element enum type is the best way to implement a singleton*. <small>[Effective Java]</small>
 
 
@@ -268,9 +270,9 @@ public enum Singleton {
 > The process by which enum constants are serialized cannot be customized: any class-specific <C>writeObject</C>, <C>readObject</C>, <C>readObjectNoData</C>, <C>writeReplace</C>, and <C>readResolve</C> methods defined by enum types are *ignored* during serialization and deserialization. Similarly, any <C>serialPersistentFields</C> or <C>serialVersionUID</C> field declarations are also ignored--all enum types have a fixed <C>serialVersionUID</C>  of 0L. Documenting serializable fields and data for enum types is unnecessary, since there is no variation in the type of data sent. [Java Object Serialization Specification](https://docs.oracle.com/javase/7/docs/platform/serialization/spec/serial-arch.html#6469)
 
 
-一个例子：
+例子：
 
-```Java
+```Java tab="Employee"
 public enum Employee {
     INSTANCE;
     private int id;
@@ -292,6 +294,37 @@ public enum Employee {
 
     public void setName(String name) {
         this.name = name;
+    }
+}
+```
+
+```java tab="Redis"
+// 使用连接池封装Redis连接工具类
+public enum RedisUtils {
+    INSTANCE;
+
+    private final JedisPool pool;
+    RedisUtils() {
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        pool = new JedisPool(poolConfig, "localhost");
+    }
+
+    public void hset(String key, String field, String value) {
+        try (Jedis jedis = pool.getResource()) {
+            jedis.sadd(key, field, value);
+        }
+    }
+
+    public String hget(String key, String field) {
+        try (Jedis jedis = pool.getResource()) {
+            return jedis.hget(key, field);
+        }
+    }
+
+    public boolean hexists(String key, String field) {
+        try (Jedis jedis = pool.getResource()) {
+            return jedis.hexists(key, field);
+        }
     }
 }
 ```

@@ -5,12 +5,12 @@ date: 2017-3-30
 top: 10
 ---
 
-[`Anaconda`](../Python/Python配置.md)默认自带`Jupyter Notebook`，可以很方便的运行Python代码、记录笔记。在terminal输入`jupyter notebook`，会自动新建浏览器页面，打开jupyter notebook。
+[Anaconda](../Python/Python配置.md)默认自带`Jupyter Notebook`，可以很方便的运行Python代码、记录笔记。在terminal输入`jupyter notebook`，会自动新建浏览器页面，即打开jupyter notebook。
 
 
 ### 1 安装kernel
 
-Jupyter NoteBook支持多种Kernel，也就是说在notebook中可以使用多种语言。下面是各种语言的kernel安装方法。
+Jupyter NoteBook支持多种Kernel，也就是说在notebook中可以使用多种语言。下面是常见编程语言的kernel安装方法。
 
 
 #### Bash Kernel
@@ -22,7 +22,7 @@ pip install bash_kernel
 python -m bash_kernel.install
 ```
 
-#### Install Python2/3 Kernel
+#### Python2/3 Kernel
 
 通过`ipykernel`可以安装Python2/3 Kernel。
 
@@ -31,7 +31,7 @@ python3 -m pip install ipykernel
 python3 -m ipykernel install --user
 ```
 
-#### Install Scala Kernel
+#### Scala Kernel
 
 通过`spylon-kernel`，可以在notebook上写scala和Spark程序。
 
@@ -59,4 +59,6 @@ nohup jupyter notebook &> /dev/null &
 ```
 
 * `nohup`: 不挂断地运行命令， 忽略SIGHUP信号
-* `&` 后端运行
+* `&`： 后台运行
+
+在Mac上选择System Preferences - Users&Groups - Login Items添加shell脚本，使脚本开机启动。

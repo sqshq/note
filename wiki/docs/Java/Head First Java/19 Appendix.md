@@ -2,7 +2,7 @@
 
 ### 10 Bit Manipulation
 
-Bitwise NOT Operator: ~, "flips all the bits of primitive"
+Bitwise NOT Operator: `~`, "flips all the bits of primitive"
 
 ```Java
 int x = 10; // bits are 00001010
@@ -167,10 +167,10 @@ public static final int BOBBY = 2;
 public static final int PHIL = 3;
 ```
 
-As of Java 5.0, you can create full-fledged enumerations using enum<C></C> keyword.
+As of Java 5.0, you can create full-fledged enumerations using <C>enum</C> keyword.
 
 ```Java
-public enum Members { JERRY, BOBBY, PHIL };
+public enum Members {JERRY, BOBBY, PHIL};
 // The "selectedBandMember" variable is of type "Members", 
 // and can ONLY have a value of JERRY, BOBBY, PHIL.
 public Members selectedBandMember; 
@@ -184,14 +184,13 @@ if (selectedBandMember == Members.JERRY) {
 when you create an enum, you're creating A NEW CLASS, and **you're implicitly extending** <C>java.lang.Enum</C>.
 
 ```Java
-public abstract class Enum<E extends Enum<E>>
-extends Object 
-implements Comparable<E>, Serializable
+public abstract class Enum<E extends Enum<E>> extends Object 
+    implements Comparable<E>, Serializable
 ```
 
-#### Using “if” and “switch” with Enums
+#### Using "if" and "switch" with Enums
 
-Using the enum, we can perform branches in our code using either the <C>if</C> or <C>switch</C> statement. Also we can compare enum instances using either == or the <C>.equals()</C> method. Usually == is considered better style.
+Using the enum, we can perform branches  using either the <C>if</C> or <C>switch</C> statement. Also we can compare enum instances using either `==` or the <C>.equals()</C> method. Usually `==` is considered better style.
 
 ```Java
 Members n = Members.BOBBY; 

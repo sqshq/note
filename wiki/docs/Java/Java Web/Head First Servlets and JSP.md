@@ -5,44 +5,24 @@ title: Head First Servlets and JSP
 
 ### 1 前言
 
-
-#### HTML速成指南
-
-详见[HTML5参考手册](http://www.w3school.com.cn/html5/html5_reference.asp)
-
-| 标记 |  描述 |
-| --- | --- |
-| `<!-- -->` | 在这里加注释 |
-| `<a>` | 通常用来放一个超链接 |
-| `<align>` | 对内容左对齐、右对齐、居中，或调整行距 |
-| `<body>` | 定义文本体的边界 |
-| `<br>` | 行分隔 |
-| `<center>` | 将内容居中 |
-| `<form>` | 定义一个表单 |
-| `<h1>` | 一级标题 |
-| `<head>` | 定义文档首部的边界 | 
-| `<html>` | 定义HTML文档的边界 |
-| `<input type>` | 在表单中定义一个输入组件 |
-| `<p>` | 一个新段落 |
-| `<title>` | HTML文档的标题 | 
-
-
 #### 单靠Web服务器
-
 
 如果需要动态页面，而且希望能够把数据保存到服务器上，只依靠Web服务器是不够的。Web服务器应用只提供静态页面。需要CGI或者Servlet这样的辅助应用生成非静态的即时页面，而且能够与Web服务器通信。
 
 也就是说即时页面在请求到来之前并不存在，请求到来后，辅助应用写出HTML，Web服务器再把这个HTML交回给客户。
 
+![](figures/dynamic_page.jpg)
+
+
 ### 2 Web应用体系结构
 
-Servlet没有`main()`方法。它们受控于另一个Java应用，这个Java应用称为容器(如[Tomcat](http://tomcat.apache.org) )。如果Web服务器应用(如Apache)得到一个指向某servlet的请求，此时服务器不是把请求交给servlet本身，而是交给部署该servlet的容器。要由容器向servlet提供HTTP请求和响应，而且要由容器调用servlet的方法(如`doPost`/`doGet`)。
+Servlet没有`main()`方法。它们受控于另一个Java应用，这个Java应用称为**容器**(如[Tomcat](http://tomcat.apache.org) )。如果Web服务器应用(如Apache)得到一个指向某servlet的请求，此时服务器不是把请求交给servlet本身，而是交给部署该servlet的容器。要由容器向servlet提供HTTP请求和响应，而且要由容器调用servlet的方法(如`doPost`/`doGet`)。
 
 ![servlet_need_a_containe](figures/servlet_need_a_container.png)
 
 容器能提供什么？
 
-* 通信支持：无需建立ServerSocket、监听端口、创建流，就能轻松让servlet与Web服务器对话。
+* 通信支持：无需建立`ServerSocket`、监听端口、创建流，就能轻松让servlet与Web服务器对话。
 * 生命周期管理：容器控制servlet的生与死，负责加载类、实例化和初始化servlet、调用servlet方法。
 * 多线程支持：自动为每个servlet请求创建一个新线程。
 * 声明方式实现安全：可以使用XML部署描述文件来配置安全性，而不必将其硬编码写到servlet或其他类代码中。也就是说不用修改Java源文件、不用重新编译就能管理和修改配置。
@@ -51,21 +31,7 @@ Servlet没有`main()`方法。它们受控于另一个Java应用，这个Java应
 
 #### 部署描述文件
 
-部署描述文件(DD，一般为`web.xml`)可以将URL映射到servlet。
-
-```xml
-<servlet>  // 将内部名映射到完全限定类名
-    <servlet-name>HelloWorld</servlet-name>
-    <servlet-class>com.headfirstservletsjsp.servlet.HelloWorld</servlet-class>
-</servlet>
-
-<servlet-mapping> // 将内部名映射到公共URL名
-    <servlet-name>HelloWorld</servlet-name>
-    <url-pattern>/hello</url-pattern>  // 公共URL名，客户看到的
-</servlet-mapping>
-```
-
-部署描述文件有以下优点：
+部署描述文件(Deployment Descriptor, 简称DD，一般为`web.xml`)有以下优点：
 
 * 尽量少改动已经测试过的源代码
 * 即使你手上并没有源代码，也可以对应用的工程进行调整
@@ -73,17 +39,82 @@ Servlet没有`main()`方法。它们受控于另一个Java应用，这个Java应
 * 可以更容易地维护动态安全信息，如访问控制列表和安全角色
 
 
+**映射**
+
+部署描述文件可以将URL映射到servlet。每个servlet映射都有两部分———— `<servlet>`元素和`<servlet-mapping>`元素。
+
+```xml
+<servlet>  // 将内部名映射到完全限定类名
+    <servlet-name>HelloWorldServlet</servlet-name>
+    <servlet-class>mypkg.HelloServlet</servlet-class>
+</servlet>
+
+<servlet-mapping> // 将内部名映射到公共URL名
+    <servlet-name>HelloWorldServlet</servlet-name>
+    <url-pattern>/sayHello</url-pattern>  // 公共URL名，客户看到的
+</servlet-mapping>
+```
+
+![](figures/web.xml.jpg)
+
+有三种`<url-pattern>`元素：
+
+* 完全匹配: `/Beer/SelectBeer.do`
+* 目录匹配: `/Beer/*`总是以一个斜线加星号结束
+* 扩展名匹配: `*.do` 必须以一个星号开头，后面必须有一个点号加扩展名
+
+容器首先查找完全匹配，如果找不到完全匹配，再查找目录匹配，最后查找扩展名匹配。
+
+
+
+**欢迎页面**
+
+容器在部署描述文件中寻找servlet映射，如果没有找到匹配，会在该目录下按照`<welcome-file-list>`中按顺序查找一个欢迎页面。如果还没找到可能会显示该目录列表，或者404 Not Found错误。
+
+常见的`<welcome-file-list>`：
+
+```xml
+<welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+</welcome-file-list>
+```
+
+**错误页面**
+
+如果没有找到文件，可以指定错误页面
+
+```xml
+<error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/errorPage.jsp</location>
+<error-page>
+```
+
+**servlet初始化**
+
+如果希望在部署时加载servlet，而不是等到第一个请求到来时才加载，可以使用`<load-on-startup>`元素，元素值为加载的顺序(即值越小越先加载)。例如
+
+
+```
+<servlet>
+    <servlet-name>KathyOne</servlaet-name>
+    <servlet-class>foo.DeployTestOne</servlet-class>
+    <load-on-startup>1</load-on-startup>
+</servlet>
+```
+
 
 ### 3 MVC模式
 
 MVC即**模型-视图-控制器**(model-view-controller)模式。MVC就是把业务逻辑从servlet中抽出来，把它放在一个模型中。所谓模型就是一个可重用的普通Java类，是业务数据和处理该数据的方法的组合。
 
-![mv](figures/mvc.png)
+![](figures/mvc.jpg)
 
 
 * 控制器(Controller) - 负责转发请求，对请求进行处理。
 * 视图(View) - 界面设计人员进行图形界面设计。
-* 模型(Model) - 程序员编写程序应有的功能（实现算法等等）、数据库专家进行数据管理和数据库设计(可以实现具体的功能)。
+* 模型(Model) - 程序员编写程序应有的功能(实现算法等等)、数据库专家进行数据管理和数据库设计(可以实现具体的功能)。
 
 
 
@@ -104,7 +135,7 @@ Servlet生命周期中重要时刻
 | `doGet()`/`doPost()` | `service()`方法根据请求的HTTP方法来调用`doGet()`或`doPost()` | 你的Web应用想要做什么，就要由这个方法负责 | 至少要覆盖其中之一 |
 | `destroy()` | 需要释放内存或者容器关闭时 | 关闭数据库连接、停止后台线程等 | 一般不覆盖  |
 
-第一个客户请求到来时，容器会开始一个线程，并调用servlet的`service()`方法。后续客户请求到来时，容器再创建或找到另一个线程，并调用servlet的`service()`方法。也就是**容器运行多个线程来处理对一个servlet的多个请求**。
+第一个客户请求到来时，容器会开始一个线程，并调用servlet的`service()`方法。后续客户请求到来时，容器再创建或找到另一个线程，并调用servlet的`service()`方法。也就是**容器运行多个线程来处理对一个servlet的多个请求**(一个servlet, 多个线程)。
 
 ![servlet_threads](figures/servlet_threads.png)
 
@@ -152,6 +183,8 @@ POST本质上讲不是幂等的，所以要适当地设计和编写代码，如�
 | `request.getHeader("User-Agent")` | 客户的平台和浏览器信息 |
 | `request.getCookies()` | 与请求相关的cookie |
 | `request.getSession()` | 与客户相关的会话session |
+| `request.getContextPath()` | 获取当前项目的系统路径 |
+
 
     
 #### 响应
@@ -164,19 +197,20 @@ POST本质上讲不是幂等的，所以要适当地设计和编写代码，如�
 
 `setContentType()`设置了HTTP首部中的内容类型：告诉了浏览器返回类型，浏览器会采取相应的操作：例如，打开PDF阅读器或者视频播放器，或者呈现HTML，又或者把响应的字节保存为一个下载文件。
 
-`ServletResponse`接口提供了两个流用于输出：`ServletOutputStream`用于输出字节, `PrintWriter`用于输出字符数据。
+`ServletResponse`接口提供了两个流用于输出：`ServletOutputStream`用于输出字节流, `PrintWriter`用于输出字符流。
 
 ```Java
 // 把文本数据打印到一个字符流
 PrintWriter writer = response.getWriter();
 writer.println("some text and HTML");
 
-// 写其他的任何内容
+// 输出字节流
 ServletOutputStream out = response.getOutputStream();
 out.write(aByteArray);
 ```
+<small>字节流和字符流的区别参见[Java IO](../Head First Java/14 Serialization and File IO.md/#1_)</small>
 
-重定向：当确定无法完成工作以后，servlet可以调用重定向方法`sendRedirect()`:
+**重定向**：当确定无法完成工作以后，servlet可以调用重定向方法`sendRedirect()`:
 
 ```Java
 if (worksForMe) {
@@ -186,7 +220,7 @@ if (worksForMe) {
 }
 ```
 
-请求分派：当servlet讲请求该给Web应用的另一部分(例如，JSP)。
+**请求分派**：当servlet将请求交给Web应用的另一部分(例如，JSP)。
 
 ```Java
 RequestDispatcher view = 
@@ -266,7 +300,7 @@ ServletContext是JSP或servlet与容器及其Web应用其他部分的一个连�
     
     servlet的`ServletConfig`对象拥有该servlet的`ServletContext`的一个引用。所以可以用以下方式获取: `getServletConfig().getServletContext()`
 
-#### 监听者
+#### 监听器
 
 如果希望应用初始化参数是一个数据库DataSource呢？
 
@@ -282,13 +316,60 @@ ServletContext是JSP或servlet与容器及其Web应用其他部分的一个连�
 
 ![servletContextListene](figures/servletContextListener.png)
 
-如何告诉容器已经为应用建立了一个监听者? 也就是说如何注册监听者？在部署描述文件中使用`<listener>`元素：
+如何告诉容器已经为应用建立了一个监听器? 也就是说如何注册监听器？在部署描述文件中使用`<listener>`元素：
 
 ```xml
 <listener>
     <listener-class> </listener-class>
 </listener>
 ```
+
+当有多个监听器时，监听器启动顺序和声明顺序相同，监听器销毁顺序和声明顺序相反。
+
+    
+    
+常见的监听器
+
+
+| 场景 | 监听器接口 | 时间类型 |
+| --- | --- | --- |
+| 你想知道一个Web应用上下文中是否增加、删除或替换了一个属性 | `ServletContextAttributeListener` | `ServletContextAttributeEvent` |
+| 你想知道有多少个并发用户。也就是说，你想跟踪活动的会话 | `HttpSessionListener` | `HttpSessionEvent` |
+| 每次请求到来时你都想知道，以便建立日志记录 | `ServletRequestListener` | `ServletRequestEvent` |
+| 增加、删除或替换一个请求属性时你希望能够知道 | `ServletRequestAttributeListener` | `ServletRequestAttributeEvent` |
+| 你有一个属性类(这个类表示的对象放在一个属性中)，而且你希望这个类型的对象在绑定到一个会话或从会话删除时得到通知 | `HttpSessionBindingListener` | `HttpSessionBindingEvent` |
+| 增加、删除或替换一个会话属性时你希望能够知道 | `HttpSessionAttributeListener` | `HttpSessionBindingEvent` |
+| 你想知道是否创建或撤销了一个上下文 | `ServletContextListener` | `ServletContextEvent` |
+| 你哟一个属性类，而且希望这个类型的对象在其绑定的会话迁移到另一个JMV时得到通知 | `HttpSessionActivationListener` | `HttpSessionEvent` |
+
+#### 属性
+
+属性就是一个对象(例如上面例子中的dog对象)，可以设置到`ServletContext`, `HttpServletRequest`, `HttpSession`中，可以把它简单地认为是一个映射实例对象中的名/值对(name/value pair)。在实际中，我们并不知道也不关心它具体如何实现，我们关心的是属性所在的作用域：谁能看到这个属性，以及属性能存活多久。
+
+!!! note "属性v.s.参数"
+    属性和参数的区别
+    
+    |     | 属性 | 参数 |
+    | --- | --- | --- |
+    | 类型 | 上下文(Context)、请求(Request)、会话(Sesssion) | 应用/上下文初始化参数、请求参数、Servlet初始化参数 |
+    | 设置方法 | `setAttribute(String name, Object value)` | 不能设置应用和Servlet初始化参数，只能在部署配置文件中设置 |
+    | 返回类型 | `Object` | `String` |
+    | 获取方法 | `getAttribute(String name)` | `getInitParameter(String name)` |
+
+
+属性的三个作用域: 上下文、请求和会话，分别由`ServletContext`、`ServletRequest`和`HttpSession`接口处理。每个接口中对应属性的API完全相同：`getAttribute()`, `setAttribute()`, `removeAttribute()`, `getAttributeNames()`。
+
+![three_attribute_scopes](figures/three_attribute_scopes.png)
+
+属性作用域的可访问性、作用域、适用环境：
+
+| | 可访问性 | 作用域 | 适用于 |
+| --- | --- | --- | --- |
+| Context上下文 | Web应用的所有部分 | 部署应用的生命周期 | 希望整个应用共享的资源，包括数据库连接 |
+| HttpSession会话  | 访问这个特定会话的所有servlet或JSP | 会话的生命周期 | 与客户会话有关的资源和数据，而不只是与单个请求相关的资源。只要与客户完成一个持续的会话。购物车就是一个典型的例子 |
+| Request请求 | 应用中能直接访问请求对象的所有部分，主要是指使用RequestDispatcher将请求转发到的JSP和Servlet，另外还有与请求相关的监听者 | 请求的生命周期 | 将模型信息从控制器传递到试图 |
+
+
 
 !!! example "一个简单的ServletContextListener"
     
@@ -378,43 +459,85 @@ ServletContext是JSP或servlet与容器及其Web应用其他部分的一个连�
         </context-param>
     </web-app>
     ```
-    
-    
-常见的监听者
+
+下面一个例子是经常遇见的网站功能，当用户在其他设备上登陆时，需要将前一个设备上登陆的页面注销，防止一个用户同时登陆多个设备，例如微信、QQ等软件都具备此功能。
 
 
-| 场景 | 监听者接口 | 时间类型 |
-| --- | --- | --- |
-| 你想知道一个Web应用上下文中是否增加、删除或替换了一个属性 | `ServletContextAttributeListener` | `ServletContextAttributeEvent` |
-| 你想知道有多少个并发用户。也就是说，你想跟踪活动的会话 | `HttpSessionListener` | `HttpSessionEvent` |
-| 每次请求到来时你都想知道，以便建立日志记录 | `ServletRequestListener` | `ServletRequestEvent` |
-| 增加、删除或替换一个请求属性时你希望能够知道 | `ServletRequestAttributeListener` | `ServletRequestAttributeEvent` |
-| 你有一个属性类(这个类表示的对象放在一个属性中)，而且你希望这个类型的对象在绑定到一个会话或从会话删除时得到通知 | `HttpSessionBindingListener` | `HttpSessionBindingEvent` |
-| 增加、删除或替换一个会话属性时你希望能够知道 | `HttpSessionAttributeListener` | `HttpSessionBindingEvent` |
-| 你想知道是否创建或撤销了一个上下文 | `ServletContextListener` | `ServletContextEvent` |
-| 你哟一个属性类，而且希望这个类型的对象在其绑定的会话迁移到另一个JMV时得到通知 | `HttpSessionActivationListener` | `HttpSessionEvent` |
+```java tab="LoginSessionListener"
+public class LoginSessionListener implements HttpSessionAttributeListener {
+	
+	private static final String LOGIN_USER="loginUser";
 
-#### 属性
+	@Override
+	public void attributeAdded(HttpSessionBindingEvent hsbe) {
+		String attrName = hsbe.getName();//监听到session属性值发生添加操作，获取对应操作的属性名
+		
+		if(LOGIN_USER.equals(attrName)){//若属性名为登录属性名，判定为用户登录操作
+			String attrVal = (String)hsbe.getValue();//获取添加的属性值，即用户登录名
+			HttpSession session = hsbe.getSession();//该次操作的session对象
+			String sessionId = session.getId();//该次操作的session对象ID
+			//从缓存对象里面，获得该用户登录名对应的sessionID值
+			String sessionId2 = LoginCache.getInstance().getSessionIdByUsername(attrVal);
+			if(null != sessionId2){//需要清理前次登录用户会话信息
+				//获取前次该用户登录对应的session对象
+				HttpSession session2 = LoginCache.getInstance().getSessionBySessionId(sessionId2);
+				session2.invalidate();//清理前次登录用户会话存储信息，使得前次登录失效
+			}
+			//完成该次登录用户登录名、sessionID，session对象的缓存对象存储
+			LoginCache.getInstance().setSessionIdByUserName(attrVal, sessionId);
+			LoginCache.getInstance().setSessionBySessionId(sessionId, session);
+		}
+	}
 
-属性就是一个对象(例如上面例子中的dog对象)，可以设置到`ServletContext`, `HttpServletRequest`, `HttpSession`中，可以把它简单地认为是一个映射实例对象中的名/值对(name/value pair)。在实际中，我们并不知道也不关心它具体如何实现，我们关心的是属性所在的作用域：谁能看到这个属性，以及属性能存活多久。
+	@Override
+	public void attributeRemoved(HttpSessionBindingEvent arg0) {
+	}
 
-!!! note "属性v.s.参数"
-    
-    |     | 属性 | 参数 |
-    | --- | --- | --- |
-    | 类型 | 上下文(Context)、请求(Request)、会话(Sesssion) | 应用/上下文初始化参数、请求参数、Servlet初始化参数 |
-    | 设置方法 | `setAttribute(String name, Object value)` | 不能设置应用和Servlet初始化参数，只能在部署配置文件中设置 |
-    | 返回类型 | `Object` | `String` |
-    | 获取方法 | `getAttribute(String name)` | `getInitParameter(String name)` |
+	@Override
+	public void attributeReplaced(HttpSessionBindingEvent arg0) {
+	}
+}
+```
 
+```java tab="LoginCache"
+public class LoginCache {
+	private static LoginCache instance = new LoginCache();
+	// key值：登录用户登录名，value值：登录用户sessionId
+	private Map<String,String> loginUserSession = new HashMap<String,String>();
+	//key值:登录用户sessionId,value值：登录用户session对象
+	private Map<String,HttpSession> loginSession = new HashMap<String,HttpSession>();	
+	private LoginCache(){	
+	}
+	public static LoginCache getInstance(){
+		return instance;
+	}
+	
+	// 通过登录名获取对应登录用户的sessionId
+	public String getSessionIdByUsername(String username){
+		return loginUserSession.get(username);
+	}
+	
+	// 通过sessionId获取对应的session对象
+	public HttpSession getSessionBySessionId(String sessionId){
+		return loginSession.get(sessionId);
+	}
+	
+	// 存储登录名与对应的登录sessionID至缓存对象
+	public void setSessionIdByUserName(String username,String sessionId){
+		loginUserSession.put(username, sessionId);
+	}
+	
+	// 存储sessionId与对应的session对象至缓存对象
+	public void setSessionBySessionId(String sessionId,HttpSession session){
+		loginSession.put(sessionId, session);
+	}
 
-属性的三个作用域: 上下文、请求和会话，分别由`ServletContext`、`ServletRequest`和`HttpSession`接口处理。每个接口中对应属性的API完全相同：`getAttribute()`, `setAttribute()`, `removeAttribute()`, `getAttributeNames()`。
-
-![three_attribute_scopes](figures/three_attribute_scopes.png)
+}
+```
 
 #### 属性和线程安全
 
-**上下文作用域不是线程安全的！**：应用中的每一部分都能访问上下文属性，所以可能有多个servlet，也就是说有多个线程
+**上下文作用域不是线程安全的**：应用中的每一部分都能访问上下文属性，所以可能有多个servlet，也就是说有多个线程
 
 ![context_scopte_is_not_thread_safe](figures/context_scopte_is_not_thread_safe.png)
 
@@ -459,22 +582,22 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 
 #### cookie
 
-如何能跨多个请求保留客户特定的状态？使用`HttpSession`: `HttpSession`兑现给可以保存跨同一个客户<font color="red">多个</font>请求的会话状态。换句话说，与一个特定客户的整个会话期间，HttpSession会持久存储。
+如何能跨多个请求保留客户特定的状态？使用`HttpSession`: `HttpSession`对象可以保存跨同一个客户<red>多个</red>请求的会话状态。换句话说，与一个特定客户的整个会话期间，`HttpSession`会持久存储。
 
-容器怎么知道客户是谁？通过cookie作为唯一的会话ID。具体请参见[计算机网络：自顶向下](../../OS/计算机网络 自顶向下/2 应用层.md#cookies)。
+容器怎么知道客户是谁？通过cookie作为唯一的会话ID（cookie具体请参见[计算机网络：自顶向下](../../OS/计算机网络 自顶向下/2 应用层.md#cookies)）。
 
 容器几乎做了关于cookie的所有工作：
 
 * 对于一个新会话，容器会生成会话ID、创建新的cookie对象、把会话ID放到cookie中、把cookie设置为响应的一部分等；
 * 对于后续的请求，容器会从请求的cookie得到会话ID，将这个会话ID与现有的会话匹配，并把会话与当前请求关联。
 
-无论在响应中<span style="color:red">发送</span>一个会话cookie，还是从请求中得到会话ID，都只需要一句话，余下的所有事情容器都帮你做好了：
+无论在响应中<red>发送</red>一个会话cookie，还是从请求中得到会话ID，都只需要一个简单语句，余下的所有事情容器都帮你做好了：
 
 ```java
 HttpSession session = request.getSession();
 ```
 
-如果想知道会话是已经存在，还是刚刚创建的，可以访问`session.isNew()`方法：
+如果想知道会话是已经存在，还是刚刚创建的，可以访问`:::java session.isNew()`方法：
 
 ```Java
 public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -491,7 +614,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 
 ![url_rewriting](figures/url_rewriting.png)
 
-只有告诉响应要对URL编码，URL重写才能奏效：
+只有告诉响应要对URL编码(`encodeURL`)，URL重写才能奏效：
 
 ```Java
 public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -514,7 +637,7 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 
 如果一个会话太长时间都不活动，怎样识别并撤销这个会话？
 
-会话有3种死法：超时、在会话对象上调用`invalidate()`，应用结束(崩溃或取消部署)。可以在部署配置文件中配置会话超时，例如设置为15分钟：
+会话有3种死法：超时、在会话对象上调用`:::Java invalidate()`，应用结束(崩溃或取消部署)。可以在部署配置文件中配置会话超时时间，例如设置为15分钟：
 
 ```xml
 <session-config> 
@@ -539,13 +662,388 @@ response.addCookie(cookie);
 Cookie[] cookies = request.getCookies();
 ```
 
-!!! example "简单的定制cookie示例"
+!!! example
+    下面的示例代码演示了如何利用Cookie登陆。`CookieUitls`类实现了Cookie的查找。`LoginServlet`类实现了登陆成功时，将当前用户的用户名保存到cookie中，在`login.jsp`页面中，获取客户端提供的cookie，再利用`CookieUitls`查找cookie，获取用户名。[完整代码](https://github.com/techlarry/Login)
+    
+    ```java tab="CookieUtils"
+    // 从系列Cookie中查找特定的Cookie
+    public class CookieUtils {
+        public static Cookie findCookie(Cookie[] cookies ,String name){
+            if (cookies != null)
+                // 说明客户端携带Cookie:
+                for (Cookie cookie : cookies) 
+                    if(name.equals(cookie.getName()))
+                        return cookie;
+            return null;
+        }
+    }
+    ```
+    
+    ```java tab="LoginServlet"
+    public class LoginServlet extends HttpServlet {
+        @Override
+        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException {
+            // 接收数据
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            // 从ServletContext域中获得保存用户信息集合
+            List<User> list = (List<User>) (this.getServletContext().getAttribute("list"));
+            for (User user : list) {
+                // 判断用户名是否正确
+                if (username.equals((user.getUsername()))) {
+                    // 用户名是正确的
+                    if (password.equals(user.getPassword())) {
+                        // 密码正确，登陆成功
+                        String remember = request.getParameter("remember"); // 判断复选框是否勾选
+                        if ("true".equals(remember)) { // “记住”复选框勾选
+                            // 记录用户名
+                            Cookie cookie = new Cookie("username", user.getUsername());
+                            cookie.setPath("/");
+                            cookie.setMaxAge(60 * 60 * 24);  // cookie保存24小时
+                            response.addCookie(cookie);
+                        }
+    
+                        // 将用户的信息保存到session中
+                        request.getSession().setAttribute("user", user);
+                        response.sendRedirect("/success.jsp");
+                        return;
+                    }
+                }
+            }
+            // 登陆失败
+            System.out.println("login failure");
+            request.setAttribute("msg", "用户名或密码错误！");
+            request.getRequestDispatcher("/login.jsp").forward(request, response);
+        }
+    
+    
+        @Override
+        protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+                throws ServletException, IOException {
+            doGet(req, resp);
+        }
+    }
+    ```
+    
+    ```java tab="login.jsp"
+    	<%
+    		String username = "";
+    		// 获得从客户端携带过来的所有的Cookie
+    		Cookie[] cookies = request.getCookies();
+    		// 从Cookie的数组中查找指定名称的Cookie
+    		Cookie cookie = CookieUtils.findCookie(cookies, "username");
+    		if (cookie != null)
+    		    username = cookie.getValue();
+    		if (session.getAttribute("username") != null)
+    			username = (String) session.getAttribute("username");
+    
+    		String msg = "";
+    		if(request.getAttribute("msg") != null){
+    			msg = (String)request.getAttribute("msg");
+    		}
+    	%>
+    ```
 
-### 7 使用JSP
-### 无脚本的JSP
-### 9 使用JSTL
-### 10 定制标记开发
-### 11 Web应用部署
-### 12 Web应用安全
-### 13 过滤器和包装器
-### 模式和struts
+
+#### 会话迁移
+
+
+对于分布式Web应用，即应用的各个部分可以复制在网络中的多个节点上。在一个集群环境中，容器可能会完成负载均衡，客户的请求会发送到多个JVM上。这说明，每次客户请求时，最后有可能到达同一个servlet的不同实例。那么，ServletContext、ServletConfig、HttpSession对象会有什么变化呢？
+
+* **只有HttpSession对象会从一个VM迁移到另一个VM**。
+* 每个VM中有一个ServletContext。
+* 每个VM上的每个Servlet有一个ServletConfig。
+* 对于每个Web应用的一个给定的会话ID，只有一个HttpSession对象，而不论应用分布在多少个VM上。
+
+![httpsession_on_distributed_syste](figures/httpsession_on_distributed_system.png)
+
+如果确保属性随着HttpSession迁移，那么属性需要实现`Serializable`接口，或者使用`HttpSessionActivationListener`。
+
+```java
+public interface Serializable {
+    private void writeObject(java.io.ObjectOutputStream out)
+        throws IOException
+    private void readObject(java.io.ObjectInputStream in)
+        throws IOException, ClassNotFoundException;
+...
+```
+
+Serializable类实现了`ReadObject`和方法`WriteObject`，而`HttpSessionActivationListener`中的 `sessionDidActivate`和`sessionWillPassivate`方法与前者类似。
+
+```java
+public interface HttpSessionActivationListener {
+    // Notification that the session has just been activated.
+    void	 sessionDidActivate(HttpSessionEvent se) 
+    // Notification that the session is about to be passivated.
+    void	 sessionWillPassivate(HttpSessionEvent se) 
+}
+```
+
+### 7 部署Web应用
+
+一般使用Intellij IDEA开发工具开发并部署Web应用，详见[Intellij IDEA](../../Miscellaneous/Intellij IDEA.md)。
+
+
+下面是给定资源放在Web应用中的位置：
+
+
+| 资源类型 | 部署位置 |
+| --- | --- |
+| 部署描述文件(web.xml) | 直接放在WEB-INF文件夹下 |
+| 可以直接访问的HTML和JSP | 放在Web的根目录下或者它的任何子目录下，但是不能放在WEB-INF目录及其子目录下 |
+| 隐藏的HTML和JSP | 放在WEB-INF目录下 |
+| Servlet类 | 必须放在与包结构匹配的一个目录结构里，置于WEB-INF/classes下的一个目录中 |
+| JAR文件 | 必须放在WEB-INF/lib目录中 |
+
+!!! note
+
+    需要注意的是部署静态HTML和JSP时，在WEB-INF下的文件，不允许从Web应用外部访问，也就是不能在浏览器中输入资源的路径使服务器返回资源。
+
+
+### 8 过滤器和包装器
+
+过滤器也是Java组件，请求发送到servlet之前，可以用过滤器截获并处理请求；也可以在servlet结束工作之后，但在响应发回给客户之前，使用过滤器处理响应。
+
+![filte](figures/filter.png)
+
+过滤器可以链接到一起，一个接一个地运行。过滤器并不关心在它前面运行了哪些过滤器，也不关心后面还会运行哪个过滤器。
+
+#### 过滤器的生命周期
+
+每个过滤器都必须实现`Filter`接口中的三个方法：
+
+* `init()`: 完成调用过滤器之前的初始化任务
+* `doFilter()`: 过滤器的真正功能在这里实现，例如记录用户名，压缩响应输出
+* `destroy()`: 删除过滤器实例时调用，完成清理工作
+
+!!! example
+    为了提升啤酒应用，需要跟踪作出请求的用户。[代码](https://github.com/techlarry/HeadFirstJava/blob/master/src/com/headfirstservletsjsp/filter/BeerRequestFilter.java)
+    ```java
+    // 每个过滤器都必须实现Filter接口
+    public class BeerRequestFilter implements Filter {
+        private FilterConfig fc;
+    
+        public void init(FilterConfig config) throws ServletException {
+            this.fc = config;
+        }
+    
+        // doFilter中才做具体的工作，注意参数并不是HTTP请求和响应对象
+        // 而只是常规的ServletRequest和ServletResponse对象
+        public void doFilter(ServletRequest request, ServletResponse response,
+                             FilterChain chain)  throws ServletException, IOException {
+    
+            // 强制转换为响应的HTTP请求和响应对象
+            HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+            String name = httpServletRequest.getRemoteUser();
+            if (name != null)
+                fc.getServletContext().log("User " + name + " is updating");
+            // 接下来要调用的过滤器
+            chain.doFilter(request, response);
+        }
+    
+        public void destroy() {
+            // 通常这个方法都为空
+        }
+    }
+    ```
+
+过滤器生命周期：
+
+* 当Web应用程序启动时，立即创建这个Web应用中的所有的过滤器，过滤器创建出来后立即调用`init()`方法执行初始化的操作。
+* 创建出来后一直驻留在内存中为后续的拦截进行服务。每次拦截到请求后都会导致`doFilter()`方法执行。
+* 在服务器关闭或web应用被移除出容器时，随着web应用的销毁过滤器对象销毁。销毁之前调用`destory()`方法执行善后工作.
+    
+#### FilterChain
+    
+过滤器链`FilterChain`知道过滤器执行的顺序，它的`doFilter()`方法负责明确接下来调用谁的`doFilter()`方法或者在链尾调用哪个servlet的`Service()`方法。过滤器的调用顺序取决于过滤器在部署描述文件中的声明顺序。
+
+过滤器相互调用的过程，可以想象成栈上的方法调用。
+
+![chain_as_conceptual_stack](figures/chain_as_conceptual_stack.png)
+
+
+#### 配置过滤器
+
+在部署描述配置文件中配置过滤器：
+
+* 声明过滤器
+* 将过滤器映射到想过滤的Web资源
+* 创建过滤器调用序列
+
+!!! example
+    在部署描述文件中配置`BeerRequestFilter`过滤器。
+    ```java
+    <filter>
+        <filter-name>BeerRequest</filter-name>
+        <filter-class>com.headfirstservletsjsp.filter.BeerRequestFilter</filter-class>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>BeerRequest</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+    ```
+    
+当多个过滤器映射到一个给定资源时，容器会先找到与URL模式匹配的所有过滤器，按照部署描述文件中声明的顺序组成一个过滤器链。
+
+#### 响应过滤器
+
+响应过滤器，是指在servlet完成工作之后，在响应发送到客户之前，对象应做些处理。
+
+一种简单的想法是，首先，完成与请求相关的工作，然后调用`chain.doFilter()`，最后当servlet工作结束之后，再对响应再做点工作，于是有以下伪代码：
+
+```java
+// 压缩过滤器伪代码
+public void doFilter(request, response, chain) {
+    // 处理请求
+    chain.doFilter(request, response); // serlvet完成工作
+    // 完成压缩
+}
+```
+
+但是以上伪代码是错误的。因为容器并没有为过滤器把输出缓存起来，而是直接发回给客户，等到过滤器自己的`doFilter()`方调用时，已经为时已晚。
+
+一种解决方案是，创建自己的实现`HttpServletResponse`的对象，并通过调用`chain.doFilter()`传递到servlet。
+
+但是又遇到新的问题，那就是`HttpServletResponse`接口太复杂了，一共有十几个方法需要实现，那么怎么办呢？还好，有`HttpServletResponseWrapper`，它实现了`HttpServletResponse`，使用了[装饰器模式](../Head First设计模式/3 Decorator Pattern.md)(`HttpServletResponse`属于component, `HttpServletResponseWrapper`属于decorator)。
+
+!!! example
+    实现压缩响应的过滤器，用一个压缩I/O流包装输出流; 当且仅当客户包含一个Accept-Encoding首部为gzip时，才会完成输出流的压缩。
+    ```java
+    public class ComporessionFilter implements Filter {
+        private ServletContext servletContext;
+        private FilterConfig filterConfig;
+    
+        // 保存配置对象，并保存servlet上下文对象的一个直接引用
+        @Override
+        public void init(FilterConfig filterConfig) throws ServletException {
+            this.filterConfig = filterConfig;
+            servletContext = filterConfig.getServletContext();
+            servletContext.log(filterConfig.getFilterName() + " initialized.");
+    
+        }
+    
+        @Override
+        public void doFilter(ServletRequest req, ServletResponse resp,
+                             FilterChain chain) throws IOException, ServletException {
+            HttpServletRequest request = (HttpServletRequest) req;
+            HttpServletResponse response = (HttpServletResponse) resp;
+            // 客户接收gzip压缩吗?
+            String validEncodings = request.getHeader("Accept-Encoding");
+            if (validEncodings.indexOf("gzip") > -1) { // 用一个压缩包装器包装响应对象
+                // 使用定制包装器类包装响应
+                CompressionResponseWrapper compressionResponse = new CompressionResponseWrapper(response);
+                // 沿着过滤器链发送对象，链上的所有组件都不知道它们得到的响应对象是一个定制对象
+                chain.doFilter(request, compressionResponse);
+                // 声明响应内容用gzip格式编码
+                compressionResponse.setHeader("Content-Encoding", "gzip");
+                // 链接到下一个组件
+                chain.doFilter(request, compressionResponse);
+                // 结束压缩流，并刷新缓冲区
+                GZIPOutputStream gzipOutputStream = 
+                        compressionResponse.getGzipOutputStream();
+                gzipOutputStream.finish();
+                servletContext.log(filterConfig.getFilterName() + " finished the request.");
+            } else {
+                servletContext.log(filterConfig.getFilterName() + " no encoding performed.");
+                chain.doFilter(request, response);
+            }
+        }
+    
+        @Override
+        public void destroy() {
+            // 实例变量设置为null
+            servletContext = null;
+            filterConfig = null;
+        }
+    }
+    ```
+
+#### 案例
+
+过滤器指定中文编码字符集
+
+
+```java tab="过滤器"
+/**
+ * 字符集编码过滤器
+ */
+public class CharacterEncodingFilter implements Filter {
+
+    // 过滤器配置
+	private FilterConfig config;
+    @Override
+    public void init(FilterConfig config) throws ServletException {
+        this.config = config;
+    }
+
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response,
+	           FilterChain chain) throws IOException, ServletException {
+      // 根据过滤器配置字符集，设置请求字符集编码
+		request.setCharacterEncoding(config.getInitParameter("charset"));
+        chain.doFilter(request, response);
+	}
+
+    @Override
+    public void destroy() {
+    }
+}
+```
+
+```xml tab="web.xml"
+<!-- 字符集编码过滤器配置 -->
+<filter>
+	<filter-name>characterEncodingFilter</filter-name>
+	<filter-class>filter.CharacterEncodingFilter</filter-class>
+	<init-param>
+		<param-name>charset</param-name>
+		<param-value>UTF-8</param-value>
+	</init-param>
+</filter>
+
+<filter-mapping>
+	<filter-name>characterEncodingFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
+```
+
+实现系统用户登陆安全控制
+
+```java tab="过滤器"
+public class SessionFilter implements Filter {
+	@Override
+	public void init(FilterConfig config) throws ServletException {
+	}
+
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		HttpServletRequest hrequest = (HttpServletRequest) request;
+		HttpServletResponse hresponse = (HttpServletResponse) response;
+		String loginUser = (String) hrequest.getSession().getAttribute("loginUser");
+		if (loginUser == null)
+			hresponse.sendRedirect(hrequest.getContextPath() + "/index.jsp?flag=1");
+		else
+			chain.doFilter(hrequest, hresponse);
+	}
+
+	@Override
+	public void destroy() {
+	}
+}
+```
+
+```xml tab="web.xml"
+<!-- 用户登录安全控制过滤器配置 -->
+<filter>
+	<filter-name>sessionFilter</filter-name>
+	<filter-class>filter.SessionFilter</filter-class>
+</filter>
+
+<filter-mapping>
+	<filter-name>sessionFilter</filter-name>
+	<url-pattern>/message.jsp</url-pattern>
+</filter-mapping>
+```

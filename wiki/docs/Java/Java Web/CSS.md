@@ -14,12 +14,15 @@ CSS规则有两个主要的部分构成：**选择器**(selector)，以及一条
 
 ![](figures/css_rule.gif)
 
-在描述颜色的时候，可以使用英文颜色名称('red')、十六进制编码('#fffffff')、RGB值(`grb(255,0,0)`)方法来设置颜色。十六进制编码(hex code)使用6个十六进制数字来表示颜色，每2个分别表示红(R)、绿(G)和蓝(B)成分。
+在描述颜色的时候，可以使用英文颜色名称(e.g.`red`)、十六进制编码(e.g.`#fffffff`)、RGB值(e.g.`grb(255,0,0)`)方法来设置颜色。十六进制编码(hex code)使用6个十六进制数字来表示颜色，每2个数字分别表示红(R)、绿(G)和蓝(B)成分;也可以是使用3个十六进制数字来表示颜色，每1个数字表示红(R)、绿(G)和蓝(B)成分，#RGB相当于##RRGGBB。
+
+以下段落的字体颜色都是红色：
 
 ```css
 p {color: red;}
 p {color: #ff0000;}
-p {color: grb(255,0,0)};
+p {color: #f00;}
+p {color: grb(255,0,0);}
 ```
 
 #### 创建
@@ -32,7 +35,7 @@ p {color: grb(255,0,0)};
 
 外部样式表适合于应用多个页面。在文档的头部加入`:::html <link rel="stylesheet" type="text/css" href="style.css">`。浏览器会从文件`style.css`中读到样式声明，并根据它来格式文档。
 
-当单个文档需要特殊的样式时，就应该使用内部样式表。可以使用`<style>`标签在文档头部定义内部样式表：
+当单个文档需要特殊的样式时，就应该使用内部样式表。可以使用`:::css <style>`标签在文档头部定义内部样式表：
 
 ```html
 <head>
@@ -65,20 +68,21 @@ p {color: grb(255,0,0)};
 
 | 选择器 | 代码 | 描述 |
 | --- | --- | --- |
-| ID选择器  | `#id`   | 选择所有`id=id`的元素 |
-| 元素选择器 | `element` | 选择所有`<element>`元素。 |
-| 类选择器 | `.class` |  选择所有`class="class"`的元素 |
-| 属性选择器 |  `[attribute]` | 选择带有target属性的元素 |
-| 属性选择器 |  `[attribute=value]` | 选择属性target的值为value的元素 |	
+| ID选择器  | `:::css #id`   | 选择所有`:::css id=id`的元素 |
+| 元素选择器 | `:::css element` | 选择所有`:::css <element>`元素。 |
+| 类选择器 | `:::css .class` |  选择所有`:::css class="class"`的元素 |
+| 属性选择器 |  `:::css [attribute]` | 选择带有target属性的元素 |
+| 属性选择器 |  `:::css [attribute=value]` | 选择属性target的值为value的元素 |	
 	
 
 #### 基于关系的选择器 
 
-| 选择器名称 | 选择器 | 例子 | 描述 |
-| --- | --- | --- | --- |
-| 后代选择器 | `element element` | `div p` | 选择`<div>`元素内部的所有`<p>`元素。|
-| 子元素选择器 | `element>element|	` | `div>p` | 选择父元素为`<div>`元素的所有`<p>`元素。 |
-| 相邻兄弟选择器 | `element+element`	 | `div+p` | 选择紧接在`<div>`元素之后的所有`<p>`元素。 |
+| 选择器名称 | 选择器 | 描述 |
+| --- | --- | --- |
+| 后代选择器 | `:::css ancestor descendant` | 选择给定的祖先元素的所有后代元素，一个元素的后代可能是该元素的一个孩子、孙子等。|
+| 子元素选择器 | `:::css parent > child` | 选择父元素parent的所有子元素child。 |
+| 相邻兄弟选择器 | `:::css prev+next`| 选择紧接在prev元素之后的next元素。 |
+| 一般兄弟选择器 | `:::css prev ~ siblings` | 匹配prev元素之后的所有兄弟元素siblings |
 
 
 
@@ -93,10 +97,10 @@ p {color: grb(255,0,0)};
 
 | 伪类 | 描述 |
 | --- | --- |
-| `:link` | 选择所有未被访问的链接 |
-| `:hover` | 选择鼠标指针位于其上的链接 |
-| `:active` | 选择活动链接 |
-| `:visited` | 选择所有已被访问的链接 |
+| `:::css :link` | 选择所有未被访问的链接 |
+| `:::css :hover` | 选择鼠标指针位于其上的链接 |
+| `:::css :active` | 选择活动链接 |
+| `:::css :visited` | 选择所有已被访问的链接 |
 
 ```css
 a:link    {color:blue;}
@@ -130,7 +134,7 @@ p:before {
 
 下面是一份优先级逐级增加的选择器列表：
 
-1. 通用选择器(*)
+1. 通用选择器(`*`)
 2. 元素选择器
 3. 类选择器
 4. 属性选择器
@@ -142,7 +146,7 @@ p:before {
 
 #### 分组和嵌套
 
-可以使用分组选择器可以有多个选择器，每个选择器之间用逗号分隔：
+分组选择器由多个选择器组成，每个选择器之间用逗号分隔：
 
 ```css
 h1,h2,p { 
@@ -170,17 +174,18 @@ color:green;
 | background-color | 设置元素的背景颜色 |
 | background-image | 设置元素的背景图像 |
 | background-position | 设置背景图像的起始位置 |
-| background-repeat | 设置背景图像进行水平(`repeat-x`)或垂直平铺(`repeat-y`) |
+| background-repeat | 设置背景图像进行水平(`repeat-x`)或垂直平铺(`repeat-y`)或不平铺(`no-repeat`) |
 
 
 ```css
 #xy {
 	background-image:url('logo.png');
 	background-repeat:no-repeat;
-	background-position:bottom right;
+	background-position:right bottom;
 	margin-right:200px;
 }
 ```
+
 #### 文本 
 
 通过CSS的Text属性，可以改变页面中文本的颜色、字符间距、对齐文本、装饰文本、对文本进行缩进等。
@@ -204,7 +209,7 @@ color:green;
 | font-style | 指定文本的字体样式 |  默认 `normal`, 斜体 `italic` |
 | font-weight | 指定字体的粗细 | 默认`normal`, 粗体`bold`, 更粗`bolder`, 更细`lighter` |
 
-font-family可以指定多个字体。如果浏览器不支持第一个字体，则会尝试下一个。
+font-family可以指定多个字体系列。如果浏览器不支持第一个字体系列，则会尝试下一个。在指定具体字体以后，一般要加上一个通用字体系列，例如"serif", "sans-serif", 以防止具体字体不可用。
 
 
 ```css
@@ -215,7 +220,6 @@ p {
     font-style: italic;
     text-decoration: underline;
     color: #992828;
-    
 }
 ```
 

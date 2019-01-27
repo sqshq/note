@@ -294,7 +294,7 @@ BufferedWriter writer = new BufferedWriter(new FileWriter(aFile));
 
 ### Reading Files
 
-Usually, we use a <C>File</C> Object to represent a file, a <C>FileReader</C> to do the actual reading, and a <C>BufferedReader</C> to make the reading more efficient.
+* Usually, we use a <C>File</C> Object to represent a file, a <C>FileReader</C> to do the actual reading, and a <C>BufferedReader</C> to make the reading more efficient.
 
 ```Java
 import java.io.BufferedReader;
@@ -323,6 +323,14 @@ public class ReadAFile {
     }
 }
 ```
+
+### 字节流/字符流
+
+在java.io包中流的操作主要有**字节流**(byte streams)、**字符流**(character streams)两大类，并且两个都具备输入输出的操作。InputStream和OutputStream属于字节流，Reader和Writer属于字符流。
+
+[对比](https://stackoverflow.com/questions/3013996/byte-stream-and-character-stream)：字节流一个字节一个字节访问文件。字节流适合于任何文件，除了文本文件。例如，当文件的字符使用两个字节的unicode编码时，字节流会分开对待每个字符，需要手动转换。而字符流一个字符一个字符访问文件。字符流需要指定文件编码才能正确访问。
+
+![](figures/character_streams_byte_streams.png)
 
 ### Java NIO
 

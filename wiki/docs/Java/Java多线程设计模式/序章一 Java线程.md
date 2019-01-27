@@ -1,8 +1,8 @@
 ---
-title: 序章1 Java线程
+title: 序章一 Java线程
 ---
 
-Java语言将“正在执行程序的主体”称之为线程。
+Java语言将"正在执行程序的主体"称之为线程。
 
 * 处理流程始终如一条线的程序，称之为单线程程序(single threaded program)。
 * 由多个线程组成的程序, 称之为多线程程序(multithreaded program).
@@ -13,6 +13,8 @@ Java语言将“正在执行程序的主体”称之为线程。
 
 * 启动新线程
 * 调用`run()`方法
+
+`Thread.start()`JDK源码
 
 ```Java
 public synchronized void start() {
@@ -34,7 +36,7 @@ public synchronized void start() {
 
 线程启动的方法有两种：
 
-* 利用`Thread`类的子类的实力来启动线程
+* 利用`Thread`类的子类的实例来启动线程
 * 利用`Runnable`接口的实现类的实例启动线程
 * `ThreadFactory`中的线程创建
 
@@ -80,7 +82,7 @@ public static native void sleep(long millis)
 当前线程是否已获取某一对象的锁可以通过`Thread.holdsLock()`方法来确认。
 
 ```Java
-// Returns {@code true} if and only if the current thread 
+// Returns true if and only if the current thread 
 //  holds the monitor lock on the specified object.
 public static native boolean holdsLock(Object obj);
 ```
@@ -113,7 +115,7 @@ void method() {
 也就是说，`synchronized`实例方法是使用`this`的锁来执行线程的。
 
 
-synchronized静态方法和synchronized实例方法使用的锁是不一样的。synchronized静态方法相当于以下synchronized代码块:
+`synchronized`静态方法和`synchronized`实例方法使用的锁是不一样的。`synchronized`静态方法相当于以下`synchronized`代码块:
 
 ```Java hl_lines="8"
 class Something {
@@ -130,7 +132,7 @@ class Something {
 }
 ```
 
-也就是说，synchronized静态方法是使用该类的*类对象*的锁来执行线程的互斥处理的。 `Something.class`是`Something`类对应的`java.long.class`类的实例。
+也就是说，synchronized静态方法是使用该类的*类对象*的锁来执行线程的互斥处理的。 例如`Something.class`是`Something`类对应的`java.long.class`类的实例。
 
 
 #### 线程控制
@@ -138,14 +140,14 @@ class Something {
 Java提供了用于执行线程的`wait()`, `notify()`, 和`notifyAll()`方法。 `wait()`是让线程等待的方法，而`notify()`和`notifyAll()`是唤醒等待中的线程的方法。
 
 
-所有实例都拥有一个等待队列，它是在实例的`wait()`方法执行后停止操作的线程的队列。在执行`wait()`后，线程便会暂停操作，进入等待队列，直到下列任意一种情况发生：
+所有实例都拥有一个等待队列(等待队列和入口队列详见[操作系统概念](../../OS/操作系统概念/7 Synchronization Examples.md/#java-monitors)，它是在实例的`wait()`方法执行后停止操作的线程的队列。在执行`wait()`后，线程便会暂停操作，进入等待队列，直到下列任意一种情况发生：
 
 * 有其他线程的`notify()`·方法来唤醒线程
 * 有其他线程的`notifyAll()`方法来唤醒线程
 * 有其他线程的`interrupt()`方法来唤醒线程
 * `wait()`方法超时
 
-实例方法中的`wait()`和`this.wait()`含义相同，执行了`wait()`的线程将会进入this的等待队列中，这时可以说“线程正在this上wait".
+实例方法中的`wait()`和`this.wait()`含义相同，执行了`wait()`的线程将会进入this的等待队列中，这时可以说"线程正在this上wait".
 
 若要执行`wait()`方法，线程必须持有锁。但如果线程进入等待队列，便会释放其实例的锁。
 
@@ -155,7 +157,7 @@ Java提供了用于执行线程的`wait()`, `notify()`, 和`notifyAll()`方法�
 
 如果未持有锁的线程调用`wait()`,`notify()`,`notifyAll()`，异常 `IllegalMonitorStateException`就会抛出。
 
-!!! note
+!!! note "notify v.s. notifyAll"
     
     该使用`notify()`方法还是`notifyAll()`方法呢？由于`notify()`唤醒一个线程，所以比较快，但如果处理不好，程序便可能会停止。一般来说使用`notifyAll()`的代码比使用`notify()`时更为健壮。
 

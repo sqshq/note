@@ -17,11 +17,14 @@ Here’s their first attempt...
 ![BeverageBadTry](figures/BeverageBadTry.png)
 
 
-#### The Open-Closed Principle
+### 2 The Open-Closed Principle
 
 > **Design Principle**: Classes should be open for extension, but closed for modification.
-> 
-### 2 Decorator Pattern
+
+Open-Close Principle(开闭原则，OCP原则)认为：一个类应该对扩展开放，对修改关闭。
+
+
+### 3 Decorator Pattern
 
 > The Decorator Pattern attaches additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.
 
@@ -155,7 +158,7 @@ public class StarbuzzCoffee {
 }
 ```
 
-### 3 Decorators in Java I/O
+### 4 Decorators in Java I/O
 
 The <C>java.io</C> package is largely based on decorator. Here’s a typical set of objects that use decorators to add functionality to reading data from a file:
 
