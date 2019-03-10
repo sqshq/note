@@ -22,7 +22,7 @@ def getWebURL(path):
 	:return:
 	"""
 	doc_path = os.path.join(WIKI_SITE, 'docs/') 
-	urlpath = quote(doc_path)# 处理中文以及特殊字符
+	urlpath = quote(path)# 处理中文以及特殊字符
 	return urlpath.replace(doc_path, LOCALHOST).replace('.md', '/')
 
 def getMostRecentModifiedFile(path):
@@ -101,6 +101,5 @@ if __name__ == "__main__":
 	#updateWiki()
 	file = getMostRecentModifiedFile(WIKI_SITE)
 	url = getWebURL(file)
-	print(url)
 	openTab(url)
 
