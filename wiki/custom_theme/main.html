@@ -164,8 +164,13 @@ var _hmt = _hmt || [];
                   <h1>{{ page.title | default(config.site_name, true)}}</h1>
                 {% endif %}
 
+<!--添加tag标签 -->
 {% for tag in page.meta.tags %}
-   <a href="http:localhost/wiki/tags/{{ tag }}" style="color:white" class="tag" > {{ tag }} </a>
+  {% if ' ' in tag %}
+    <a href="https://techlarry.github.io/tags/{{ tag.split() | join('%20') }}/" style="color:white" class="tag" > {{ tag }} </a>
+  {% else %}
+    <a href="https://techlarry.github.io/tags/{{ tag }}/" style="color:white" class="tag" > {{ tag }} </a>
+  {% endif %}
 {% endfor %}
 
                 {{ page.content }}
@@ -192,7 +197,7 @@ var _hmt = _hmt || [];
         </div>
       </main>
 
-<!-- 注释掉了
+<!-- 注释掉了 页脚
       {% block footer %}
         {% include "partials/footer.html" %}
       {% endblock %}
