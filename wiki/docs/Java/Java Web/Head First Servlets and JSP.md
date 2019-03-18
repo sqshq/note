@@ -1047,3 +1047,22 @@ public class SessionFilter implements Filter {
 	<url-pattern>/message.jsp</url-pattern>
 </filter-mapping>
 ```
+
+
+### 9 常见项目
+
+本节讲述了主要利用JSP和Servlet技术实现常见的Web开发项目和技术。
+
+#### 单点登录
+
+**单点登录**(Single Sign On，简称SSO)，是目前比较流行的企业业务整合的解决方案之一。SSO是指在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。举例来说，豆瓣网站上有豆瓣FM、豆瓣读书、豆瓣电影、豆瓣日记等多种应用，如果我们访问豆瓣读书、豆瓣电影、豆瓣日记都需要进行一次登录认证，那么用户体验是非常不好的，而实现了单点登录的话，只需要一次登录就可以访问所有相互信任的应用系统。
+
+![sso流程](figures/sso_liucheng.png)
+
+
+首先，新建三个Web Application，名为WebApp1, WebApp2, SSO_server
+
+![sso_project](figures/sso_project.png)
+
+
+#### 购物车

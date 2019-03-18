@@ -127,11 +127,11 @@ public class Main {
 
 #### BlockingQueue
 
-BlockingQueue的实现类相当于生产者-消费者模式中的Channel角色。BlockingQueue接口表示的是在达到合适的状态之前线程一直阻塞(wait)的队列。
+`BlockingQueue`的实现类相当于生产者-消费者模式中的Channel角色。`BlockingQueue`接口表示的是在达到合适的状态之前线程一直阻塞(wait)的队列。
 
 ![blockingqueue-um](figures/blockingqueue-uml.png)
 
-下面使用ArrayBlockingQueue来实现示例程序。
+下面使用`ArrayBlockingQueue`来实现示例程序。
 
 ```Java
 public class Table extends ArrayBlockingQueue<String> {

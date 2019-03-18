@@ -5,7 +5,7 @@ title: 3 Guarded Suspension模式
 > 如果执行现在的处理会造成问题，就让执行处理的线程进行等待，这就是Guarded Suspension模式。
 
 
-### 示例程序
+#### 示例程序
 
 | 名字 | 说明 |
 | --- | --- |
@@ -37,11 +37,11 @@ public class Request {
 public class RequestQueue {
     private final Queue<Request> queue = new LinkedList<Request>();
     public synchronized Request getRequest() {
-        while (queue.peek() == null) {
+        while (queue.peek() == null) { # 守护条件不成立
             try { wait();} 
             catch (InterruptedException e) {}
         }
-        return queue.remove();
+        return queue.remove();  # 守护条件成立
     }
     public synchronized void putRequest(Request request) {
         queue.offer(request);
@@ -110,9 +110,16 @@ public class ClientThread extends Thread {
 
 那什么时候守护条件成立呢？当`putRequest`中的`notifyAll`被调用时。
 
+#### 拓展思路的要点
+
+在Single Threaded Execution模式中，只要有一个线程进入临界区，其他线程就无法进入，只能等待。而在Guarded Suspension模式中，线程是否等待取决于守护条件。
+
+正在wait的线程每次被notify/notifyAll时都会检查守护条件。不管notify/notifyAll多少次，如果守护条件不成立，线程都会随着while再次wait。
+
+
 #### 使用LinkedBlockingQueue
 
-LinkedBlockingQueue与RequestQueue功能类似。由于take方法和put方法已经考虑了互斥处理，所以getRequest方法和putRequest方法也就无需声明为synchronized方法。
+`LinkedBlockingQueue`与`RequestQueue`功能类似。由于take方法和put方法已经考虑了互斥处理，所以getRequest方法和putRequest方法也就无需声明为synchronized方法。
 
 ```Java
 public class RequestQueue {

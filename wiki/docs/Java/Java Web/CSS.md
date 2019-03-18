@@ -175,14 +175,16 @@ color:green;
 | background-image | 设置元素的背景图像 |
 | background-position | 设置背景图像的起始位置 |
 | background-repeat | 设置背景图像进行水平(`repeat-x`)或垂直平铺(`repeat-y`)或不平铺(`no-repeat`) |
+| background-size | 设置图片背景大小(百分比%) |
 
 
 ```css
 #xy {
-	background-image:url('logo.png');
-	background-repeat:no-repeat;
-	background-position:right bottom;
-	margin-right:200px;
+	background-image: url('logo.png');
+	background-repeat: no-repeat;
+	background-position: right bottom;
+	background-size: 120%;
+	margin-right: 200px;
 }
 ```
 

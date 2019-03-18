@@ -8,4 +8,5 @@
 * [4 Balking模式](4 Balking模式.md)
 * [5 Producer-Consumer模式](5 Producer-Consumer模式.md)
 * [6 Read-Write Lock模式](6 Read-Write Lock模式.md)
+* [9 Future模式](9 Future模式.md)
 

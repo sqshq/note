@@ -2,24 +2,24 @@ import os
 import codecs
 
 """
-Rename markdown files, to keep filename consistent with title of the article
+Rename markdown files, to keep filename consistent with titles of articles
 """
 
-# escape these directories when scanning
+# escaping these directories while scanning
 Invalid_dir = {'custom_theme', 'tags', 'css', 'figures'}
 Invlaid_files = {'index.md'}
 
 
 def is_md_file(filename):
     """
-    Is file a markdown file?
+    Is the file a markdown file?
     """
     return filename[-3:] == '.md'
 
 
 def is_valid_file(path):
     """
-    return true if given file is either markdown file or a directory
+    Return true if the given file is either a markdown file or a directory
     """
     return is_md_file(path) or os.path.isdir(path)
 

@@ -245,6 +245,76 @@ ORDER BY prod_name;
 
 ### 6 用通配符进行过滤
 
+### 15 插入数据
+
+INSERT用来将行插入或添加到数据库表。插入有几种方式：插入完整的行，插入行的一部分，插入某些查询的结果。
+
+把数据插入表中最简单方法是使用基本的INSERT语法，它要求指定表名和插入到新行中的值。例如
+
+```sql
+INSERT INTO Customers VALUES('1000006', 'Toy Land', 
+        '124 ANy Street', 'New York', 'NY', '11111', 
+        'USA', NULL, NULL);
+```
+
+虽然这种语法很简单，但并不安全，应该尽量避免使用，更安全的方法如下
+
+```sql
+INSERT INTO Customers（cust_id, cust_name, cust_address,
+    cust_city, cust_state, cust_zip, cust_country, cust_contant, cust_mail)
+     VALUES('1000006', 'Toy Land', '124 ANy Street', 'New York', 'NY', 
+     '11111', 'USA', NULL, NULL);
+```
+
+!!! tip "总是使用列的列表"
+    不要使用没有明确给出列的INSERT语句。给出列能使SQL代码继续发挥作用，即使表结构发生了变化。
+
+### 16 更新和删除数据
+### 17 创建和操纵表
+
+利用CREATE TABLE创建表，必须给出下列信息：
+
+* 新表的名字，在关键字CREATE TABLE之后给出
+* 表列的名字和定义，用逗号分隔；
+* 有的DBMS还要求指定表的位置；
+
+表名紧跟CREATE TABLE关键字。实际的表定义(所有列)括在圆括号之中，各列之间用逗号分隔。
+
+例如创建Products表:
+
+```sql
+CREATE TABLE Products 
+(
+    prod_id CHAR(10) NOT NULL,
+    vend_id CHAR(10) NOT NULL,
+    prod_name CHAR(254) NOT NULL,
+    prod_price DECIMAL(8,2) NOT NULL,
+    prod_desc VARCHAR(1000) NULL
+);
+```
+
+SQL允许指定默认值，在插入行时如果不给出值，DBMS将自动采用默认值。默认值在CREATE TABLE语句的列定义中用关键字DEFAULT指定。
+
+```mysql
+CREATE TABLE OrderItems
+(
+    order_num   INTEGER     NOT NULL,
+    order_item  INTEGER     NOT NULL,
+    quantity    INTEGER     NOT NULL DEFAULT 1,
+    item_price  DECIMAL(8,2)   NOT NULL
+);
+```
+
+默认值经常用于日期或时间戳列，例如DEFAULT CURRENT_DATE()将系统日期作为默认日期。
+    
+对已有表进行增加列，例如
+
+```sql
+ALTER TABLE Vendors ADD vend_phone CHAR(20);
+```
+
+可以使用describe table查看表的结构和信息。
+
 ### 18 使用视图
 
 视图是虚拟的表。与包含数据的表不一样，视图只包含使用时动态检索数据的查询。视图常用于：
@@ -278,13 +348,15 @@ SELECT cust_name, cust_contact FROM ProductCustomers WHERE prod_id = 'RGAN01';
 视图的另一常见用途时重新格式化检索出的数据。例如：
 
 ```sql
-CREATE VIEW VendorLocations AS SELECT RTRIM(vend_name) || ' (' || RTRIM(vend_country) || ')' AS vend_title FROM Vendors;
+CREATE VIEW VendorLocations AS 
+    SELECT RTRIM(vend_name) || ' (' || RTRIM(vend_country) || ')' 
+    AS vend_title FROM Vendors;
 ```
 
 
 ### 19 使用存储过程
 
-存储过程就是为以后使用而保存的一条或多条SQL语句。可将其视为批文件，虽然它们的作用不仅限于批处理。执行存储过程的 SQL 语句很简单，即EXECUTE。EXECUTE接受存储过程名和需要传递给它的任何参数。
+存储过程就是为以后使用而保存的一条或多条SQL语句。可将其视为批文件，虽然它们的作用不仅限于批处理。执行存储过程的 SQL语句很简单，即EXECUTE。EXECUTE接受存储过程名和需要传递给它的任何参数。
 
 ### 20 管理事务处理
 

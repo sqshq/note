@@ -49,6 +49,7 @@
 * [4 Balking模式](Java多线程设计模式/4 Balking模式.md)
 * [5 Producer-Consumer模式](Java多线程设计模式/5 Producer-Consumer模式.md)
 * [6 Read-Write Lock模式](Java多线程设计模式/6 Read-Write Lock模式.md)
+* [9 Future模式](Java多线程设计模式/9 Future模式.md)
 
 #### Java Web 
 
