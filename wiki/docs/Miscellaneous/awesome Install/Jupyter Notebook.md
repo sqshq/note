@@ -5,7 +5,7 @@ date: 2017-3-30
 top: 10
 ---
 
-[Anaconda](../Python/Python配置.md)默认自带`Jupyter Notebook`，可以很方便的运行Python代码、记录笔记。在terminal输入`jupyter notebook`，会自动新建浏览器页面，即打开jupyter notebook。
+[Anaconda](../Python/Python配置.md)默认自带`Jupyter Notebook`，可以很方便的运行Python代码、记录笔记。在terminal输入`jupyter-notebook`，会自动新建浏览器页面，即打开jupyter notebook。
 
 
 ### 1 安装kernel
@@ -46,10 +46,14 @@ python -m spylon_kernel install
 
 ```Python
 pip install jupyter_contrib_nbextensions
-jupyter contrib nbextension install --user
+jupyter contrib-nbextension install --user
 ```
 
-在启动notebook后，网址`http://localhost:8888/nbextensions`对应的是nbextensions的配置页面。
+在启动notebook后，网址`http://localhost:8888/nbextensions`对应的是nbextensions的配置页面。也可以在启动notebook页面中寻找nbextension配置(最右侧标签页)。
+
+
+
+![nbextensions](figures/nbextensions.png)
 
 
 #### 守护进程
