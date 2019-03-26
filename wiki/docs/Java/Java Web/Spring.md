@@ -47,9 +47,9 @@ public void demoIOC() {
     userService.sayHello();
 }
 ```
-    
+
 #### 依赖注入
-    
+
 
 **依赖注入**(Dependency Injection, DI)：在Spring创建对象的过程中，将这个对象所依赖的属性注入进去。
 
@@ -172,6 +172,13 @@ AOP能够使横切关注点模块化，并以声明的方式将它们应用到�
 
 ![](figures/after_AOP.jpg)
 
+
+
+
+
+
+
+
 #### 样板代码
 
 样本代码(boilerplate code)指重复编写的代码。Spring旨在通过模板封装来消除样板式代码。Spring的JdbcTemplate使得执⾏数据库操作时，避免传统的JDBC样板代码成为了可能。
@@ -233,7 +240,8 @@ public class Man implements BeanNameAware, ApplicationContextAware,
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(ApplicationContext 
+        applicationContext) throws BeansException {
         System.out.println("第四步：了解工厂信息");
     }
 
@@ -361,10 +369,10 @@ Bean的作用域，使用scope属性配置
 
 | 类别 | 说明 |
 | --- | --- |
-| singleton  | 默认的作用域，在整个应用中，只创建bena的一个实例 |
+| singleton  | 默认的作用域，在整个应用中，只创建bean的一个实例 |
 | prototype | 每次注入或者通过Spring应用上下文获取的时候，都会创建一个新的bean实例 |
-| request  | 为每个请求创建一个bean实例 |
-| session | 为每个绘画创建一个bean实例 |
+| request  | 在Web应用中，为每个请求创建一个bean实例 |
+| session | 在Web应用中，为每个会话创建一个bean实例 |
 
 
 
@@ -467,4 +475,201 @@ Spring 3引⼊了Spring表达式语⾔（Spring Expression Language，SpEL），
 </bean>
 ```
 
+
+
+### 3 面向切面编程
+
+描述切面的常用术语有通知(advice)、切点(cut point)和连接点(join point)。
+
+
+
+
+
+![aop_demo](figures/aop_demo.png)
+
+切面的工作被称为**通知**(Advice)。通知定义了切面是什么以及何时使用。除了描述切面要完成的工作，通知还解决了何时执行这个工作的问题。
+
+Spring切面可以应用5种类型的通知：
+
+- 前置通知(Before): 在目标方法被调用之前调用通知功能
+- 后置通知(After): 在目标方法完成之后调用通知，此时不会关心方法的输出是什么
+- 返回通知(After-returning): 在目标方法成功之后调用通知；
+- 异常通知(After-throwing): 在目标方法抛出异常后调用通知；
+- 环绕通知: 通知包裹了被通知的方法，在被通知的方法调用之前和调用之后执行自定义的行为；
+
+**连接点**(Join Point)是在应用执行过程中能够插入切面的一个点。这个点可以是调用方法时、抛出异常时、甚至修改一个字段时。切面代码可以利用这些点插入到应用的正常流程之中，并添加新的行为。
+
+如果说通知定义了切⾯的“什么”和“何时”的话， 那么**切点**(Point)就定义了“何处”。 切点的定义会匹配通知所要织⼊的⼀个或多个连接点。 我们通常使⽤明确的类和⽅法名称， 或是利⽤正则表达式定义所匹配的类和⽅法名称来指定这些切点。
+
+**切⾯**(Aspect)是通知和切点的结合。 通知和切点共同定义了切⾯的全部内容——它是什么， 在何时和何处完成其功能
+
+**织⼊**(Weaving)是把切⾯应⽤到⽬标对象并创建新的代理对象的过程。 切⾯在指定的连接点被织⼊到⽬标对象中。 在目标对象的生命周期里有多个点可以进行织入：
+
+- 编译期：切面在目标类编译时被织入。这种方式需要特殊的编译器。AspectJ的织入编译器就是以这种方式织入切面的。
+- 类加载期：切面在目标类加载到JVM时被织入。这种方式需要特殊的类加载器，它可以在目标类被引入应用之前增强该目标类的字节码。AspectJ 5的加载时织入(load-time)就支持以这种方式织入切面。
+- 运行期：切面在应用运行的某个时刻被织入。一般情况下，在织入切面时，AOP容器会为目标对象动态地创建一个代理对象。Spring AOP就是以这种方式织入切面的。
+
+
+下面是一个一般切面案例：它使用了前置通知，使用了ProxyFactoryBean(配置target和proxyInterfaces)。它对目标类的所有方法进行拦截。
+
+```java tab="aop_demo"
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:applicationContext.xml")
+public class aop_demo {
+    @Resource(name="studentDaoProxy")
+    private StudentDao studentDao;
+
+    @Test
+    public void demo1() {
+        studentDao.find();
+        studentDao.save();
+        studentDao.update();
+        studentDao.delete();
+    }
+}
+```
+
+```xml tab="applicationContext.xml"
+<bean id="studentDao" class="com.imooc.aop.demo3.StudentDaoImpl"/>
+<bean id="mybeforeadvice" class="com.imooc.aop.demo3.MyBeforeAdvice"/>
+<bean id="studentDaoProxy" 
+      			class="org.springframework.aop.framework.ProxyFactoryBean">
+    <property name="target" ref="studentDao"/>
+    <property name="proxyInterfaces" value="com.imooc.aop.demo3.StudentDao"/>
+    <property name="interceptorNames" value="mybeforeadvice"/>
+    <!--使用CGLIB代理-->
+    <property name="optimize" value="true"/>
+</bean>
+```
+
+```java tab="MyBeforeAdvice"
+public class MyBeforeAdvice implements MethodBeforeAdvice {
+    public void before(Method method, Object[] objects, Object o) 
+        								throws Throwable {
+        System.out.println("before advice");
+    }
+}
+```
+
+```java tab="StudentDaoImpl"
+public class StudentDaoImpl implements StudentDao {
+    public void save() {
+        System.out.println("save");
+    }
+
+    public void update() {
+        System.out.println("update");
+    }
+
+    public void delete() {
+        System.out.println("delete");
+    }
+
+    public void find() {
+        System.out.println("find");
+    }
+}
+```
+
+对目标类的所有方法进行拦截，不够灵活，在实际开发中长采用带有切点的切面。
+
+常用的实现类有
+
+* DefaultPointcutAdvisor: 最常用的切面类型，它可以通过任意Pointcut和Advice组合定义切面
+* Jdkegexpethodointcut：构造正则表达式切点
+
+
+下面这个例子使用了环绕通知，使用正则表达式切点，切点位置是save方法
+
+```java tab="环绕通知"
+public class MyAroundAdvice implements MethodInterceptor {
+    public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+        System.out.println("环绕前增强===================");
+        Object obj = methodInvocation.proceed();
+        System.out.println("环绕后增强===================");
+        return obj;
+    }
+}
+```
+
+```java tab="SpringDemo4"
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:applicationContext.xml")
+public class SpringDemo4 {
+    @Resource(name="customDaoProxy")
+    private CustomDao customDao;
+
+    @Test
+    public void demo1() {
+        customDao.delete();
+        customDao.find();
+        customDao.save();
+        customDao.update();
+    }
+}
+```
+
+```java tab="applicationContext.xml"
+<bean id="customDao" class="com.imooc.aop.demo4.CustomDao"/>
+<bean id="myAroundAdvice" class="com.imooc.aop.demo4.MyAroundAdvice"/>
+<bean id="myAdvisor" 
+		class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+    <property name="pattern" value=".*save.*"/>
+    <property name="advice" ref="myAroundAdvice"/>
+</bean>
+<bean id="customDaoProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+    <property name="target" ref="customDao"/>
+    <property name="proxyTargetClass" value="true"/>
+    <property name="interceptorNames" value="myAdvisor"/>
+</bean>
+```
+
+基于bean名称的自动代理，在配置中使用BeanNameAutoProxyCreator
+
+```java tab="demo"
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:applicationContext3.xml")
+public class SpringDemo5 {
+    @Resource(name="studentDao")
+    private StudentDao studentDao;
+    @Resource(name="customDao")
+    private CustomDao customDao;
+
+    @Test
+    public void demo1() {
+        studentDao.update();
+
+        customDao.update();
+    }
+}
+```
+
+```xml  tab="applicationContext.xml"
+<bean id="studentDao" class="com.imooc.aop.demo3.StudentDaoImpl"/>
+<bean id="customDao" class="com.imooc.aop.demo4.CustomDao"/>
+
+<bean id="myBeforeAdvice" class="com.imooc.aop.demo3.MyBeforeAdvice"/>
+<bean id="myAroundAdvice" class="com.imooc.aop.demo4.MyAroundAdvice"/>
+
+<bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+	<property name="beanNames" value="*Dao"/>
+	<property name="interceptorNames" value="myAroundAdvice"/>
+</bean>
+```
+
+
+#### AspectJ
+
+AspectJ是一个基于Java语言的AOP框架，Spring 2.0以后新增了对AspectJ切点表达式支持。@AspectJ通过注解，允许直接在Bean类中定义切面。
+
+
+
+@AspectJ的通知类型
+
+* @Before 前置通知，相当于BeforeAdvice
+* @AfterReturning 后置通知，相当于AfterReturningAdvice
+* @Around 环绕通知，相当于MethodInterceptor
+* @AfterThrowing 异常抛出通知，相当于ThrowAdvice
+* @After最终final通知，不管是否异常，该通知都会执行
+* @DeclareParents引介通知，相当于IntroductionInterceptor
 

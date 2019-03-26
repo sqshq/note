@@ -26,7 +26,7 @@ How?  By marking the class as **abstract**, the compiler will stop any code, any
 Making a class abstract before the class declaration:
 
 ```Java
-abstract class Caine extends Animal {
+abstract class Canine extends Animal {
     public void roam() {}
 }
 ```
@@ -123,7 +123,7 @@ If you're not sure it's a Dog, you can use the `instanceof` operator to check.
 if (o instanceof Dog) {
     Dog d = (Dog) o;
 }
-``` 
+```
 
 !!! note
     Java中的instanceof 算符是用来在运行时指出对象是否是特定类的一个实例。instanceof通过返回一个布尔值来指出，这个对象是否是这个特定类或者是它的子类的一个实例。`:::Java result = object instanceof class`

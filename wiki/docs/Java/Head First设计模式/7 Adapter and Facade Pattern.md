@@ -18,7 +18,7 @@ You can write a class that adapts the new vendor interface into the one you’re
 
 #### Adapter Pattern Defined
 
-> The Adapter Pattern(适配器模式) converts the interface of a class into another interface the clients expect. Adapter lets classes work together that couldn’t otherwise because of incompatible interfaces.
+> The **Adapter Pattern**(适配器模式) converts the interface of a class into another interface the clients expect. Adapter lets classes work together that couldn’t otherwise because of incompatible interfaces.
 
 It acts to decouple the client from the implemented interface, and if we expect the interface to change over time, the adapter encapsulates that change so that the client doesn’t have to be modiﬁed each time it needs to operate against a different interface.
 
@@ -29,7 +29,7 @@ It acts to decouple the client from the implemented interface, and if we expect 
 #### Example - Collections.enumeration()
 
 <C>enumeration()</C> returns an enumeration over the specified collection.  This provides interoperability with legacy APIs that require an enumeration as input.
- 
+
 ```Java
 //java.utils.Collections
 public static <T> Enumeration<T> enumeration(final Collection<T> c) {
@@ -244,6 +244,6 @@ public class HomeTheaterTestDrive {
 	}
 }
 ```
-	
-	
-	
+
+
+​	
