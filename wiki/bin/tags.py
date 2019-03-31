@@ -72,7 +72,7 @@ def process_tag_info(tag_info):
     result = []
     for filepath in tag_info:
         title = os.path.basename(filepath);
-        relateive_path = os.path.join(os.getcwd(), 'docs/')
+        relateive_path = os.path.join(get_wiki_site(), 'docs/')
         url = filepath.replace(relateive_path, '../')
         result.append("* [" + title + "](" + url + ")\n")
     result.sort()
@@ -105,8 +105,13 @@ def is_valid_file(path):
     """
     return is_md_file(path) or os.path.isdir(path)
 
+def get_wiki_site():
+    cur_path = os.getcwd()
+    if cur_path.endswith('/bin'):
+        cur_path = cur_path[:-4]
+    return cur_path
 
 
 if __name__ == "__main__":
-    tags = build_tags(os.path.join(os.getcwd(), 'docs'))
-    write_tag(os.path.join(os.getcwd(), 'docs/tags'), tags)
+    tags = build_tags(os.path.join(get_wiki_site(), 'docs'))
+    write_tag(os.path.join(get_wiki_site(), 'docs/tags'), tags)

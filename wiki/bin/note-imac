@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# 获取当前目录
+basepath=/Users/larry/Documents/note/wiki/
+
+
+set -e
+
+echo "preparing..."
+python $basepath/bin/rename.py
+python $basepath/bin/tags.py
+python $basepath/bin/nav.py
+
+echo "mkdocs build --clean"
+echo "clean & building .... "
+cd $basepath
+mkdocs build --clean -q --site-dir=/Library/WebServer/Documents/
+#mkdocs build --dirty -q
+echo "building complete!"

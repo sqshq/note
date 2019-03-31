@@ -16,6 +16,11 @@ TOP_CATEGORY = {'Java', 'Algorithm', 'OS', 'Big Data'}
 # escape these files when scanning
 INVALID_FILES = {'index.md'}
 
+def get_wiki_site():
+    cur_path = os.getcwd()
+    if cur_path.endswith('/bin'):
+        cur_path = cur_path[:-4]
+    return cur_path
 
 def is_md_file(filename):
 	"""
@@ -58,7 +63,7 @@ def reindex(path):
 	# 生成一个导航文件
 	if books:  # 生成书的导航
 		index_books = create_index_books(books)
-		if path == os.path.join(os.getcwd(), 'docs'):
+		if path == os.path.join(get_wiki_site(), 'docs'):
 			filename = '目录.md'
 		else:
 			filename = 'index.md'
@@ -137,4 +142,4 @@ def sort_chapters(chapters):
 
 
 if __name__ == "__main__":
-	reindex(os.path.join(os.getcwd(), 'docs'))
+	reindex(os.path.join(get_wiki_site(), 'docs'))

@@ -12,8 +12,12 @@ from urllib.parse import quote
 
 
 LOCALHOST = 'http://localhost/'
-WIKI_SITE = os.getcwd()
 
+def get_wiki_site():
+    cur_path = os.getcwd()
+    if cur_path.endswith('/bin'):
+        cur_path = cur_path[:-4]
+    return cur_path
 
 def getWebURL(path):
 	"""
@@ -21,7 +25,7 @@ def getWebURL(path):
 	:param path: markdown文件路径
 	:return:
 	"""
-	doc_path = os.path.join(WIKI_SITE, 'docs/') 
+	doc_path = os.path.join(get_wiki_site(), 'docs/') 
 	urlpath = quote(path)# 处理中文以及特殊字符
 	return urlpath.replace(doc_path, LOCALHOST).replace('.md', '/')
 
@@ -89,17 +93,17 @@ def openTab(url):
 	rc = osapipe.close()
 
 
-def updateWiki():
+def updateWiki(cwd):
 	"""
 	利用bash命令快速重建网站
 	"""
-	command = r"mkdocs build --dirty --site-dir=/Users/larry/techlarry.github.io"
-	subprocess.Popen(command.split(), cwd='/Users/larry/techlarry/wiki')
+	command = r"mkdocs build --dirty --site-dir=/Library/WebServer/Documents/"
+	subprocess.Popen(command.split(), cwd=get_wiki_site())
 
 
 if __name__ == "__main__":
 	#updateWiki()
-	file = getMostRecentModifiedFile(WIKI_SITE)
+	file = getMostRecentModifiedFile(get_wiki_site())
 	url = getWebURL(file)
 	openTab(url)
 

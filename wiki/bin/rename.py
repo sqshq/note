@@ -58,7 +58,7 @@ def rename_files(path):
 
 def construct_new_title(path, title):
     """
-    构建新的markdown文件名
+    根据文章标题构建新的markdown文件名
     """
     return os.path.join(path, title + '.md') # 加上md后缀
 
@@ -79,4 +79,7 @@ def extract_title(path):
     return None
 
 if __name__ == "__main__":
-    tags = rename_files(os.getcwd())
+    cur_path = os.getcwd()
+    if cur_path.endswith('/bin'):
+        cur_path = cur_path[:-4]
+    tags = rename_files(cur_path)
