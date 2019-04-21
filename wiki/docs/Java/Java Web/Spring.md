@@ -381,10 +381,10 @@ Bean的作用域，使用scope属性配置
 
 Spring从两个角度来实现自动化装配：
 
-* 组件扫描(component scanning): Spring会自动发现应用上下文中所创建的bean
+* **组件扫描**(component scanning): Spring会自动发现应用上下文中所创建的bean
 * 自动装配(Autowiring): Spring自动满足bean之间的依赖
 
-@Component注解表明该类会作为组件类，并告知Spring要为这个类创建bean。@ComponentScan注解会启动组件扫描。也通过XML来启动组件扫描，使用SpringContext命名空间的`<context:component-scan>`元素。
+`@Component`注解表明该类会作为组件类，并告知Spring要为这个类创建bean。`@ComponentScan`注解会启动组件扫描。也通过XML来启动组件扫描，使用SpringContext命名空间的`<context:component-scan>`元素。
 
 
 
@@ -664,12 +664,49 @@ AspectJ是一个基于Java语言的AOP框架，Spring 2.0以后新增了对Aspec
 
 
 
-@AspectJ的通知类型
+@AspectJ注解:
 
-* @Before 前置通知，相当于BeforeAdvice
-* @AfterReturning 后置通知，相当于AfterReturningAdvice
-* @Around 环绕通知，相当于MethodInterceptor
-* @AfterThrowing 异常抛出通知，相当于ThrowAdvice
-* @After最终final通知，不管是否异常，该通知都会执行
-* @DeclareParents引介通知，相当于IntroductionInterceptor
+
+| 注解 | 通知 |
+| @After | 在目标方法返回或抛出异常后调用 |
+| @AfterReturning | 在目标方法返回后调用 |
+| @AfterThrowing | 在目标方法抛出异常后调用 |
+| @Around | 将目标方法封装起来 |
+| @Before | 在目标方法调用之前执行 |
+
+通过execution函数，可以定义切点表达式的方法切入：
+
+```
+execution(<访问修饰符>?<返回类型><方法名>(<参数>)<异常>)
+```
+
+如果要在XML来装配bean的话，那么需要Spring aop的命名空间中的`<aop: aspectj-autoproxy>`元素。
+
+
+#### 在XML中声明切面
+
+在Spring的aop命名空间中，提供了多个元素用来在XML中声明切面。
+
+| AOP配置元素 | 用途 |
+| --- | --- |
+| `<aop: advisor>` | 定义AOP通知器 |
+| `<aop: after/after-returning/after-throwing>` | 定义AOP后置/返回/异常通知   | 
+| `<aop: around/before>` | 定义AOP环绕/前置通知 |
+| `<aop: aspect>` | 定义一个切面 |
+| `<aop: config>` | 顶层的AOP配置元素 |
+| `<aop: pointcut>` | 定义一个切点 |
+
+```xml
+<aop: config>
+    <aop:aspect ref='audience'>
+    
+        <aop:before pointcut="execution(** concert.Performance.perform(..))" 
+            method="silenceCellPhones"/>
+    </aop:aspect>
+</aop:config>
+```
+
+### 通过Spring和JDBC征服数据库
+
+为了避免持久化的逻辑分散到应用的各个组件中，最好将数据访问的功能放到一个或多个专注于此项任务的组件中。这样的组件通常称为**数据访问对象**(data access object, DAO)或Repository。
 

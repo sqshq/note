@@ -284,8 +284,8 @@ INSERT INTO Customers（cust_id, cust_name, cust_address,
 
 ```sql
 CREATE TABLE Products 
-(
-    prod_id CHAR(10) NOT NULL,
+（
+    prod_id int primary key auto_increment NOT NULL,
     vend_id CHAR(10) NOT NULL,
     prod_name CHAR(254) NOT NULL,
     prod_price DECIMAL(8,2) NOT NULL,
@@ -314,6 +314,13 @@ ALTER TABLE Vendors ADD vend_phone CHAR(20);
 ```
 
 可以使用describe table查看表的结构和信息。
+
+
+使用DROP TABLE语句删除表：
+
+```sql
+DROP TABLE Cust;
+```
 
 ### 18 使用视图
 
@@ -435,3 +442,47 @@ ROLLBACK TO delete1;
 ```
 
 ![transaction](figures/transaction.png)
+
+### 22 高级SQL特性
+#### 约束
+
+顾客信息存储在Customers表中。Orders表中的订单通过顾客ID与Customers表中的特定行相关联。
+
+```sql
+CREATE TABLE Orders
+(
+    order_num INTEGER NOT NULL PRIMARY KEY,
+    order_date DATETIME NOT NULL,
+    cust_id CHAR(10) NOT NULL REFERENCES Customers(cust_id)
+);
+```
+
+其中的表定义使用了REFERENCE关键字，它表示cust_id中的任何值都必须是Customers表中的cust_id中的值。
+
+也可以使用CONSTRIANT语法来完成
+
+```sql
+ALTER TABLE Orders
+ADD CONSTRAINT
+FOREIGN KEY (cust_id) REFERENCES Customers(cust_id);
+```
+
+
+
+#### 索引
+#### 触发器
+
+
+### 附录
+
+#### SQL数据类型
+
+
+日期
+
+| 数据类型 | 说明 |
+| --- | --- |
+| DATE | 日期值 |
+| DATETIME | 日期时间值 |
+| SMALLDATETIME | 日期时间值，精确到分 |
+| TIME | 时间值 |

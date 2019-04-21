@@ -1,5 +1,6 @@
 * [100. Same Tree.md](../Leetcode/100. Same Tree.md)
 * [101. Symmetric Tree.md](../Leetcode/101. Symmetric Tree.md)
+* [1020. Number of Enclaves.md](../Leetcode/1020. Number of Enclaves.md)
 * [104. Maximum Depth of Binary Tree.md](../Leetcode/104. Maximum Depth of Binary Tree.md)
 * [105. Construct Binary Tree from Preorder and Inorder Traversal.md](../Leetcode/105. Construct Binary Tree from Preorder and Inorder Traversal.md)
 * [108. Convert Sorted Array to Binary Search Tree.md](../Leetcode/108. Convert Sorted Array to Binary Search Tree.md)

@@ -61,7 +61,7 @@ def write_tag(path, tags):
     for tag in tags_map:
         # 只生成出现频数大于5的标签
         if (len(tags_map[tag]) > 3):
-            print(tag)
+            #print(tag)
             with codecs.open(os.path.join(path, tag) + '.md', mode='w', encoding="utf-8") as f:
                 f.write(process_tag_info(tags_map[tag]))
 

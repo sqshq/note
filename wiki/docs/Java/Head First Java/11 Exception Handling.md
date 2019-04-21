@@ -40,11 +40,11 @@ The compiler checks for everything except **RuntimeExceptions**.
 ![Excetions_and_its_subclass](figures/Excetions_and_its_subclass.png)
 
 
-* Exceptions that are NOT subclass of RuntimeException are checked for by the compiler. They're called "**checked exceptions**".
-* The compiler cares about all subclasses of Exception, unless they are a special type, RuntimeException (**unchecked exceptions**).
-* Any exception class that extends RuntimeException *gets a free pass*.
-* RuntimeExceptions can be thrown anywhere, with or without throws declarations or try/catch blocks.
-* Most RuntimeExceptions come from a problem in your **code logic**, rather than a condition that fails at runtime in ways that you cannot predict or prevent.
+* Exceptions that are NOT subclass of `RuntimeException` are checked for by the compiler. They're called "**checked exceptions**"(检查型异常).
+* The compiler cares about all subclasses of Exception, unless they are a special type, `RuntimeException` (**unchecked exceptions**, 非检查型异常).
+* Any exception class that extends `RuntimeException` *gets a free pass*.
+* `RuntimeException`s can be thrown anywhere, with or without throws declarations or try/catch blocks.
+* Most `RuntimeException`s come from a problem in your **code logic**, rather than a condition that fails at runtime in ways that you cannot predict or prevent.
     * e.g. You *cannot* guarantee the server is up. You *cannot* guarantee the file is there. But you *can* make sure your code doesn't index of the end of an array.
 
 #### Flow control in try/catch blocks
