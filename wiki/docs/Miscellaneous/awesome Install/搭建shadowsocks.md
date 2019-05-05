@@ -34,31 +34,16 @@ Linux是免费开源的操作系统，大概被世界上过半服务器所采用
 以下是3条命令，每次输入一行、回车，等待屏幕上的操作完成后再输入下一条。
 
 ```bash
-wget --no-check-certificate [https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh](https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh)
+wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh
 chmod +x shadowsocks.sh
 ./shadowsocks.sh 2>&1 | tee shadowsocks.log
 ```
 
-最后一步输完，你应该会看到下图中内容──是要你为`Shadowsocks` 服务设置一个个人密码。
+最后一步输完，你应该会看到下图中内容──是要你为`Shadowsocks` 服务设置一个密码。
 
 输好回车后会让你选择一个端口，输入1–65535间的数字都行。
 
-
-![ss](http://or9a8nskt.bkt.clouddn.com/ss.png)
-
-
-
-
 遵照上图指示，按任意键开始部署`Shadowsocks`。这时你什么都不用做，只需要静静地等它运行完就好。结束后就会看到你所部署的`Shadowsocks`的配置信息。
-
-
-![ss_complete](http://or9a8nskt.bkt.clouddn.com/ss_complete.png)
-
-
-
-
-
-
 
 记住其中黄框中的内容，也就是服务器 IP、服务器端口、你设的密码和加密方式。
 
@@ -72,15 +57,7 @@ chmod +x shadowsocks.sh
 nano /etc/rc.local
 ```
 
-你的「终端」会刷新一下，出现下图。
-
-
-![nano](http://or9a8nskt.bkt.clouddn.com/nano.png)
-
-
-
-
-别慌张，它就是个文本编辑器。用方向键把光标移到最末端，粘贴下面这一行内容，然后按 `Ctrl + X`退出。
+用方向键把光标移到最末端，粘贴下面这一行内容，然后按 `Ctrl + X`退出。
 
 ```
 echo 3 > /proc/sys/net/ipv4/tcp_fastopen
@@ -120,7 +97,7 @@ nano /etc/shadowsocks.json
 /etc/init.d/shadowsocks restart
 ```
 
-#### 3.3安装`Shadowsocks`客户端
+#### 3.3 安装`Shadowsocks`客户端
 
 相比服务器端的安装，客户端的安装就简单了许多。首先，根据操作系统下载相应的客户端。
 
@@ -128,11 +105,6 @@ nano /etc/shadowsocks.json
 * [Win 版客户端下载](https://github.com/shadowsocks/shadowsocks-windows/releases)
 
 打开客户端，在「服务器设定」(Servers-Open Server Preferences)里新增服务器。然后依次填入服务器 IP、服务器端口、你设的密码和加密方式。
-
-
-![ss_mac](http://or9a8nskt.bkt.clouddn.com/ss_mac.png)
-![ss_prefenence1](http://or9a8nskt.bkt.clouddn.com/ss_prefenence1.png)
-
 
 然后启用代理，就可以实现科学上网了。
 
