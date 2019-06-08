@@ -42,12 +42,22 @@ Redis还可以实现任务队列，用列表类型键实现队列，由于支持
 
 #### 基本使用
 
+**安装**
+
+在Mac上直接使用redis安装
+
+```bash
+brew install redis
+```
+
 **启动**
 
-启动Redis有直接启动和通过初始化脚本启动两种方式：
+启动Redis有多种启动方式：
 
-* 直接启动：`redis-server`，适用于开发环境，默认使用6379端口
-* 初始化脚本启动：`utils/redis_init_script`，需要配置以后使用，适用于生产环境，随系统自动运行
+* 最简启动：`redis-server`，适用于开发环境，默认使用6379端口
+* 动态参数启动：`redis-server --port 6379`，制定特定端口
+* 配置文件启动：`redis-server configPath`，需要配置以后使用，适用于生产环境
+
 
 向Redis发送SHUTDOWN命令(`redis-cli shutdown`)，会断开所有客户端连接，然后根据配置执行持久化，然后退出。
 
@@ -57,8 +67,8 @@ redis-cli是Redis自带的基于命令行的Redis客户端，可以直接通过`
 
 Redis中的每个字典都可以理解成一个独立的数据库。Redis默认支持16个数据库，数据库的名字由整数索引标识(从0开始的数字编号)，建立连接以后会自动选择0号数据库，可以通过`select database`切换数据库(例如`select 1`选择1号数据库)。它有以下特点：
 
-* 不支持为每个数据库设置访问密码，所以一个客户端要么可以访问全部数据库，要么连一个数据库也不能反问
-* 数据库之间并不完全隔离，例如FLUSHALL命令可以清空所有数据库中过的数据(FLUSHDB只清除当前数据库)
+* 不支持为每个数据库设置访问密码，所以一个客户端要么可以访问全部数据库，要么连一个数据库也不能访问
+* 数据库之间并不完全隔离，例如`FLUSHALL`命令可以清空所有数据库中过的数据(FLUSHDB只清除当前数据库)
 
 所以，Redis的多数据库更像是一种命名空间，不适宜存储不同应用程序的数据。可以将不同数据库使用不同生产环境、测试环境数据。
 
@@ -71,7 +81,23 @@ With DB numbers, with a default of a few DBs, we are communication better what t
 </div>
 
 
+#### 常见可执行文件
+
+* `redis-server`: Redis服务器
+* `redis-cli`: Redis客户端
+* `redis-benchmark`: 性能基准测试
+* `redis-check-aof`: AOF文件修复工具
+* `redis-check-dump`: RDB文件检查工具
+* `redis-sentinel`： Sentinel服务器
+
+
 ### 2 数据类型
+
+多种数据结构：字符串String, 哈希Hash, 链表Linked Lists，集合Sets，有序集合Sorted Sets.
+
+![redis-data-structure](figures/redis-data-structure.png)
+
+
 
 Key定义的注意点：
 
@@ -79,9 +105,9 @@ Key定义的注意点：
 * 不要过短：太短不利于阅读，如a
 * 统一的命令规范
 
-#### string
+#### 字符串
 
-最为基础的数据类型，以二进制方式存储，存入和获取的数据相同，字符串类型键允许的最大容量是512M。
+字符串String是Redis最为基础的数据类型，以二进制方式存储，存入和获取的数据相同，字符串类型键允许的最大容量是512M。
 
 关于String常用命令：
 
@@ -95,9 +121,9 @@ Key定义的注意点：
 * 指定key的value递增/递减：`incrby key increment`, `decrby key decrement`
 * 拼接字符串：`append key value`
 
-#### hash
+#### 哈希
 
-散列类型(hash)的键是一种字典结构，存储字段(field)和值(value)之间的映射，字段值只能是字符串。
+哈希类型(hash)的键是一种字典结构，存储字段(field)和值(value)之间的映射，字段值只能是字符串。
 
 关于hash的常用命令：
 
@@ -111,7 +137,7 @@ Key定义的注意点：
 * 获取field数量： `hlen key` 
 * 得到所有fields/values：`hkeys key`, `hvals key`
 
-#### list
+#### 列表
 
 列表类型(list)可以存储一个有序的字符串列表，内部是使用双向列表实现的，所以获取靠近两端的元素速度比较快，但是通过索引访问元素比较慢。
 
@@ -149,7 +175,7 @@ Key定义的注意点：
     4) "1"
     ```
 
-#### set
+#### 集合
 
 集合类型(set)不允许重复成员，在Redis内部是使用值为空的散列表(hash)实现的，所以增删成员、判断某个成员是否存在等常见操作的时间复杂度都是$O(1)$。
 
@@ -199,9 +225,9 @@ Key定义的注意点：
     2) "3"
     ```
 
-#### sorted-set
+#### 有序集合
 
-有序集合类型为集合中的每个元素都关联了一个分数，这使得不仅可以完成插入、删除和判断元素是否存在等集合类型支持的操作，还能够获得分数最高或最低的前N个元素、获得指定分数范围内的元素等与分数有关的操作。虽然集合中的元素都不同，但是它们的分数可以相同。
+有序集合sorted-set类型为集合中的每个元素都关联了一个分数，这使得不仅可以完成插入、删除和判断元素是否存在等集合类型支持的操作，还能够获得分数最高或最低的前N个元素、获得指定分数范围内的元素等与分数有关的操作。虽然集合中的元素都不同，但是它们的分数可以相同。
 
 有序集合类型是通过三列表和跳跃表(skip list)实现的，时间复杂度是$O(log(N))$。
 
@@ -248,8 +274,7 @@ Sorted-Set常用命令：
 事务可以一次执行多个命令， 并且带有以下两个重要的保证：
 
 * 事务是一个单独的隔离操作：事务中的所有命令都会序列化、按顺序地执行。事务在执行的过程中，不会被其他客户端发送来的命令请求所打断。
-* 事务是一个原子操作：事务中的命令要么全部被执行，要么全部都不执行。
-
+ 
 
 ![redis-transaction](figures/redis-transaction.png)
 
@@ -295,7 +320,7 @@ Sorted-Set常用命令：
     ```
 
 
-#### 排序
+#### 慢查询
 
 #### 
 
@@ -303,7 +328,7 @@ Sorted-Set常用命令：
 
 [近一步阅读： Reids Persistence](https://redis.io/topics/persistence)
 
-Redis**持久化**(persistence)是指Reids将数据从内存中以某种形式同步到硬盘中，使得重启后可以根据硬盘中的记录恢复数据。Redis支持**RDB**(Redis Database File)和**AOF**(Append Only File)两种持久化方式。
+Redis**持久化**(persistence)是指Redis将数据从内存中以某种形式同步到硬盘中，使得重启后可以根据硬盘中的记录恢复数据。Redis支持**RDB**(Redis Database File)和**AOF**(Append Only File)两种持久化方式。
 
 * RDB持久化：默认开启，在指定的时间间隔内，将内存快照写入到磁盘;
 * AOF持久化：默认不开启，将执行过后的每一条写命令本身记录下来;
@@ -338,7 +363,7 @@ dir: ./             // 持久化文件保存路径，默认./配置文件当前�
 
 **SAVE/BGSAVE命令**
 
-执行SAVE命令时，Redis<red>同步</red>进行快照操作，在快照执行过程中会阻塞所有来自客户端的请求。可能会导致Redis长时间不相应，所以应该尽量避免在生产环境中使用。
+执行SAVE命令时，Redis<red>同步</red>进行快照操作，在快照执行过程中会阻塞所有来自客户端的请求。可能会导致Redis长时间不响应，所以应该尽量避免在生产环境中使用。
 
 BGSAVE命令可以在后台<red>异步</red>地进行快照操作，在快照执行过程中还可以继续响应来自客户端的请求。
 
@@ -499,78 +524,64 @@ pipe.get('foo')
 result = pipe.execute()
 ```
 
-### 复制
-
-* 机器故障：单机出现硬件故障
-* 容量瓶颈：单机内存满足不了
-* QPS瓶颈：QPS大于单机能处理的最大值
+### 6 集群
 
 
+#### 复制
 
-#### 主从复制
+为了避免单点故障，Redis提供了**复制**(Replication)功能，可以实现当一台数据库的数据更新后，自动将更新的数据同步到其他数据库上。
 
-主节点(master) 从节点(slave)
+在复制的概念中，数据库分为两类，一类是主数据库(master)，另一类是从数据库(slave)。主数据库可以进行读写操作，当写操作导致数据变化时会自动将数据同步给从数据库。从数据库一般是只读的，并接受主数据库同步过来的数据。
 
 ![redis_master_slave](figures/redis_master_slave.png)
 
-一个master可以有多个slave。一个slave智能有一个master。数据流向是单向的，从master到slave。
+一个主数据可以拥有多个从数据库，而一个从数据库只能拥有一个主数据库。
+
 ![redis_master_slaves](figures/redis_master_slaves.png)
 
-* 为数据提供了多个副本
-* 读写分离，提高了读的性能
+在Redis中使⽤复制功能⾮常容易，只需要在*从数据库*的配置⽂件中加⼊”slaveof 主数据库地址 主数据库端口“即可，主数据库⽆需进⾏任何配置。
 
-
-#### 复制的配置
-
-两种实现方式
-
-* slaveof
-* 配置
 
 ![slave_of](figures/slave_of.png)
 
-```
-redis-6380 > slaveof 127.0.0.1 6379  // 成为127.0.0.1: 6379的从节点，并清除所有数据
-OK
-redis-6380 > slavef no one   // 不当从节点，取消复制
-OK
-```
-修改配置
+!!! example 
 
-```
-slaveof ip port // 成为ip:port的从节点
-slave-read-only yes // 从节点只做读的操作
-```
+    命令方式
+    ```
+    redis-6380 > slaveof 127.0.0.1 6379  // 成为127.0.0.1: 6379的从节点，并清除所有数据
+    OK
+    redis-6380 > slavef no one   // 不当从节点，取消复制
+    OK
+    ```
+    
+    修改配置方式
+    
+    ```
+    slaveof ip port // 成为ip:port的从节点
+    slave-read-only yes // 从节点只做读的操作
+    ```
 
-| 方式 | 优点 | 缺点 |
-| --- | --- | --- |
-| 命令 | 无需重启 | 不便于管理 |
-| 配置 | 统一配置 | 需要重启 |
-
-#### 全量复制和部分复制
-
-run_id 启动标识，启动时用全量复制
-偏移量master/slave_repl_offset：写入的数据大小。 主从的偏移量不一致，要部分复制
-
-查看run_id 和偏移量 redis-cli info replication
+    | 方式 | 优点 | 缺点 |
+    | --- | --- | --- |
+    | 命令 | 无需重启 | 不便于管理 |
+    | 配置 | 统一配置 | 需要重启 |
 
 
-全量复制：将rdb文件复制给slave，复制完之后对比偏移量，将期间写入的值(在复制缓存区里)同步给slave
+复制原理：
+
+
+当⼀个从数据库启动后，会向主数据库发送SYNC命令。同时主数据库接收到SYNC命令后会开始在后台保存快照（即RDB持久化的过程)，并将保存快照期间接收到的命令缓存起来。当快照完成后，Redis会将快照⽂件和所有缓存的命令发送给从数据库。从数据库收到后，会载⼊快照⽂件并执⾏收到的缓存的命令。以上过程称为**复制初始化**。复制初始化结束后，主数据库每当收到写命令时就会将命令同步给从数据库，从⽽保证主从数据库数据⼀致。
+
 
 ![fullresyn](figures/fullresync.png)
 
 
-全量复制开销
-
-* bgsave事件
-* rdb文件网络传输时间
-* 从节点清空数据时间
-* 从节点加载RDB时间
-* 可能的AOF重写时间
+Redis2.8版实现了主从断线重连的情况下的增量复制。
 
 ![partialsyn](figures/partialsync.png)
 
 
+<!--
 #### 故障处理
 
 故障转移
@@ -603,25 +614,42 @@ master宕机： 选择一个slave变成master，其他slave变成新的master的
 
     ![fsfa](figures/change_slave.png)
 
+!-->
 
-### Sentinel 
+#### 哨兵 
 
-主从复制的主要问题：
+遇到的问题：当主数据库遇到异常中断服务后，开发者只能通过⼿动的⽅式选择⼀个从数据库来升格为主数据库，以使得系统能够继续提供服务。
 
-* 手动故障转移
-* 写能力和存储能力受限
 
-多个sentinel发现并确认master有问题，选举出一个sentinel作为领导，选出一个slave作为master
-通知其余slave成为新的master的slave，通知客户端主从变化，等待老的master复活成为新master的slave。
+哨兵的作⽤就是监控Redis系统的运⾏状况。它的功能包括：
+
+* 监控主数据库和从数据库是否正常运⾏；
+* 主数据库出现故障时⾃动将从数据库转换为主数据库。
+
+可以使用多个哨兵进行监控任务以保证系统足够稳健。此时不仅哨兵会同时监控主从数据库，哨兵之间也会相互监视。
 
 ![sentine](figures/sentinel.png)
 
 
-### 集群
+
+多个sentinel发现并确认master有问题，选举出一个sentinel作为领导，选出一个slave作为master。通知其余slave成为新的master的slave，通知客户端主从变化，等待老的master复活成为新master的slave。
+
+
+
+#### 集群
+
+遇到的问题：
+
+* 高并发量：超过单机并发量
+* 数据量：超过单机内存容量
+
+Redis集群是Redis提供的分布式数据库⽅案，集群通过分⽚（sharding）来进⾏数据共享，并提供复制和故障转移功能。
+
+
 ### 参考资料
 
 * 慕课网, [Redis入门](https://www.imooc.com/learn/839)
 * 慕课网, [从入门到高可用分布式实践](https://coding.imooc.com/class/151.html)
 * Redis入门指南(第二版)，李子骅
-* Redis设计与实现
+* Redis设计与实现(第二版)，黄健宏
 * [Redis命令参考](http://redisdoc.com/index.html)

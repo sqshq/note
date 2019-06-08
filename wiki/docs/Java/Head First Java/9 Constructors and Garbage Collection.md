@@ -102,39 +102,41 @@ If you write a constructor that takes arguments, and you still want a no-arg con
 
 When an object is created, the object gets space for *all* instance variables, from all the way up the inheritance tree.
 
-***All the constructors in an object's inheritance tree must run when you make a new object.*** When a constructor runs, it immediately calls its superclass constructor, all the way up the chain until you get to the class `Object` constructor (called **constructor chaining**(构造函数链)).
+***All the constructors in an object's inheritance tree must run when you make a new object.*** When a constructor runs, it immediately calls its superclass constructor, all the way up the chain until you get to the class `Object` constructor (called **constructor chaining**, 构造函数链).
 
 
-eg. A new Hippo object also IS-A Animal and IS-A Object. If you want to make a Hippo, you must also make the Animal and Object parts of the Hippo.
+!!! example "Construct a Hippo"
 
-![construcotr_chaining](figures/construcotr_chaining-1.png)
-
-```Java
-public class Animal { 
-    public Animal() { 
-        System.out.println(“Making an Animal”); 
-    } 
-}
-
-public class Hippo extends Animal { 
-    public Hippo() { 
-        System.out.println(“Making a Hippo”); 
+    eg. A new `Hippo` object also IS-A `Animal` and IS-A `Object`. If you want to make a `Hippo`, you must also make the `Animal` and `Object` parts of the `Hippo`.
+    
+    ![construcotr_chaining](figures/construcotr_chaining-1.png)
+    
+    ```Java
+    public class Animal { 
+        public Animal() { 
+            System.out.println(“Making an Animal”); 
+        } 
     }
-}
-
-public class TestHippo {
-    public static void main (String[] args { 
-        System.out.println(“Starting...”); 
-        Hippo h = new Hippo(); 
+    
+    public class Hippo extends Animal { 
+        public Hippo() { 
+            System.out.println(“Making a Hippo”); 
         }
-}
-```
-
-![hippo_animal_constructo](figures/hippo_animal_constructor.png)
+    }
+    
+    public class TestHippo {
+        public static void main (String[] args { 
+            System.out.println(“Starting...”); 
+            Hippo h = new Hippo(); 
+            }
+    }
+    ```
+    
+    ![hippo_animal_constructo](figures/hippo_animal_constructor.png)
 
 #### invoke a superclass constructor
 
-The only way to call a superclass constructor is by calling `**super()`**.
+The only way to call a superclass constructor is by calling `super()`.
 
 ```Java
 public class Duck extends Animal {
@@ -151,7 +153,7 @@ A call to `super()` in your constructor puts the superclass constructor on the t
 !!! note
     The compiler will put a call to `super()` in **each** of your overloaded constructors, if you do *not* have calls to `super()`.
 
-***The superclass parts of an object have to be fully-formed (completely built) before the subclass parts can be constructed.*** So the call to `Super()` must be  the *first* statement in each constructor!
+***The superclass parts of an object have to be fully-formed (completely built) before the subclass parts can be constructed.*** So the call to `super()` must be  the *first* statement in each constructor!
 
 #### `this`
 

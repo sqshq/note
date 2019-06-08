@@ -6,7 +6,7 @@ date: 2017-10-30
 
 ### 1 Static methods
 
-Methods in the Math class don't use any instance variable values. Because the methods of Math are 'static', you don't need to have an instance of Math. All you need is the Math class.
+Methods in the `Math` class don't use any instance variable values. Because the methods of `Math are 'static', you don't need to have an instance of `Math`. All you need is the `Math` class.
 
 ```Java
 int x = Math.round(42.2);
@@ -14,7 +14,7 @@ int y = Math.min(56, 12);
 int z = Math.abs(-343);
 ```
 
-If you try to make an instance of class Math:
+If you try to make an instance of class `Math`:
 
 ```Java
 Math mathObject = new Math()
@@ -26,7 +26,7 @@ You'll get an error:
 Math() has private access in java.lang.Math
 ```
 
-This error shows that the Math constructor is marked private! That means you can NEVER say `new` on the Math class to make a new Math object.
+This error shows that the `Math` constructor is marked `private`! That means you can NEVER say `new` on the `Math` class to make a new `Math` object.
 
 <big><i>The keyword <b>static</b> lets a method run <b>without any instance of the class</b>.</i></big>
 
@@ -36,10 +36,15 @@ public static int min(int a, int b) {
 }
 ```
 
-static method v.s. non-static method:
+!!! note "static method v.s. non-static method"
 
-* Call a static method using a class name (e.g.`Math.min(88, 12)`)
-* Call a non-static method using a reference variable name (e.g. `t2.play()`)
+    * Call a static method using a class name (e.g.`Math.min(88, 12)`)
+    * Call a non-static method using a reference variable name (e.g. `t2.play()`)
+
+    
+!!! important
+    
+    static方法可以理解为没有this的方法。在static方法的内部不能调用非静态方法。this关键字表示对"调用方法的那个对象"的引用。当在方法内部调用同一个类的另一个方法时，编译器会自动添加this。
 
 #### Comparison between abstract class and private constructor
 

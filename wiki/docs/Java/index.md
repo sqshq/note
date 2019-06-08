@@ -15,7 +15,7 @@
 * [11 Proxy Pattern](Head First设计模式/11 Proxy Pattern.md)
 * [12 Compound Patterns](Head First设计模式/12 Compound Patterns.md)
 * [13 Better Living with Patterns](Head First设计模式/13 Better Living with Patterns.md)
-* [14 Appendix FlyWeight Pattern](Head First设计模式/14 Appendix FlyWeight Pattern.md)
+* [14 Builder Pattern](Head First设计模式/14 Builder Pattern.md)
 
 #### Head First Java 
 
@@ -57,14 +57,16 @@
 * [CSS](Java Web/CSS.md)
 * [HTML](Java Web/HTML.md)
 * [Head First Servlets and JSP](Java Web/Head First Servlets and JSP.md)
+* [JDBC](Java Web/JDBC.md)
 * [JSP以及JSTL和EL表达式](Java Web/JSP以及JSTL和EL表达式.md)
 * [Java Web](Java Web/Java Web.md)
 * [JavaScript](Java Web/JavaScript.md)
+* [MyBatis](Java Web/MyBatis.md)
 * [Spring](Java Web/Spring.md)
 * [Tomcat](Java Web/Tomcat.md)
 * [XML](Java Web/XML.md)
 * [jQuery](Java Web/jQuery.md)
-* [人员管理系统](Java Web/人员管理系统.md)
+* [人员信息管理系统](Java Web/人员信息管理系统.md)
 
 #### Effective Java 
 
@@ -100,27 +102,27 @@
 
 #### Java编程思想 
 
-* [1 Introduction](Java编程思想/1 Introduction.md)
-* [2 Introduction to Objects](Java编程思想/2 Introduction to Objects.md)
+* [1 简介](Java编程思想/1 简介.md)
+* [2 对象导论](Java编程思想/2 对象导论.md)
 * [3 Everything is an Object](Java编程思想/3 Everything is an Object.md)
 * [4 Operators](Java编程思想/4 Operators.md)
 * [5 Controlling Execution](Java编程思想/5 Controlling Execution.md)
-* [6 Initialization and Cleanup](Java编程思想/6 Initialization and Cleanup.md)
+* [6 初始化和管理](Java编程思想/6 初始化和管理.md)
 * [7 Access Control](Java编程思想/7 Access Control.md)
-* [8 Reusing Classes](Java编程思想/8 Reusing Classes.md)
-* [9 Polymorphism](Java编程思想/9 Polymorphism.md)
-* [10 Interfaces](Java编程思想/10 Interfaces.md)
+* [8 复用类](Java编程思想/8 复用类.md)
+* [9 多态](Java编程思想/9 多态.md)
+* [10 接口](Java编程思想/10 接口.md)
 * [11 Inner Classes](Java编程思想/11 Inner Classes.md)
 * [12 Holding Your Objects](Java编程思想/12 Holding Your Objects.md)
-* [13 Error Handling with Exceptions](Java编程思想/13 Error Handling with Exceptions.md)
+* [13 通过异常处理错误](Java编程思想/13 通过异常处理错误.md)
 * [14 String](Java编程思想/14 String.md)
-* [15 Type Information](Java编程思想/15 Type Information.md)
-* [16 Generics](Java编程思想/16 Generics.md)
+* [15 类型信息](Java编程思想/15 类型信息.md)
+* [16 泛型](Java编程思想/16 泛型.md)
 * [17 Arrays](Java编程思想/17 Arrays.md)
 * [18 Containers in Depth](Java编程思想/18 Containers in Depth.md)
 * [19 IO](Java编程思想/19 IO.md)
-* [20 Enumerated Types](Java编程思想/20 Enumerated Types.md)
-* [21 Annotations](Java编程思想/21 Annotations.md)
-* [22 Concurrency](Java编程思想/22 Concurrency.md)
+* [20 枚举类型](Java编程思想/20 枚举类型.md)
+* [21 注解](Java编程思想/21 注解.md)
+* [22 并发](Java编程思想/22 并发.md)
 * [23 Graphical User Interfaces](Java编程思想/23 Graphical User Interfaces.md)
 

@@ -6,30 +6,32 @@ title: Spring
 
 [Spring](http://spring.io)是一个开源框架，为简化企业级应用开发而生，使用Spring可以让简单的JavaBean实现以前只有EJB才能实现的功能。
 
-* 方便解耦，简化开发：可以将所有对象创建和依赖关系维护，交给Spring管理
-* AOP编程的支持：可以方便地实现对程序进行权限拦截，运行监控等功能
-* 声明式事务的支持：只需要通过配置就可以完成对事务的管理，而无需手动编程
-* 方便程序的测试：支持Junit，也可以通过注解测试
-* 方便继承各种优秀框架：提供了对各种优秀框架(structs, hibernate, mybatis)的直接支持
-* 降低Java EE API的使用难度：对一些非常难用的API(JDBC, JavaMail, 远程调用等)，都提供了封装，使这些API应用难度大大降低
+* 方便解耦，简化开发：可以将所有对象创建和依赖关系维护，交给Spring管理;
+* AOP编程的支持：可以方便地实现对程序进行权限拦截，运行监控等功能;
+* 声明式事务的支持：只需要通过配置就可以完成对事务的管理，而无需手动编程;
+* 方便程序的测试：支持Junit，也可以通过注解测试;
+* 方便继承各种优秀框架：提供了对各种优秀框架(structs, hibernate, mybatis)的直接支持;
+* 降低Java EE API的使用难度：对一些非常难用的API(JDBC, JavaMail, 远程调用等)，都提供了封装，使这些API应用难度大大降低.
 
 #### Spring模块
 
 ![Spring模块](figures/spring_framework_modules.jpg)
 
 
+<!--
+
 Spring核心容器：Spring 框架最核心的部分，它管理者Spring应用中bean的创建、配置和管理。
 
 
 底层实现原理
 
-通过配置文件+反射实现松耦合
+通过配置文件+反射实现松耦合-->
 
 #### 控制反转
 
 **控制反转**(Inversion of Control, IOC)，是指将原本在程序中手动创建对象的控制权，交给Spring。
 
-传统方式中，每个对象负责管理与自己相护协作的对象的引用，将会导致高度耦合且难以测试的代码。例如在`HelloTest`类中使用`UserService`类对象：
+传统方式中，每个对象负责管理与自己相护协作的对象的引用，将会导致*高度耦合且难以测试*的代码。例如在`HelloTest`类中使用`UserService`类对象：
 
 * 传统方式： `:::Java UserService userService = new Uservicmpl()`
 
@@ -50,22 +52,24 @@ public void demoIOC() {
 
 #### 依赖注入
 
+按照传统的做法，每个对象负责管理与⾃⼰相互协作的对象(即它所依赖的对象)的引⽤，这将会导致⾼度耦合和难以测试的代码。通过依赖注入，对象的依赖关系将由系统中负责协调各对象的第三⽅组件在创建对象的时候进⾏设定。
 
-**依赖注入**(Dependency Injection, DI)：在Spring创建对象的过程中，将这个对象所依赖的属性注入进去。
+> **依赖注入**(Dependency Injection, DI)：在Spring创建对象的过程中，将这个对象所依赖的属性注入进去。
 
 
 对于类成员变量，注入方式有三种
 
-* 构造函数注入：保证Bean实例在实例化后就可以使用，注入在<constructor-arg>元素里声明的属性
-* 属性setter方法注入: 在<property>元素设置注入的属性
+* 构造器注入(constructor injection)：保证Bean实例在实例化后就可以使用，注入在`<constructor-arg>`元素里声明的属性
+* 属性setter方法注入: 在`<property>`元素设置注入的属性
 * 接口注入
 
 
 p-命名空间属性是如何组成的。⾸先，属性的名字使⽤了“p: ”前缀，表明我们所设置的是⼀个属性。接下来就是要注⼊的属性名。最后，属性的名称以“-ref”结尾，这会提⽰Spring要进⾏装配的是引⽤，⽽不是字⾯量。
+
 ![p-namesapce](figures/p-namesapce.png)
 
 ```xml
-<!--Bean的构造方法的属性注入=============================-->
+<!--Bean的构造器注入=============================-->
 <bean id="user" class="com.spring.ioc.User">
     <constructor-arg name="name" value="张三" />
     <constructor-arg name="age" value="23"/>
@@ -148,9 +152,9 @@ Spring支持前两种
 
 依赖注入会将所依赖的关系自动交给目标对象，而不是让对象自己去获取依赖。
 
-创建应用组件之间的协作的行为通常称为装配(wiring)。Spring有多种装配bean的方式，采用XML是很常见的一种装配方式。
+创建应用组件之间的协作的行为通常称为**装配**(wiring)。Spring有多种装配bean的方式，采用XML是很常见的一种装配方式。
 
-Spring通过应用上下文(Application Context)装载bean的定义并把它们组装起来。Spring应用上下文全权负责对象的创建和组装。
+Spring通过**应用上下文**(Application Context)装载bean的定义并把它们组装起来。Spring应用上下文全权负责对象的创建和组装。
 
 
 
@@ -179,25 +183,25 @@ AOP能够使横切关注点模块化，并以声明的方式将它们应用到�
 
 
 
-#### 样板代码
+#### 样板式代码
 
-样本代码(boilerplate code)指重复编写的代码。Spring旨在通过模板封装来消除样板式代码。Spring的JdbcTemplate使得执⾏数据库操作时，避免传统的JDBC样板代码成为了可能。
+样板式代码(boilerplate code)指重复编写的代码。Spring旨在通过模板封装来消除样板式代码。Spring的`JdbcTemplate`使得执⾏数据库操作时，避免传统的JDBC样板代码成为了可能。
 
 
 #### Spring容器
 
 Spring的应用对象生存于Spring容器(Container)中，由Spring容器负责创建、装配、配置和管理对象的整个生命周期。Spring自带多个容器：
 
-* bean工厂(BeanFactory)是最简单的容器，提供基本的DI支持;
-* 应用上下文(ApplicationContext)基于BeanFactory构建，并提供应用框架级别的服务。
+* bean工厂(`BeanFactory`)是最简单的容器，提供基本的DI支持;
+* 应用上下文(`ApplicationContext`)基于`BeanFactory`构建，并提供应用框架级别的服务。
 
 Spring自带了多种类型的应用上下文，最常用的有
 
-* AnnotationConfigApplicationContext: 从一个或多个基于Java的配置类中加载Spring应用上下文
-* AnnotationConfigWebApplicationContext: 从一个或多个基于Java的配置类中加载Spring Web应用上下文
-* ClassPathXmlApplicationContext: 从类路径下的一个或多个XML配置文件中加载上下文定义，把应用上下文的定义文件作为类资源
-* FileSystemXmlApplicationContext: 从文件系统下的一个或多个XML配置文件中加载上下文定义
-* XmlWebApplicationContext: 从Web应用下的一个或多个XML配置文件中加载上下文定义。
+* `AnnotationConfigApplicationContext`: 从一个或多个基于Java的配置类中加载Spring应用上下文
+* `AnnotationConfigWebApplicationContext`: 从一个或多个基于Java的配置类中加载Spring Web应用上下文
+* `ClassPathXmlApplicationContext:` 从类路径下的一个或多个XML配置文件中加载上下文定义，把应用上下文的定义文件作为类资源
+* `FileSystemXmlApplicationContext`: 从文件系统下的一个或多个XML配置文件中加载上下文定义
+* `XmlWebApplicationContext:` 从Web应用下的一个或多个XML配置文件中加载上下文定义。
 
 下图展示了bean装载到Spring应用上下文中的一个典型的生命周期过程：
 
@@ -264,7 +268,7 @@ public class Man implements BeanNameAware, ApplicationContextAware,
 
 ### 2 装配Bean
 
-在Spring中，对象无需自己查找或创建与其所关联的其他对象，容器负责把需要相护协作的对象引用赋予各个对象，创建应用对象之间的协作关系的行为通常被称为**装配**(wiring)。
+在Spring中，对象无需自己查找或创建与其所关联的其他对象，容器负责把需要相护协作的对象引用赋予各个对象，_创建应用对象之间的协作关系的行为_ 通常被称为**装配**(wiring)。
 
 Spring提供了三种主要的装配机制：
 
@@ -273,7 +277,145 @@ Spring提供了三种主要的装配机制：
 * 隐式的bean发现机制和自动装配
 
 
-建议尽可能地使用自动配置的机制
+三种可选配置方案功能有一些重叠，建议尽可能地使用自动配置的机制，其次推荐使用JavaConfig，最后推荐使用XML。
+
+#### 自动化装配bean
+
+Spring从两个角度来实现自动化装配：
+
+* **组件扫描**(component scanning): Spring会自动发现应用上下文中所创建的bean；
+* **自动装配**(Autowiring): Spring自动满足bean之间的依赖；
+
+`@Component`注解表明该类会作为组件类，并告知Spring要为这个类创建bean。不过，组件扫描默认是不启用的。所以要加入`@ComponentScan`注解启动组件扫描，寻找带有`@Component`注解的类。也通过XML来启动组件扫描，使用SpringContext命名空间的`<context:component-scan>`元素。
+
+!!! example "组件扫描"
+    
+    ```java
+    @Component # 表明SgtPeppers作为组件类
+    public class SgtPeppers implements CompactDisc {
+        private String title = "Sgt. Pepper's Lonely Hearts Club Band";
+        private String artist = "The Beatles";
+        public void play() {
+            System.out.println("Playing " + title + " by " + artist);
+        }
+    }
+    
+    
+    @Configuration
+    @ComponentScan  # 启用组件扫描
+    public class CDPlayerConfig {
+    }
+    ```
+    
+    
+其他几个注意点：
+    
+* 通过将ID作为值传递给`@Component`注解，可以为这个bean设置ID，例如`@Component("lonelyHeartsClub)`为`SgtPeppers`设置了ID名`lonelyHeartsClub`
+* 默认情况下，`@ComponentScan`会扫描对应类所在的基础包下的组件。可以通过value属性明确指定包的名称。例如指定在soundsystem下扫描组件: `@ComponentScan(basepackages="soundsystem")`，指定多个包下扫描组件: `@ComponentScan(basepackages={"soundsystem", "video"})`
+
+
+<!--
+
+![](figures/spring_bean_applicationContext.jpg)
+
+
+
+
+
+除了@Component外，Spring提供了3个功能基本和@Component等效的注解
+
+* @Repository用于对DAO实现类进行标注
+* @Service用于对Service实现类进行标注
+* @Controller用于对Controller实现类进行标注
+-->
+
+
+自动装配会在Spring应用上下文中寻找匹配的某个bean需求的其他bean。Spring的`@Autowired`注解，可以用在构造器上进行实例化，也可以用在属性的Setter方法上。
+
+!!! example "自动装配"
+    
+    在`CDPlayer`的构造器上添加了`@AutoWired`注解。当Spring创建`CDPlayer` bean时，会通过这个构造器来进行实例化，并且由于`@AutoWired`注解用在`setCompactDisc`上，会传入`SgtPeppers`。
+
+    ```java tab="自动装配"
+    @Component 
+    public class CDPlayer implements MediaPlayer {
+        private CompactDisc cd;
+        
+        @Autowired
+        public CDPlayer(CompactDisc cd) {
+            this.cd = cd;
+        }
+        
+        public void play() {
+            cd.play();
+        }
+        
+        @Autowired
+        public void setCompactDisc(CompactDisc cd) {
+            this.cd = cd;
+        }
+    }
+    ```
+    
+    ```java tab="验证自动装配"
+    @RunWith(SpringJUnit4ClassRunner.class)
+    @ContextConfiguration(classes = CDPlayerConfig.class)
+    public class CDPlayerTest {
+    
+        @Rule
+        public final StandardOutputStreamLog log =
+             new StandardOutputStreamLog(); //得到标准输出：SgtPeppers
+    
+        @Autowired
+        private MediaPlayer player;
+    
+        @Autowired
+        private CompactDisc cd;
+    
+        @Test
+        public void play() {
+            player.play();
+            assertEquals("Playing Sgt. Pepper's Lonely Hearts 
+                Club Band by The Beatles\n",log.getLog());
+        } // 验证输出的内容
+    
+    }
+    ```
+    
+几个注意点：
+
+* 如果Spring执行自动装配，但是没有匹配到bean，bean处于未装配状态，其属性为null
+* 如果匹配到多个bean，那么将会抛出异常。
+
+并在ApplicationContext.xml文件中配置开启注解扫描
+
+```xml
+<!--开启注解扫描=======================-->
+<context:component-scan base-package="..."/>
+```
+
+Spring初始化bean或销毁bean时，有时需要作一些处理工作，因此Spring可以在创建和拆卸bean的时候调用bean的两个生命周期方法。可以使用@PostConstruct做一些初始化，使用@PreDestory做一些销毁前的工作。
+
+```java
+@Component("bean1")
+public class Bean1 {
+    @PostConstruct
+    public void init(){
+        System.out.println("initBean...");
+    }
+    public void say(){
+        System.out.println("say...");
+    }
+    @PreDestroy
+    public void destroy(){
+        System.out.println("destroyBean...");
+    }
+}
+```
+
+
+#### Java装配bean
+某些情况下不能使用自动化装配，例如将第三方库中的组件装配到应用中。这时，必须要采用显示配置的方式。由于其强大、类型安全并且对重构友好，JavaConfig是显示配置中较好的方案。
 
 #### XML装备bean
 
@@ -377,78 +519,7 @@ Bean的作用域，使用scope属性配置
 
 
 
-#### 自动化装配bean
 
-Spring从两个角度来实现自动化装配：
-
-* **组件扫描**(component scanning): Spring会自动发现应用上下文中所创建的bean
-* 自动装配(Autowiring): Spring自动满足bean之间的依赖
-
-`@Component`注解表明该类会作为组件类，并告知Spring要为这个类创建bean。`@ComponentScan`注解会启动组件扫描。也通过XML来启动组件扫描，使用SpringContext命名空间的`<context:component-scan>`元素。
-
-
-
-![](figures/spring_bean_applicationContext.jpg)
-
-
-
-
-
-除了@Component外，Spring提供了3个功能基本和@Component等效的注解
-
-* @Repository用于对DAO实现类进行标注
-* @Service用于对Service实现类进行标注
-* @Controller用于对Controller实现类进行标注
-
-自动装配会在Spring应用上下文中寻找匹配的某个bean需求的其他bean。Spring的@Autowired注解，可以用在构造器上进行实例化，也可以用在属性的Setter方法上。
-
-
-```java
-@Component
-public class CDPlayer implements MediaPlayer {
-    private CompactDisc cd;
-    
-    @Autowired
-    public CDPlayer(CompactDisc cd) {
-        this.cd = cd;
-    }
-    
-    public void play() {
-        cd.play();
-    }
-    
-    @Autowired
-    public void setCompactDisc(CompactDisc cd) {
-        this.cd = cd;
-    }
-}
-```
-
-并在ApplicationContext.xml文件中配置开启注解扫描
-
-```xml
-<!--开启注解扫描=======================-->
-<context:component-scan base-package="..."/>
-```
-
-Spring初始化bean或销毁bean时，有时需要作一些处理工作，因此Spring可以在创建和拆卸bean的时候调用bean的两个生命周期方法。可以使用@PostConstruct做一些初始化，使用@PreDestory做一些销毁前的工作。
-
-```java
-@Component("bean1")
-public class Bean1 {
-    @PostConstruct
-    public void init(){
-        System.out.println("initBean...");
-    }
-    public void say(){
-        System.out.println("say...");
-    }
-    @PreDestroy
-    public void destroy(){
-        System.out.println("destroyBean...");
-    }
-}
-```
 
 
 
@@ -668,11 +739,11 @@ AspectJ是一个基于Java语言的AOP框架，Spring 2.0以后新增了对Aspec
 
 
 | 注解 | 通知 |
-| @After | 在目标方法返回或抛出异常后调用 |
-| @AfterReturning | 在目标方法返回后调用 |
-| @AfterThrowing | 在目标方法抛出异常后调用 |
-| @Around | 将目标方法封装起来 |
-| @Before | 在目标方法调用之前执行 |
+| `@After` | 在目标方法返回或抛出异常后调用 |
+| `@AfterReturning` | 在目标方法返回后调用 |
+| `@AfterThrowing` | 在目标方法抛出异常后调用 |
+| `@Around` | 将目标方法封装起来 |
+| `@Before` | 在目标方法调用之前执行 |
 
 通过execution函数，可以定义切点表达式的方法切入：
 
@@ -689,22 +760,24 @@ execution(<访问修饰符>?<返回类型><方法名>(<参数>)<异常>)
 
 | AOP配置元素 | 用途 |
 | --- | --- |
+| `<aop: config>` | 顶层的AOP配置元素 |
 | `<aop: advisor>` | 定义AOP通知器 |
 | `<aop: after/after-returning/after-throwing>` | 定义AOP后置/返回/异常通知   | 
 | `<aop: around/before>` | 定义AOP环绕/前置通知 |
 | `<aop: aspect>` | 定义一个切面 |
-| `<aop: config>` | 顶层的AOP配置元素 |
 | `<aop: pointcut>` | 定义一个切点 |
 
-```xml
-<aop: config>
-    <aop:aspect ref='audience'>
-    
-        <aop:before pointcut="execution(** concert.Performance.perform(..))" 
-            method="silenceCellPhones"/>
-    </aop:aspect>
-</aop:config>
-```
+!!! example
+
+    ```xml
+    <aop: config>
+        <aop:aspect ref='audience'>
+        
+            <aop:before pointcut="execution(** concert.Performance.perform(..))" 
+                method="silenceCellPhones"/>
+        </aop:aspect>
+    </aop:config>
+    ```
 
 ### 通过Spring和JDBC征服数据库
 

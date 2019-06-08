@@ -32,7 +32,7 @@ A disk has a block size, which is the minimum amount of data that it can read or
 HDFS, too, has the concept of a ***block***, but it is a much larger unit — 128 MB by default (typically a few kilobytes for ordinary file system). Unlike a filesystem for a single disk, a file in HDFS that is smaller than a single block does not occupy a full block’s worth of underlying storage. (For example, a 1 MB file stored with a block size of 128 MB uses 1 MB of disk space, not 128 MB.)
 
 !!! Question
-    WHY IS A BLOCK IN HDFS SO LARGE? To minimize the cost of seeks.
+    WHY IS A BLOCK IN HDFS SO LARGE? **To minimize the cost of seeks**.
     
 Having a block abstraction for a distributed filesystem brings several benefits.
 
@@ -45,7 +45,7 @@ Having a block abstraction for a distributed filesystem brings several benefits.
 
 #### Namenodes and Datanodes
 
-An HDFS cluster has two types of nodes: a ***namenode*** (the master) and a number of ***datanodes*** (workers). 
+An HDFS cluster has two types of nodes: a ***namenode*** (管理节点，the master) and a number of ***datanodes*** (工作节点，workers). 
 
 * The namenode manages the filesystem namespace. It maintains the filesystem tree and the metadata for all the files and directories in the tree. This information is stored persistently on the local disk in the form of two files: the namespace image and the edit log.
 * The namenode also knows the datanodes on which all the blocks for a given file are located;

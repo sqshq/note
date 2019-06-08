@@ -5,7 +5,7 @@ title: MyBatis
 
 #### 概述
 
-> [MyBatis](http://www.mybatis.org/mybatis-3/zh/index.html)是一款优秀的持久层框架，它支持定制化 SQL、存储过程以及高级映射。MyBatis避免了几乎所有的JDBC代码和手动设置参数以及获取结果集。MyBatis可以使用简单的XML或注解来配置和映射原生信息，将接口和Java的POJOs映射成数据库中的记录。
+> [MyBatis](http://www.mybatis.org/mybatis-3/zh/index.html)是一款优秀的持久层框架，它支持定制化SQL、存储过程以及高级映射。MyBatis避免了几乎所有的JDBC代码和手动设置参数以及获取结果集。MyBatis可以使用简单的XML或注解来配置和映射原生信息，将接口和Java的POJOs映射成数据库中的记录。
 
 ORM: 对象关系映射(Object Relation Mapping)
 
@@ -153,3 +153,19 @@ public interface CakeMapper {
 
 }
 ```
+
+
+#### XML映射文件
+
+MyBatis的强大之处在于它的映射语句。SQL映射文件只有很少的几个顶级元素：
+
+* `insert` – 映射插入语句
+* `delete` – 映射删除语句
+* `update` – 映射更新语句
+* `select` – 映射查询语句
+* `resultMap` – 是最复杂也是最强大的元素，用来描述如何从数据库结果集中来加载对象。
+* `cache` – 对给定命名空间的缓存配置。
+* `cache-ref` – 对其他命名空间缓存配置的引用。
+* `sql` – 可被其他语句引用的可重用语句块。
+
+[[详细用法](http://www.mybatis.org/mybatis-3/zh/sqlmap-xml.html)]

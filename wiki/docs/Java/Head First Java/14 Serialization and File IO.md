@@ -199,7 +199,7 @@ Changes to a class that can hurt deserialization:
 
 Each time an object is serialized, the object (including every object in its graph) is 'stamped' with a version ID number for the object's class. The ID is called **serialVersionUID**.
 
-> The serialization runtime associates with each serializable class a version number, called a <C>serialVersionUID</C>, which is used during deserialization to verify that the sender and receiver of a serialized object have loaded classes for that object that are *compatible* with respect to serialization. If the receiver has loaded a class for the object that has a different <C>serialVersionUID</C> than that of the corresponding sender's class, then deserialization will result in an InvalidClassException. <small>[Java Docs]</small>
+> The serialization runtime associates with each serializable class a version number, called a <C>serialVersionUID</C>, which is used during deserialization to verify that the sender and receiver of a serialized object have loaded classes for that object that are *compatible* with respect to serialization. If the receiver has loaded a class for the object that has a different <C>serialVersionUID</C> than that of the corresponding sender's class, then deserialization will result in an `InvalidClassException`. <small>[Java Docs]</small>
 
 **SOLUTION TO THE QUESTION**: ***If you think there is ANY possibility that your class might evolve, put a serialVersionUID in your class.***
 

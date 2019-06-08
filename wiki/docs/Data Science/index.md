@@ -2,8 +2,6 @@
 
 #### Database 
 
-* [JDBC](Database/JDBC.md)
-* [MyBatis](Database/MyBatis.md)
 * [MySQL](Database/MySQL.md)
 * [Redis](Database/Redis.md)
 * [SQL必知必会](Database/SQL必知必会.md)

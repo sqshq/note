@@ -4,7 +4,12 @@ toc: false
 date: 2017-10-30
 ---
 
-Apache YARN(Yet Another Resource Negotiator) is Hadoop’s cluster resource management system. YARN provides APIs for requesting and working with cluster resources, but these APIs are not typically used directly by user code. Distributed computing frameworks (MapReduce, Spark, and so on) running as YARN applications on the cluster compute layer (YARN) and the cluster storage layer (HDFS and HBase).
+Apache YARN(Yet Another Resource Negotiator)是Hadoop的集群资源管理系统(**cluster resource management system**). YARN被引入Hadoop2，最初是为了改善MapReduce的实现，但它具有足够的通用性，同样可以支持其他的分布式计算模式。
+
+![hadoop1.0-2.0](figures/hadoop1.0-2.0.png)
+
+
+YARN provides APIs for requesting and working with cluster resources, but these APIs are not typically used directly by user code. Distributed computing frameworks (MapReduce, Spark, and so on) running as YARN applications on the cluster compute layer (YARN) and the cluster storage layer (HDFS and HBase).
 
 ![](figures/YARNApplications.jpg)
 
@@ -12,13 +17,15 @@ Apache YARN(Yet Another Resource Negotiator) is Hadoop’s cluster resource mana
 
 YARN provides its core services via two types of long-running daemon:
 
-* a ***resource manager*** (one per cluster) to manage the use of resources across the cluster,
-* ***node managers*** running on all the nodes in the cluster to launch and monitor ***containers***.
+* a ***resource manager*** (资源管理器，one per cluster) to manage the use of resources across the cluster,
+* ***node managers***(节点管理器) running on all the nodes in the cluster to launch and monitor ***containers***.
 
 ![How YARN Runs An Application](figures/HowYARNRunsAnApplication.jpg)
 
-* step1 : To run an application on YARN, a client contacts the resource manager and asks it to run an ***application master*** process.
-* steps 2a and 2b: The resource manager then finds a node manager that can launch the application master in a container. It could simply run a computation in the container it is running in and return the result to the client.
+YARN是如何运行一个应用的：
+
+* step1 : To run an application on YARN, a client contacts the *resource manager* and asks it to run an ***application master*** process.
+* steps 2a and 2b: The resource manager then finds a *node manager* that can launch the application master in a *container*. It could simply run a computation in the container it is running in and return the result to the client.
 * step 3: Or it could request more containers from the resource managers
 * steps 4a and 4b: use them to run a distributed computation.
 

@@ -13,5 +13,5 @@
 * [11 Proxy Pattern](11 Proxy Pattern.md)
 * [12 Compound Patterns](12 Compound Patterns.md)
 * [13 Better Living with Patterns](13 Better Living with Patterns.md)
-* [14 Appendix FlyWeight Pattern](14 Appendix FlyWeight Pattern.md)
+* [14 Builder Pattern](14 Builder Pattern.md)
 

@@ -6,6 +6,7 @@ tags: [Big Data]
 
 [Big Data Specialization](https://www.coursera.org/specializations/big-data)笔记。
 
+## I Big Data Intruction
 
 ### 1 Big data why and where
 
@@ -16,6 +17,8 @@ Cloud computing = computing anywhere and any time + dynamic and scalable data an
 Applications: which makes big data valuable.
 
 Big data -> better models -> higher precision
+
+The combination of a growing torrent of data and on-demand (e.g.cloud) computing has launched the data field.
 
 
 ### 2 Characteristics of Big Data and Dimensions of Scalability
@@ -29,16 +32,11 @@ The Four V's of Big Data:
 
 * **Variety**: This refers to the ever-increasing different forms that data can come in, e.g., text, images, voice, geospatial.
 
-A fourth V is now also sometimes added:
-
 * **Veracity**: This refers to the quality of the data, which can vary greatly.
 
-There are many other V's that gets added to these depending on the context. For our specialization, we will add:
+There are many other V's that gets added to these depending on the context. 
 
 * **Valence**: This refers to how big data can bond with each other, forming connections between otherwise disparate datasets.
-
-In fact, many consider value as the sixth V of big data:
-
 * **Value**: Processing big data must bring about value from insights gained.
 
 ![](figures/six-v.jpg)
@@ -107,6 +105,142 @@ Valence == Connectedness
 #### value
 
 
-#### 3 Data Science: Getting Value out of Big Data
-#### 4 Foundations for Big Data Systems and Programming
-#### 5 Systems: Getting Started with Hadoop
+### 3 Data Science: Getting Value out of Big Data
+
+Data science can be thought of as a basis for empirical research where data is used to induce information for observations. 
+
+![data_science](figures/data_science.png)
+
+Insights often refer to the data products of data science.
+
+![data_insight](figures/data_insight.png)
+
+#### five P's 
+
+
+five P's of data science:
+
+![five_P_of_data_science](figures/five_P_of_data_science.png)
+
+
+
+
+
+
+
+### 4 Foundations for Big Data Systems and Programming
+
+...
+
+### 5 Systems: Getting Started with Hadoop
+
+#### hdfs
+
+
+HDFS splits files across nodes for parallel access:
+
+![hdfs_split](figures/hdfs_split.png)
+
+HDFS is designed for fault tolerance. By default, HDFS maintains three copies of each block.
+
+![hdfs_replica](figures/hdfs_replica.png)
+
+HDFS is also designed for variety of file types: text, pics....
+
+Two key components of HDFS
+
+
+1. **NameNode** for metadata: Usually one per cluster
+    
+    * coordinates operations
+    * keeps track of file name, location in directory, etc.
+    * mapping of contents on DataNode.    
+2. **DataNode** for block storage: Usually one per machine
+    
+    * Listens to NameNode for block creation, deletion,
+
+![](figures/name_node_data_node.jpg)
+
+[View in Detail](Hadoop权威指南/3 The Hadoop Distributed FileSystem.md)
+
+
+#### yarn
+
+YARN - The resource manager for hadoop
+
+
+Hadoop 1.0 only  support, mapreduce jobs, other applications are not supported, which has *poor resource utilization*.
+
+Hadoop 2.0: One dataset -> many applications
+
+![hadoop2.0](figures/hadoop2.0.png)
+
+#### mapreduce
+
+
+map and reduce are two concepts based on functional programming.
+
+* map = apply operation to all elements
+* reduce = summarize operation on elements
+
+![map_shuffle_sort_reduce](figures/map_shuffle_sort_reduce.png)
+
+
+
+!!! example "WordCount"
+
+    Step 1: Map on each node - map generates key-value pairs
+
+    ![word-count-map](figures/word-count-map.png)
+    
+    Step2: sort and shuffle - pairs with same key moved to same node
+    
+    ![word_count_sort_and_shuffle](figures/word_count_sort_and_shuffle.png)
+    
+    Step3: reduce - add values for same keys
+    
+    ![word_count_reduce](figures/word_count_reduce.png)
+
+
+MapReduce is bad for:
+
+* frequently changing data
+* dependent tasks
+* interactive analysis
+
+
+#### When to reconsider Hadoop
+
+![caution_when_to_hadoop](figures/caution_when_to_hadoop.png)
+
+
+#### cloud computing 
+
+If you decide to build your own hardware:
+
+* Hardware estimation is hard -> over estimation/under estimation
+* Software Stacks are complex
+* High Capital Investments: maintenance, procurement, disposal...
+
+![cloud-computing-your-team-cloud](figures/cloud-computing-your-team-cloud.png)
+
+
+#### cloud service models
+
+
+IaaS = Get the Hardware only
+
+* YOU: Install and maintain OS Application Software
+* e.g. Amazon EC2
+
+PaaS = Get the Computing Environment
+
+* YOU: Application Software
+* e.g. Microsoft Azure
+
+SaaS = Get full software on-demand
+
+* YOU: Domain Goals
+* e.g. Dropbox
+
+![](figures/cloud-serive-model.jpg)
