@@ -125,6 +125,10 @@ MVC即**模型-视图-控制器**(model-view-controller)模式。MVC就是把业
 
 ![servlet_life](figures/servlet_life.png)
 
+Servlet接口：
+
+![servlet_api](figures/servlet_api.png)
+
 
 Servlet生命周期中重要时刻
 
@@ -477,10 +481,12 @@ public class LoginSessionListener implements HttpSessionAttributeListener {
 			HttpSession session = hsbe.getSession();//该次操作的session对象
 			String sessionId = session.getId();//该次操作的session对象ID
 			//从缓存对象里面，获得该用户登录名对应的sessionID值
-			String sessionId2 = LoginCache.getInstance().getSessionIdByUsername(attrVal);
+			String sessionId2 = LoginCache.getInstance()
+			         .getSessionIdByUsername(attrVal);
 			if(null != sessionId2){//需要清理前次登录用户会话信息
 				//获取前次该用户登录对应的session对象
-				HttpSession session2 = LoginCache.getInstance().getSessionBySessionId(sessionId2);
+				HttpSession session2 = LoginCache.getInstance()
+				        .getSessionBySessionId(sessionId2);
 				session2.invalidate();//清理前次登录用户会话存储信息，使得前次登录失效
 			}
 			//完成该次登录用户登录名、sessionID，session对象的缓存对象存储
@@ -852,11 +858,11 @@ public interface HttpSessionActivationListener {
 
 * 当Web应用程序启动时，立即创建这个Web应用中的所有的过滤器，过滤器创建出来后立即调用`init()`方法执行初始化的操作。
 * 创建出来后一直驻留在内存中为后续的拦截进行服务。每次拦截到请求后都会导致`doFilter()`方法执行。
-* 在服务器关闭或web应用被移除出容器时，随着web应用的销毁过滤器对象销毁。销毁之前调用`destory()`方法执行善后工作.
+* 在服务器关闭或web应用被移除出容器时，随着web应用的销毁，过滤器对象也销毁。销毁之前调用`destory()`方法执行善后工作.
     
 #### FilterChain
     
-过滤器链`FilterChain`知道过滤器执行的顺序，它的`doFilter()`方法负责明确接下来调用谁的`doFilter()`方法或者在链尾调用哪个servlet的`Service()`方法。过滤器的调用顺序取决于过滤器在部署描述文件中的声明顺序。
+过滤器链`FilterChain`知道过滤器执行的顺序，它的`doFilter()`方法负责明确接下来调用谁的`doFilter()`方法或者在链尾调用哪个servlet的`Service()`方法。过滤器的调用顺序取决于*过滤器在部署描述文件中的声明顺序*。
 
 过滤器相互调用的过程，可以想象成栈上的方法调用。
 
@@ -871,8 +877,10 @@ public interface HttpSessionActivationListener {
 * 将过滤器映射到想过滤的Web资源
 * 创建过滤器调用序列
 
-!!! example
+!!! example "BeerRequestFilter"
+
     在部署描述文件中配置`BeerRequestFilter`过滤器。
+    
     ```java
     <filter>
         <filter-name>BeerRequest</filter-name>
@@ -908,7 +916,8 @@ public void doFilter(request, response, chain) {
 
 但是又遇到新的问题，那就是`HttpServletResponse`接口太复杂了，一共有十几个方法需要实现，那么怎么办呢？还好，有`HttpServletResponseWrapper`，它实现了`HttpServletResponse`，使用了[装饰器模式](../Head First设计模式/3 Decorator Pattern.md)(`HttpServletResponse`属于component, `HttpServletResponseWrapper`属于decorator)。
 
-!!! example
+!!! example "响应压缩"
+
     实现压缩响应的过滤器，用一个压缩I/O流包装输出流; 当且仅当客户包含一个Accept-Encoding首部为gzip时，才会完成输出流的压缩。
     ```java
     public class ComporessionFilter implements Filter {
@@ -962,91 +971,90 @@ public void doFilter(request, response, chain) {
 
 #### 案例
 
-过滤器指定中文编码字符集
+!!! example "过滤器指定中文编码字符集"
 
-
-```java tab="过滤器"
-/**
- * 字符集编码过滤器
- */
-public class CharacterEncodingFilter implements Filter {
-
-    // 过滤器配置
-	private FilterConfig config;
-    @Override
-    public void init(FilterConfig config) throws ServletException {
-        this.config = config;
+    ```java tab="过滤器"
+    /**
+     * 字符集编码过滤器
+     */
+    public class CharacterEncodingFilter implements Filter {
+    
+        // 过滤器配置
+    	private FilterConfig config;
+        @Override
+        public void init(FilterConfig config) throws ServletException {
+            this.config = config;
+        }
+    
+    	@Override
+    	public void doFilter(ServletRequest request, ServletResponse response,
+    	           FilterChain chain) throws IOException, ServletException {
+          // 根据过滤器配置字符集，设置请求字符集编码
+    		request.setCharacterEncoding(config.getInitParameter("charset"));
+            chain.doFilter(request, response);
+    	}
+    
+        @Override
+        public void destroy() {
+        }
     }
+    ```
+    
+    ```xml tab="web.xml"
+    <!-- 字符集编码过滤器配置 -->
+    <filter>
+    	<filter-name>characterEncodingFilter</filter-name>
+    	<filter-class>filter.CharacterEncodingFilter</filter-class>
+    	<init-param>
+    		<param-name>charset</param-name>
+    		<param-value>UTF-8</param-value>
+    	</init-param>
+    </filter>
+    
+    <filter-mapping>
+    	<filter-name>characterEncodingFilter</filter-name>
+    	<url-pattern>/*</url-pattern>
+    </filter-mapping>
+    ```
 
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
-	           FilterChain chain) throws IOException, ServletException {
-      // 根据过滤器配置字符集，设置请求字符集编码
-		request.setCharacterEncoding(config.getInitParameter("charset"));
-        chain.doFilter(request, response);
-	}
+!!! example "实现系统用户登陆安全控制"
 
-    @Override
-    public void destroy() {
+    ```java tab="过滤器"
+    public class SessionFilter implements Filter {
+    	@Override
+    	public void init(FilterConfig config) throws ServletException {
+    	}
+    
+    	@Override
+    	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+    			throws IOException, ServletException {
+    		HttpServletRequest hrequest = (HttpServletRequest) request;
+    		HttpServletResponse hresponse = (HttpServletResponse) response;
+    		String loginUser = (String) hrequest.getSession().getAttribute("loginUser");
+    		if (loginUser == null)
+    			hresponse.sendRedirect(hrequest.getContextPath() + "/index.jsp?flag=1");
+    		else
+    			chain.doFilter(hrequest, hresponse);
+    	}
+    
+    	@Override
+    	public void destroy() {
+    	}
     }
-}
-```
-
-```xml tab="web.xml"
-<!-- 字符集编码过滤器配置 -->
-<filter>
-	<filter-name>characterEncodingFilter</filter-name>
-	<filter-class>filter.CharacterEncodingFilter</filter-class>
-	<init-param>
-		<param-name>charset</param-name>
-		<param-value>UTF-8</param-value>
-	</init-param>
-</filter>
-
-<filter-mapping>
-	<filter-name>characterEncodingFilter</filter-name>
-	<url-pattern>/*</url-pattern>
-</filter-mapping>
-```
-
-实现系统用户登陆安全控制
-
-```java tab="过滤器"
-public class SessionFilter implements Filter {
-	@Override
-	public void init(FilterConfig config) throws ServletException {
-	}
-
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		HttpServletRequest hrequest = (HttpServletRequest) request;
-		HttpServletResponse hresponse = (HttpServletResponse) response;
-		String loginUser = (String) hrequest.getSession().getAttribute("loginUser");
-		if (loginUser == null)
-			hresponse.sendRedirect(hrequest.getContextPath() + "/index.jsp?flag=1");
-		else
-			chain.doFilter(hrequest, hresponse);
-	}
-
-	@Override
-	public void destroy() {
-	}
-}
-```
-
-```xml tab="web.xml"
-<!-- 用户登录安全控制过滤器配置 -->
-<filter>
-	<filter-name>sessionFilter</filter-name>
-	<filter-class>filter.SessionFilter</filter-class>
-</filter>
-
-<filter-mapping>
-	<filter-name>sessionFilter</filter-name>
-	<url-pattern>/message.jsp</url-pattern>
-</filter-mapping>
-```
+    ```
+    
+    ```xml tab="web.xml"
+    <!-- 用户登录安全控制过滤器配置 -->
+    <filter>
+    	<filter-name>sessionFilter</filter-name>
+    	<filter-class>filter.SessionFilter</filter-class>
+    </filter>
+    
+    <filter-mapping>
+    	<filter-name>sessionFilter</filter-name>
+    	<url-pattern>/message.jsp</url-pattern>
+    </filter-mapping>
+    ```
 
 
 ### 9 常见项目

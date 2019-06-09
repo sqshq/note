@@ -734,11 +734,10 @@ public class SpringDemo5 {
 AspectJ是一个基于Java语言的AOP框架，Spring 2.0以后新增了对AspectJ切点表达式支持。@AspectJ通过注解，允许直接在Bean类中定义切面。
 
 
-
 @AspectJ注解:
 
-
 | 注解 | 通知 |
+| --- | --- |
 | `@After` | 在目标方法返回或抛出异常后调用 |
 | `@AfterReturning` | 在目标方法返回后调用 |
 | `@AfterThrowing` | 在目标方法抛出异常后调用 |
@@ -782,4 +781,7 @@ execution(<访问修饰符>?<返回类型><方法名>(<参数>)<异常>)
 ### 通过Spring和JDBC征服数据库
 
 为了避免持久化的逻辑分散到应用的各个组件中，最好将数据访问的功能放到一个或多个专注于此项任务的组件中。这样的组件通常称为**数据访问对象**(data access object, DAO)或Repository。
+
+
+### 事务
 

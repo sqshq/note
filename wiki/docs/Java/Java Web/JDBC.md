@@ -41,11 +41,11 @@ JDBC API主要有以下几个：
 
 | 参数 | 解释 |
 | --- | --- |
-| jdbc | 协议 |
-| mysql | 子协议 |
-| ip_address | ip 地址 |
-| port | 端口 |
-| database_name | 数据库名称 |
+| `jdbc` | 协议 |
+| `mysql` | 子协议 |
+| `ip_address` | ip 地址 |
+| `port` | 端口 |
+| `database_name` | 数据库名称 |
 
 如果数据库是本地的，url可以简写为："jdbc:mysql:///database_name"
 
@@ -110,92 +110,92 @@ CRUD操作具体是指Create添加数据/Read读取数据/Update修改数据/Del
 
 !!! example "CURD操作示例"
 
-1. 创建数据库/表
+    1. 创建数据库/表
+        
+    ```mysql
+    create database jdbctest;
+    use jdbctest;
+    create table user (
+        uid int primary key auto_increment,
+        usernmae varchar(20), 
+        password varchar(20),
+        name varchar(20)
+    );
+    insert into user values (null, 'aaa', '111', 'jerry');
+    insert into user values (null, 'bbb', '222', 'baby');
+    ```
     
-```mysql
-create database jdbctest;
-use jdbctest;
-create table user (
-    uid int primary key auto_increment,
-    usernmae varchar(20), 
-    password varchar(20),
-    name varchar(20)
-);
-insert into user values (null, 'aaa', '111', 'jerry');
-insert into user values (null, 'bbb', '222', 'baby');
-```
-
-2. 在程序中加载数据库驱动
-3. 建立连接
-4. 创建用于向数据库发送SQL的Statement对象
-5. 从代表结果集的ResultSet中取出数据
-6. 断开与数据库的连接，并释放相关资源
-
+    2. 在程序中加载数据库驱动
+    3. 建立连接
+    4. 创建用于向数据库发送SQL的Statement对象
+    5. 从代表结果集的ResultSet中取出数据
+    6. 断开与数据库的连接，并释放相关资源
     
-
-```java
-public void crudOperation() {
-    Connection connection = null;
-    Statement statement = null;
-    ResultSet resultSet = null;
-    try {
-        // 注册驱动
-        Class.forName("com.mysql.jdbc.Driver");
-        // 获得连接
-        connection = DriverManager.getConnection(
-                "jdbc:mysql:///jdbctest", "root", "!");
-        // 获得执行SQL语句的对象
-        statement = connection.createStatement();
-        // 编写SQL语句，包括增删改查
-        String insertSQL = "insert into user values 
-            (null, '123', '3243', 'peek')";
-        String updateSQL = "update user set username = 'peek', 
-                password = '345', name='pick' where uid = 4";
-        String deleteSQL = "delete from user where uid = 2";
-        String querySQL = "select * from user";
-        // 执行SQL语句
-        statement.executeUpdate(insertSQL);
-        statement.executeUpdate(updateSQL);
-        statement.executeUpdate(deleteSQL);
-        resultSet = statement.executeQuery(querySQL);
-        // 得到查询结果
-        while (resultSet.next()) {
-            int uid = resultSet.getInt("uid");
-            String username = resultSet.getString("username");
-            String password = resultSet.getString("password");
-            String name = resultSet.getString("name");
-            System.out.println(uid + "  " + username 
-                        + "  " + password + " " + name);
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-        // 释放资源
-        if (statement != null) {
-            try {
-                statement.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+        
+    
+    ```java
+    public void crudOperation() {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            // 注册驱动
+            Class.forName("com.mysql.jdbc.Driver");
+            // 获得连接
+            connection = DriverManager.getConnection(
+                    "jdbc:mysql:///jdbctest", "root", "!");
+            // 获得执行SQL语句的对象
+            statement = connection.createStatement();
+            // 编写SQL语句，包括增删改查
+            String insertSQL = "insert into user values 
+                (null, '123', '3243', 'peek')";
+            String updateSQL = "update user set username = 'peek', 
+                    password = '345', name='pick' where uid = 4";
+            String deleteSQL = "delete from user where uid = 2";
+            String querySQL = "select * from user";
+            // 执行SQL语句
+            statement.executeUpdate(insertSQL);
+            statement.executeUpdate(updateSQL);
+            statement.executeUpdate(deleteSQL);
+            resultSet = statement.executeQuery(querySQL);
+            // 得到查询结果
+            while (resultSet.next()) {
+                int uid = resultSet.getInt("uid");
+                String username = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                String name = resultSet.getString("name");
+                System.out.println(uid + "  " + username 
+                            + "  " + password + " " + name);
             }
-        }
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 释放资源
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        }
-    
-        if (resultSet != null) {
-            try {
-                 resultSet.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        
+            if (resultSet != null) {
+                try {
+                     resultSet.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
-}
-```
+    ```
 
 #### JDBC工具类
 
@@ -205,100 +205,100 @@ public void crudOperation() {
 2. 有不同的释放资源方法
 
 !!! example "JDBCUtils"
-```java
-// JDBC工具类
-public class JDBCUtils {
-    
-    public static final String driverClass;
-    public static final String url;
-    public static final String username;
-    public static final String password;
-    
-    static {
-        // 加载属性文件并解析：
-        Properties properties = new Properties();
-        // 获得属性文件的输入流: 通常不采用FileInputStream方式，因为可能文件不是本地的
-        InputStream inputStream = JDBCUtils.class.getClassLoader().getResourceAsStream("jdbc.properties");
-        try {
-            properties.load(inputStream);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        driverClass = properties.getProperty("driverClass");
-        url = properties.getProperty("url");
-        username = properties.getProperty("username");
-        password = properties.getProperty("password");
-    }
-    /**
-     * 注册驱动的方法
-     * @throws ClassNotFoundException;
-     */
-    public static void loadDriver() throws ClassNotFoundException {
-        Class.forName(driverClass);
-    
-    }
-    
-    // 获得连接
-    public static Connection getConnection() throws Exception {
-        loadDriver();
-        Connection conn = DriverManager.getConnection(url, username, password);
-        return conn;
-    }
-    
-    // 释放资源的方法
-    public static void release(Statement statement, Connection connection) {
-        if (statement != null) {
+    ```java
+    // JDBC工具类
+    public class JDBCUtils {
+        
+        public static final String driverClass;
+        public static final String url;
+        public static final String username;
+        public static final String password;
+        
+        static {
+            // 加载属性文件并解析：
+            Properties properties = new Properties();
+            // 获得属性文件的输入流: 通常不采用FileInputStream方式，因为可能文件不是本地的
+            InputStream inputStream = JDBCUtils.class.getClassLoader().getResourceAsStream("jdbc.properties");
             try {
-                statement.close();
+                properties.load(inputStream);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            driverClass = properties.getProperty("driverClass");
+            url = properties.getProperty("url");
+            username = properties.getProperty("username");
+            password = properties.getProperty("password");
         }
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+        /**
+         * 注册驱动的方法
+         * @throws ClassNotFoundException;
+         */
+        public static void loadDriver() throws ClassNotFoundException {
+            Class.forName(driverClass);
+        
+        }
+        
+        // 获得连接
+        public static Connection getConnection() throws Exception {
+            loadDriver();
+            Connection conn = DriverManager.getConnection(url, username, password);
+            return conn;
+        }
+        
+        // 释放资源的方法
+        public static void release(Statement statement, Connection connection) {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
-    }
-    
-    // 释放资源的方法
-    public static void release(ResultSet resultSet, Statement statement, Connection connection) {
-        release(statement, connection);
-        if (resultSet != null) {
-            try {
-                resultSet.close();
-            } catch (Exception e) {
-                e.printStackTrace();
+        
+        // 释放资源的方法
+        public static void release(ResultSet resultSet, Statement statement, Connection connection) {
+            release(statement, connection);
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
-    }
-    
-    public static void main(String[] args) {
-        Connection connection = null;
-        Statement statement = null;
-    
-        try {
-            // 获得连接;
-            connection = JDBCUtils.getConnection();
-            // 创建执行SQL语句的对象
-            statement = connection.createStatement();
-            // 编写SQL
-            String sql = "insert into user values 
-                    (null, '123', '3454', 'fsadj')";
-            // 执行SQL
-            statement.executeUpdate(sql);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            // 释放资源
-            JDBCUtils.release(statement, connection);
+        
+        public static void main(String[] args) {
+            Connection connection = null;
+            Statement statement = null;
+        
+            try {
+                // 获得连接;
+                connection = JDBCUtils.getConnection();
+                // 创建执行SQL语句的对象
+                statement = connection.createStatement();
+                // 编写SQL
+                String sql = "insert into user values 
+                        (null, '123', '3454', 'fsadj')";
+                // 执行SQL
+                statement.executeUpdate(sql);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                // 释放资源
+                JDBCUtils.release(statement, connection);
+            }
         }
+        
     }
-    
-}
-```
+    ```
 
 
 !!! note 

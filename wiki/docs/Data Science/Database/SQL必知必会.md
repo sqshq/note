@@ -120,7 +120,7 @@ SELECT prod_name FROM Products ORDER BY prod_name;
 要按多个列排序，简单指定列名，列名之间用逗号分开即可。
 
 ```sql
-SELECT prod_id, prod_price, prod_name FROM Products
+SELECT prod_id, prod_price, prod_name FROM Product
 ORDER BY prod_price, prod_name;
 ```
 
@@ -138,7 +138,8 @@ ORDER BY 2, 3;
 下面的例子以价格降序来排序产品（最贵的排在最前面）：
 
 ```sql
-SELECT prod_id, prod_price, prod_name FROM Products ORDER BY prod_price DESC, prod_name;
+SELECT prod_id, prod_price, prod_name FROM Products 
+ORDER BY prod_price DESC, prod_name;
 ```
 
 !!! warning "在多个列上降序排序"
@@ -245,6 +246,77 @@ ORDER BY prod_name;
 
 ### 6 用通配符进行过滤
 
+
+在搜索字句中使用通配符，必须使用LIKE操作符。
+
+| 通配符 | 含义 |
+| --- | --- |
+| `%` | 任何字符出现任意次数 | 
+| `_` | 与%一样，但只匹配单个字符 |
+| `[]` | 指定一个字符集，必须匹配指定位置的一个字符 | 
+
+
+
+### 9 汇总数据
+
+为了方便汇总数据而不用把它们实际检索出来， SQL提供了专门的聚集函数。
+
+
+| 函数 | 说明 |
+| --- | --- |
+| `AVG()` | 返回某列的平均值 |
+| `COUNT()` | 返回某列的行数 |
+| `MAX()` | 返回某列的最大值 |
+| `MIN()` | 返回某列的最小值 |
+| `SUM()` | 返回某列值之和 | 
+
+```sql
+SELECT COUNT(*) AS num_cust FROM Customers;
+SELECT SUM(quantity) AS items_ordered 
+FROM OrderItems WHERE order_num = 20005;
+```
+!!! warn "NULL值"
+    
+    AVG()函数忽略列值为NULL的行。
+
+!!! note "COUNT(*) v.s COUNT(column)"
+    
+    使用COUNT(*)对表中行的数目进行计数，不管表列中包含的是空值(NULL)还是非空值。使用COUNT(column)对特定列中具有值的行进行计数，忽略NULL值。
+    
+SELECT语句可根据需要包含多个聚集函数:
+
+```sql
+SELECT COUNT(*) AS num_items, 
+    MIN(prod_price) AS price_min, 
+    MAX(prod_price) AS price_max, 
+    AVG(prod_price) AS price_avg 
+FROM Products;
+```
+### 12 联结表
+
+
+**内联结**(inner join)基于两个表之间的相等测试。下面就是一个内联结的例子
+
+
+```sql
+SELECT vend_name, prod_name, prod_price
+FROM Vendors, Products
+WHERE Vendors.vend_id = Products.vend_id;
+```
+
+可以对上面例子使用稍微不同的语法，明确联结的类型:
+
+```sql
+SELECT vend_name, prod_name, prod_price
+FROM Vendors INNER JOIN Products
+  ON Vendors.vend_id = Products.vend_id;
+
+
+
+
+
+
+
 ### 15 插入数据
 
 INSERT用来将行插入或添加到数据库表。插入有几种方式：插入完整的行，插入行的一部分，插入某些查询的结果。
@@ -270,6 +342,23 @@ INSERT INTO Customers（cust_id, cust_name, cust_address,
     不要使用没有明确给出列的INSERT语句。给出列能使SQL代码继续发挥作用，即使表结构发生了变化。
 
 ### 16 更新和删除数据
+
+更新(修改)表中的数据，可以使用UPDATE语句。
+
+```sql
+UPDATE Customers
+SET cust_email = 'kim@jsadfl.com', cust_contact = 'Sam Roberts',
+WHERE cust_id = '1000005';
+```
+
+从一个表中删除数据，使用DELETE语句。
+
+```sql
+DELETE FROM Customers
+WHERE cust_id = '1000006';
+```
+
+
 ### 17 创建和操纵表
 
 利用CREATE TABLE创建表，必须给出下列信息：
