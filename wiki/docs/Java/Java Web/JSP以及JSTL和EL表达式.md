@@ -9,7 +9,20 @@ JSP全名为Java Server Pages，中文名叫**Java服务器页面**，其根本�
 
 
 !!! note "JSP和Servlet"
-    JSP不是Servlet。JSP是动态生成的网页，而servlet是运行在服务器上的Java类。但是JSP引擎会将JSP转化成Java源代码，再编译成一个完成的Java Servlet类(转化具体过程可见[Translation into Servlets](http://cs.au.dk/~amoeller/WWW/jsp/translation.html)）。
+
+    JSP不是Servlet。JSP是动态生成的网页，而Servlet是运行在服务器上的Java类。但是JSP引擎会将JSP转化成Java源代码，再编译成一个完成的Java Servlet类(转化具体过程可见[Translation into Servlets](http://cs.au.dk/~amoeller/WWW/jsp/translation.html)）。
+    
+!!! note "JSP和HTML"
+
+    HTML是静态页面，JSP是动态生成的页面。HTML转换成JSP的方法也很简单，在HTML文档最上方加入
+    
+    ```xml
+    <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>`
+    ```
+    
+    并把`.html`后缀改成`.jsp`即可
+    
 
 #### JSP程序的执行过程
 
@@ -24,22 +37,24 @@ JSP全名为Java Server Pages，中文名叫**Java服务器页面**，其根本�
 
 #### JSP程序的生命周期
 
-既然JSP最终会变成一个Servlet，那么它的生命周期就和一般的Servlet类似：
+既然JSP最终会变成一个`Servlet`，那么它的生命周期就和一般的`Servlet`类似：
 
 ![](figures/jsp_lifecycle.jpg)
 
 * 查看指令，得到转换时可能需要的信息
 * 创建一个`HttpJspBase`子类
-* 如果一个page指令有import属性，它会在类文件的最上面写import语句
+* 如果一个page指令有`import`属性，它会在类文件的最上面写`import`语句
 * 如果有声明，将声明写到类文件中，通常放在类声明下面，并在服务方法前面。
 * 建立服务方法`_jspService()`, 由servlet超类被覆盖的`service()`方法调用，并初始化所有隐式对象。
-* 将普通的HTML、scriptlet和表达式放到服务方法中，完成格式化，并写至PrintWriter输出。
+* 将普通的HTML、scriptlet和表达式放到服务方法中，完成格式化，并写至`PrintWriter`输出。
 
 
 `jspInit()`方法由Servlet的init方法调用，`jspDestroy()`由destroy方法调用，`_jspService()`由service方法调用。
 
 !!! example "_jspService"
+
     下面是一个显示登陆成功的JSP页面转化成的Java代码中的`_jspService`函数：
+    
     ```java tab="_jspService()"
      public void _jspService(final javax.servlet.http.HttpServletRequest request, 
                 final javax.servlet.http.HttpServletResponse response)
@@ -169,6 +184,7 @@ JSP脚本、声明、表达式、注释的使用方法如下，需要注意是�
 ```
 
 !!! example
+
     ```java tab="JSP声明和脚本"
     <%!
         String str = "hello world";
@@ -221,6 +237,17 @@ JSP标准标签库(JSTL)是一个JSP标签集合，它封装了JSP应用的通�
 
 ```
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+```
+
+需要添加Maven依赖
+
+```xml
+<!--jstl-->
+<dependency>
+    <groupId>org.apache.taglibs</groupId>
+    <artifactId>taglibs-standard-impl</artifactId>
+    <version>1.2.5</version>
+</dependency>
 ```
 
 |  JSTL | 描述 |
@@ -307,4 +334,6 @@ JSP表达式语言支持以下隐式对象
 | 11 | pageContext | 当前页面的JSP PageContext对象 | 
 
 
+`${param.name}` 等价于 r`equest.getParamter("name")`，这两种方法一般用于服务器从页面或者客户端获取的内容。
 
+`${requestScope.name} 等价于 request.getAttribute("name")`，一般是从服务器传递结果到页面，在页面中取出服务器保存的值。

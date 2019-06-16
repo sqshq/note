@@ -125,7 +125,7 @@ MVC即**模型-视图-控制器**(model-view-controller)模式。MVC就是把业
 
 ![servlet_life](figures/servlet_life.png)
 
-Servlet接口：
+1. Servlet接口：
 
 ![servlet_api](figures/servlet_api.png)
 

@@ -12,10 +12,10 @@ Binary Search Tree have poor worst-case performance. Balanced Search Trees are *
 
 !!! Definition
     
-    A 2-3 *search tree* is a tree that is either empty or 
+    A 2-3 *search tree*(2-3查找树) is a tree that is either empty or 
 
-    * A 2-*node*, with one key (and associated value) and two links, a left link to a 2-3 search tree with smaller keys, and a right link to a 2-3 search tree with larger keys
-    * A 3-*node*, with two keys (and associated values) and three links, a left link to a 2-3 search tree with smaller keys, a middle link to a 2-3 search tree with keys between the node’s keys, and a right link to a 2-3 search tree with larger keys
+    * A 2-*node*(2-节点) , with one key (and associated value) and two links, a left link to a 2-3 search tree with smaller keys, and a right link to a 2-3 search tree with larger keys
+    * A 3-*node*(3-节点) , with two keys (and associated values) and three links, a left link to a 2-3 search tree with smaller keys, a middle link to a 2-3 search tree with keys between the node’s keys, and a right link to a 2-3 search tree with larger keys
     
     As usual, we refer to a link to an empty tree as a *null link.*
     
@@ -77,7 +77,7 @@ Although 2-3 search tree guarantee good worst-case performance, it is inconvenie
 * copy links and other information from one type of node to another
 * convert nodes from one type to another, and so forth.
 
-In this section, We will consider a simple representation of 2-3 search tree known as a *red-black* BST that leads to a natural implementation.
+In this section, We will consider a simple representation of 2-3 search tree known as a *red-black* BST(红黑树) that leads to a natural implementation.
 
 !!! Definition
 
@@ -191,6 +191,10 @@ private Node put(Node h, Key key, Value val) {
     return h;
 }
 ```
+
+### B-Tree
+
+
 
 ### Application : Kd Tree
 

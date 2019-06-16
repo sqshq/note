@@ -17,7 +17,7 @@ jQuery有多个版本：
 如何使用？
 
 * 关联本地jQuery：`:::html <script src="jquery-3.1.0.js"></script>`
-* 从CDN载入jQuery
+* 从CDN载入jQuery: `<script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>`
 
 
 #### 基本语法 

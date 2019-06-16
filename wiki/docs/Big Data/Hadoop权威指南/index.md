@@ -1,4 +1,8 @@
-### Hadoop权威指南 
+---
+title: Hadoop权威指南
+toc: false
+date: 2017-07-07
+---
 
 * [1 Meet Hadoop](1 Meet Hadoop.md)
 * [2 MapReduce](2 MapReduce.md)

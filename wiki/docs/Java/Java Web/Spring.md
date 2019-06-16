@@ -60,13 +60,16 @@ public void demoIOC() {
 对于类成员变量，注入方式有三种
 
 * 构造器注入(constructor injection)：保证Bean实例在实例化后就可以使用，注入在`<constructor-arg>`元素里声明的属性
-* 属性setter方法注入: 在`<property>`元素设置注入的属性
+* setter方法注入: 在`<property>`元素设置注入的属性，Spring中最主流注入方式
 * 接口注入
 
 
+<!--
 p-命名空间属性是如何组成的。⾸先，属性的名字使⽤了“p: ”前缀，表明我们所设置的是⼀个属性。接下来就是要注⼊的属性名。最后，属性的名称以“-ref”结尾，这会提⽰Spring要进⾏装配的是引⽤，⽽不是字⾯量。
 
 ![p-namesapce](figures/p-namesapce.png)
+-->
+
 
 ```xml
 <!--Bean的构造器注入=============================-->
@@ -203,20 +206,27 @@ Spring自带了多种类型的应用上下文，最常用的有
 * `FileSystemXmlApplicationContext`: 从文件系统下的一个或多个XML配置文件中加载上下文定义
 * `XmlWebApplicationContext:` 从Web应用下的一个或多个XML配置文件中加载上下文定义。
 
+![applicationContext_UM](figures/applicationContext_UML.png)
+
+
+
+`BeanFactory`是Spring IoC容器所定义的最底层接口，而`ApplicationContext`是其高级接口之一，并且对`BeanFactory`功能做了许多有用的扩展，所以在大部分的工作场景下，都会使用`ApplicationContext`作为Spring IoC容器。
+
+
 下图展示了bean装载到Spring应用上下文中的一个典型的生命周期过程：
 
 ![](figures/Spring_bean_lifecycle.jpg)
 
 1. Spring对bean进⾏实例化；
 2. Spring将值和bean的引⽤注⼊到bean对应的属性中； 
-3. 如果bean实现了BeanNameAware接口，Spring将bean的ID传递给setBeanName()⽅法； 
-4. 如果bean实现了BeanFactoryAware接口，Spring将调⽤setBeanFactory⽅法，将BeanFactory容器实例传⼊；
-5. 如果bean实现了ApplicationContextAware接口，Spring将调⽤setApplicationContext()⽅法，将bean所在的应⽤上下⽂的引⽤传⼊进来；
-6. 如果bean实现了BeanPostProcessor接口，Spring将调⽤它们的postProcesssBeforeInitialization()⽅法。
-7. 如果bean实现了InitializingBean接口，Spring将调⽤它们的afterPropertiesSet()⽅法;类似地，如果bean使⽤init-method声明了初始化⽅法，该⽅法也会被调⽤；
-8. 如果bean实现了BeanPostProcessor接口，Spring将调⽤它们的postProcessAfterInitalization()⽅法；
+3. 如果bean实现了`BeanNameAware`接口，Spring将bean的ID传递给`setBeanName()`⽅法； 
+4. 如果bean实现了`BeanFactoryAware`接口，Spring将调⽤`setBeanFactory`⽅法，将`BeanFactory`容器实例传⼊；
+5. 如果bean实现了`ApplicationContextAware`接口，Spring将调⽤`setApplicationContext()`⽅法，将bean所在的应⽤上下⽂的引⽤传⼊进来；
+6. 如果bean实现了`BeanPostProcessor`接口，Spring将调⽤它们的`postProcesssBeforeInitialization()`⽅法。
+7. 如果bean实现了`InitializingBean`接口，Spring将调⽤它们的`afterPropertiesSet()`⽅法;类似地，如果bean使⽤init-method声明了初始化⽅法，该⽅法也会被调⽤；
+8. 如果bean实现了`BeanPostProcessor`接口，Spring将调⽤它们的`postProcessAfterInitalization()`⽅法；
 9. 此时，bean已经准备就绪，可以被应⽤程序使⽤了，它们将⼀直驻留在应⽤上下⽂中，直到该应⽤上下⽂被销毁；
-10. 如果bean实现了DisposableBean接口，Spring将调⽤它的destroy()接口⽅法。同样，如果bean使⽤destroy-method声明了销毁⽅法，该⽅法也会被调⽤。
+10. 如果bean实现了`DisposableBean`接口，Spring将调⽤它的`destroy()`接口⽅法。同样，如果bean使⽤destroy-method声明了销毁⽅法，该⽅法也会被调⽤。
 
 ```java
 public class Man implements BeanNameAware, ApplicationContextAware,
@@ -290,7 +300,7 @@ Spring从两个角度来实现自动化装配：
 
 !!! example "组件扫描"
     
-    ```java
+    ```java tab="@Component"
     @Component # 表明SgtPeppers作为组件类
     public class SgtPeppers implements CompactDisc {
         private String title = "Sgt. Pepper's Lonely Hearts Club Band";
@@ -299,12 +309,27 @@ Spring从两个角度来实现自动化装配：
             System.out.println("Playing " + title + " by " + artist);
         }
     }
+    ```
     
-    
+    ```java tab="@ComponentScan"
     @Configuration
     @ComponentScan  # 启用组件扫描
     public class CDPlayerConfig {
     }
+    ```
+    
+    ```java tab="spring-config.xml"
+    <beans xmlns="http://www.springframework.org/schema/beans"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xmlns:context="http://www.springframework.org/schema/context"
+      xmlns:c="http://www.springframework.org/schema/c"
+      xmlns:p="http://www.springframework.org/schema/p"
+      xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    
+      <context:component-scan base-package="soundsystem" />
+    
+    </beans>
     ```
     
     
@@ -330,7 +355,7 @@ Spring从两个角度来实现自动化装配：
 -->
 
 
-自动装配会在Spring应用上下文中寻找匹配的某个bean需求的其他bean。Spring的`@Autowired`注解，可以用在构造器上进行实例化，也可以用在属性的Setter方法上。
+自动装配会在Spring应用上下文中寻找匹配的某个bean需求的其他bean。Spring的`@Autowired`注解，可以用在构造器上进行实例化，也可以用在属性的Setter方法上。@Autowired注解表示在Spring IoC定位所有的Bean之后，这个字段需要按类型注入，这样IoC容器就会寻找资源，然后将其注入。
 
 !!! example "自动装配"
     
@@ -415,7 +440,21 @@ public class Bean1 {
 
 
 #### Java装配bean
+
 某些情况下不能使用自动化装配，例如将第三方库中的组件装配到应用中。这时，必须要采用显示配置的方式。由于其强大、类型安全并且对重构友好，JavaConfig是显示配置中较好的方案。
+
+
+`@Bean`注解会告诉Spring这个方法将会返回一个对象，该对象要注册为Spring应用上下文中的bean。
+
+```java
+@Bean(name="lonelyHeartsClubBand")
+public CompactDisc sgtPeppers() {
+    return new SgtPeppers();
+}
+```
+
+和其他Bean一样，它也可以通过`@Autowired`等注解注入别的Bean中
+
 
 #### XML装备bean
 
@@ -487,7 +526,8 @@ public class SpringDemo2 {
 <!--第一种：无参构造器的方式-->
 <bean id="bean1" class="com.spring.ioc.xmlbean.Bean1"/>
 <!--第二种：静态工厂的方式-->
-<bean id="bean2" class="com.spring.ioc.xmlbean.Bean2Factory" factory-method="createBean2"/>
+<bean id="bean2" class="com.spring.ioc.xmlbean.Bean2Factory" 
+        factory-method="createBean2"/>
 <!--第三种：实例工厂的方式-->
 <bean id="bean3Factory" class="com.spring.ioc.xmlbean.Bean3Factory"/>
 <bean id="bean3" factory-bean="bean3Factory" factory-method="createBean3"/>
@@ -505,24 +545,99 @@ id和name
 class用于设置一个类的完全路径名称，主要作用是IOC容器生成类的实例
 
 
-<hh>作用域</hh>
 
-Bean的作用域，使用scope属性配置
+
+
+
+
+
+
+
+#### 使用Profile
+
+使用@Profile注解可以在不同的环境中进行切换。例如切换不同的数据库分别让开发人员和测试人员来进行不同的测试。也可以通过XML的方式配置。
+
+```java tab="注解"
+@Bean(name="devDataSource")
+@Profile("dev")
+public DataSource getDevDataSource() throws Exception {
+    Properties props = new Properties();
+    props.getProperty("driver", "com.mysql.jdbc.Driver");
+    props.setProperty("url", "jdbc:mysql://localhost:3306/sm");
+    return BasicDataSourceFactory.createDataSource(props);
+}
+
+@Bean(name="testDataSource")
+@Profile("test")
+public DataSource getDevDataSource() throws Exception {
+    Properties props = new Properties();
+    props.getProperty("driver", "com.mysql.jdbc.Driver");
+    props.setProperty("url", "jdbc:mysql://localhost:3306/sm2");
+    return BasicDataSourceFactory.createDataSource(props);
+}
+```
+
+```xml tab="xml"
+<beans profile="dev">
+    <bean id="devDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver>
+        <property name="url" value="jdbc:mysql://localhost:3306/sm">
+        ...
+    </bean>
+</beans>
+
+<beans profile="test">
+    <bean id="devDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver>
+        <property name="url" value="jdbc:mysql://localhost:3306/sm2">
+        ...
+    </bean>
+</beans>
+```
+
+
+#### 加载属性文件
+
+属性文件(.properties)文件，也可以通过注解(@PropertySource)和XML方式加载。
+
+
+```java tab="注解"
+// 引入数据库配置文件
+@Configuration
+@PropertySource(value={"classpath:database-config.properties"},
+    ignoreResourceNotFound=true)
+public class ApplicationConfig {
+}
+
+
+// 使用引入属性文件的配置
+@Componenent
+public class DataSourceBean {
+    @Value("${jdbc.database.driver}")
+    private String driver = null;
+    
+    @Value("${jdbc.database.url}"
+    private String url = null;
+    ...
+}
+```
+
+```xml tab="xml"
+<context:property-placeholder ignore-resource-not-found="true"
+    location="classpath:database-config.properties"/>
+```
+
+
+#### Bean的作用域
+
+在默认的情况下，Spring IoC容器只会对一个Bean创建一个实例，这是由Spring的作用域所决定的。Spring提供了4中作用域，它会根据情况来决定是否生成新的对象：
 
 | 类别 | 说明 |
 | --- | --- |
-| singleton  | 默认的作用域，在整个应用中，只创建bean的一个实例 |
-| prototype | 每次注入或者通过Spring应用上下文获取的时候，都会创建一个新的bean实例 |
-| request  | 在Web应用中，为每个请求创建一个bean实例 |
-| session | 在Web应用中，为每个会话创建一个bean实例 |
-
-
-
-
-
-
-
-
+| 单例singleton  | 默认的作用域，在整个应用中，只创建bean的一个实例 |
+| 原型prototype | 每次注入或者通过Spring应用上下文获取的时候，都会创建一个新的bean实例 |
+| 请求request  | 在Web应用中，为每个请求创建一个bean实例 |
+| 会话session | 在Web应用中，为每个会话创建一个bean实例 |
 
 
 
@@ -546,102 +661,220 @@ Spring 3引⼊了Spring表达式语⾔（Spring Expression Language，SpEL），
 </bean>
 ```
 
+#### Spring2.5
+在Spring2.5版本中，引入了更多的Spring类注解： `@Component`， `@Service`， `@Controller`。`@Component`是一个通用的Spring容器管理的单例bean组件。而`@Repository`，`@Service`，`@Controller`就是针对不同的使用场景所采用的特定功能化的注解组件。
 
+
+| 注解 | 含义 | 备注 |
+| --- | --- | --- | 
+| `@Component` |	 最普通的组件，可以被注入到spring容器进行管理 | |
+| `@Repository`	 | 作用于持久层 | 常用于DAO |
+| `@Service`	 | 作用于业务逻辑层 | |
+| `@Controller`	 | 作用于表现层（spring-mvc的注解） | |
 
 ### 3 面向切面编程
 
-描述切面的常用术语有通知(advice)、切点(cut point)和连接点(join point)。
+面向切面编程(AOP)是Spring的一项重要功能。
 
-
-
-
-
-![aop_demo](figures/aop_demo.png)
-
-切面的工作被称为**通知**(Advice)。通知定义了切面是什么以及何时使用。除了描述切面要完成的工作，通知还解决了何时执行这个工作的问题。
-
-Spring切面可以应用5种类型的通知：
-
-- 前置通知(Before): 在目标方法被调用之前调用通知功能
-- 后置通知(After): 在目标方法完成之后调用通知，此时不会关心方法的输出是什么
-- 返回通知(After-returning): 在目标方法成功之后调用通知；
-- 异常通知(After-throwing): 在目标方法抛出异常后调用通知；
-- 环绕通知: 通知包裹了被通知的方法，在被通知的方法调用之前和调用之后执行自定义的行为；
-
-**连接点**(Join Point)是在应用执行过程中能够插入切面的一个点。这个点可以是调用方法时、抛出异常时、甚至修改一个字段时。切面代码可以利用这些点插入到应用的正常流程之中，并添加新的行为。
-
-如果说通知定义了切⾯的“什么”和“何时”的话， 那么**切点**(Point)就定义了“何处”。 切点的定义会匹配通知所要织⼊的⼀个或多个连接点。 我们通常使⽤明确的类和⽅法名称， 或是利⽤正则表达式定义所匹配的类和⽅法名称来指定这些切点。
-
-**切⾯**(Aspect)是通知和切点的结合。 通知和切点共同定义了切⾯的全部内容——它是什么， 在何时和何处完成其功能
-
-**织⼊**(Weaving)是把切⾯应⽤到⽬标对象并创建新的代理对象的过程。 切⾯在指定的连接点被织⼊到⽬标对象中。 在目标对象的生命周期里有多个点可以进行织入：
-
-- 编译期：切面在目标类编译时被织入。这种方式需要特殊的编译器。AspectJ的织入编译器就是以这种方式织入切面的。
-- 类加载期：切面在目标类加载到JVM时被织入。这种方式需要特殊的类加载器，它可以在目标类被引入应用之前增强该目标类的字节码。AspectJ 5的加载时织入(load-time)就支持以这种方式织入切面。
-- 运行期：切面在应用运行的某个时刻被织入。一般情况下，在织入切面时，AOP容器会为目标对象动态地创建一个代理对象。Spring AOP就是以这种方式织入切面的。
-
-
-下面是一个一般切面案例：它使用了前置通知，使用了ProxyFactoryBean(配置target和proxyInterfaces)。它对目标类的所有方法进行拦截。
-
-```java tab="aop_demo"
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:applicationContext.xml")
-public class aop_demo {
-    @Resource(name="studentDaoProxy")
-    private StudentDao studentDao;
+```java tab="Main"
+public class Main {
 
     @Test
-    public void demo1() {
-        studentDao.find();
-        studentDao.save();
-        studentDao.update();
-        studentDao.delete();
+    public void test() {
+        RoleService roleService = new RoleServiceImpl();
+        Interceptor interceptor = new RoleInterceptor();
+        RoleService proxy = ProxyBeanFactory.getBean(roleService, interceptor);
+        Role role = new Role(1L, "zhenhua", "lala");
+        System.out.println("测试afterthrowing方法");
+        role = null;
+        proxy.printRole(role);
+
     }
 }
 ```
 
-```xml tab="applicationContext.xml"
-<bean id="studentDao" class="com.imooc.aop.demo3.StudentDaoImpl"/>
-<bean id="mybeforeadvice" class="com.imooc.aop.demo3.MyBeforeAdvice"/>
-<bean id="studentDaoProxy" 
-      			class="org.springframework.aop.framework.ProxyFactoryBean">
-    <property name="target" ref="studentDao"/>
-    <property name="proxyInterfaces" value="com.imooc.aop.demo3.StudentDao"/>
-    <property name="interceptorNames" value="mybeforeadvice"/>
-    <!--使用CGLIB代理-->
-    <property name="optimize" value="true"/>
-</bean>
-```
 
-```java tab="MyBeforeAdvice"
-public class MyBeforeAdvice implements MethodBeforeAdvice {
-    public void before(Method method, Object[] objects, Object o) 
-        								throws Throwable {
-        System.out.println("before advice");
+```java tab="Interceptor"
+public interface Interceptor {
+    public void before(Object obj);
+    public void after(Object obj);
+    public void afterReturning(Object obj);
+    public void afterThrowing(Object obj);
+}
+
+public class RoleInterceptor implements Interceptor {
+    public void before(Object obj) {
+        System.out.println("准备打印角色信息");
+    }
+
+    public void after(Object obj) {
+        System.out.println("已经完成角色信息的打印处理");
+
+    }
+
+    public void afterReturning(Object obj) {
+        System.out.println("刚刚完成打印功能，一切正常");
+    }
+
+    public void afterThrowing(Object obj) {
+        System.out.println("打印功能异常，查看一下角色对象为空了吗？");
+
     }
 }
 ```
 
-```java tab="StudentDaoImpl"
-public class StudentDaoImpl implements StudentDao {
-    public void save() {
-        System.out.println("save");
-    }
+```java tab="RoleService"
+public interface RoleService {
+    public void printRole(Role role);
+}
 
-    public void update() {
-        System.out.println("update");
-    }
-
-    public void delete() {
-        System.out.println("delete");
-    }
-
-    public void find() {
-        System.out.println("find");
+public class RoleServiceImpl implements RoleService {
+    public void printRole(Role role) {
+        System.out.println(role);
     }
 }
 ```
 
+```java tab="ProxyBeanFactory"
+public class ProxyBeanFactory {
+
+    public static <T> T getBean(T obj, Interceptor interceptor) {
+        return (T) ProxyBeanUtil.getBean(obj, interceptor);
+    }
+}
+```
+
+```java tab="ProxyBeanUtil"
+public class ProxyBeanUtil implements InvocationHandler {
+    // 被代理的对象
+    private Object obj;
+
+    //拦截器
+    private Interceptor interceptor = null;
+
+
+    public static Object getBean(Object obj, Interceptor interceptor) {
+        ProxyBeanUtil _this = new ProxyBeanUtil();
+        _this.obj = obj;
+        _this.interceptor = interceptor;
+        return Proxy.newProxyInstance(obj.getClass().getClassLoader(),
+                     obj.getClass().getInterfaces(), _this);
+    }
+
+    public Object invoke(Object proxy, Method method, Object[] args) 
+                        throws Throwable {
+        Object retObj = null;
+        boolean exceptionFlag = false;
+        interceptor.before(obj);
+        try {
+            retObj = method.invoke(obj, args);
+        } catch (Exception e) {
+            exceptionFlag = true;
+        } finally {
+            interceptor.after(obj);
+        }
+
+        if (exceptionFlag) {
+            interceptor.afterThrowing(obj);
+        } else {
+            interceptor.afterReturning(obj);
+        }
+
+        return retObj;
+    }
+}
+```
+
+
+![aspect_demo](figures/aspect_demo.png)
+
+
+
+面向切面编程的常用术语有切面(aspect)、通知(advice)、切点(cut point)、连接点(join point)和织入(weaving)：
+
+* **切面**：贯穿多个对象的关注模块。例如事务管理，通常有@Aspect注解
+* **通知**：切面在特殊连接点采取的行为。Spring切面可以应用5种类型的通知：
+
+    - 前置通知(Before): 在目标方法被调用之前调用通知功能
+    - 后置通知(After): 在目标方法完成之后调用通知，此时不会关心方法的输出是什么
+    - 返回通知(After-returning): 在目标方法成功之后调用通知；
+    - 异常通知(After-throwing): 在目标方法抛出异常后调用通知；
+    - 环绕通知: 通知包裹了被通知的方法，在被通知的方法调用之前和调用之后执行自定义的行为；
+
+* **切点**：被切面拦截的方法。
+* **连接点**：是在应用执行过程中能够插入切面的一个点。这个点可以是调用方法时、抛出异常时、甚至修改一个字段时。切面代码可以利用这些点插入到应用的正常流程之中，并添加新的行为。
+* **织⼊**：把切⾯应⽤到⽬标对象并创建新的代理对象的过程。 切⾯在指定的连接点被织⼊到⽬标对象中。 在目标对象的生命周期里有多个点可以进行织入：
+
+    - 编译期：切面在目标类编译时被织入。这种方式需要特殊的编译器。AspectJ的织入编译器就是以这种方式织入切面的。
+    - 类加载期：切面在目标类加载到JVM时被织入。这种方式需要特殊的类加载器，它可以在目标类被引入应用之前增强该目标类的字节码。AspectJ 5的加载时织入(load-time)就支持以这种方式织入切面。
+    - 运行期：切面在应用运行的某个时刻被织入。一般情况下，在织入切面时，AOP容器会为目标对象动态地创建一个代理对象。Spring AOP就是以这种方式织入切面的。
+
+
+
+!!! example "Spring切面"
+
+    下面是一个一般切面案例：它使用了前置通知，使用了ProxyFactoryBean(配置target和proxyInterfaces)。它对目标类的所有方法进行拦截。
+    
+    ```java tab="aop_demo"
+    @RunWith(SpringJUnit4ClassRunner.class)
+    @ContextConfiguration("classpath:applicationContext.xml")
+    public class aop_demo {
+        @Resource(name="studentDaoProxy")
+        private StudentDao studentDao;
+    
+        @Test
+        public void demo1() {
+            studentDao.find();
+            studentDao.save();
+            studentDao.update();
+            studentDao.delete();
+        }
+    }
+    ```
+    
+    ```xml tab="applicationContext.xml"
+    <bean id="studentDao" class="com.imooc.aop.demo3.StudentDaoImpl"/>
+    <bean id="mybeforeadvice" class="com.imooc.aop.demo3.MyBeforeAdvice"/>
+    <bean id="studentDaoProxy" 
+          			class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="studentDao"/>
+        <property name="proxyInterfaces" value="com.imooc.aop.demo3.StudentDao"/>
+        <property name="interceptorNames" value="mybeforeadvice"/>
+        <!--使用CGLIB代理-->
+        <property name="optimize" value="true"/>
+    </bean>
+    ```
+    
+    ```java tab="MyBeforeAdvice"
+    public class MyBeforeAdvice implements MethodBeforeAdvice {
+        public void before(Method method, Object[] objects, Object o) 
+            								throws Throwable {
+            System.out.println("before advice");
+        }
+    }
+    ```
+    
+    ```java tab="StudentDaoImpl"
+    public class StudentDaoImpl implements StudentDao {
+        public void save() {
+            System.out.println("save");
+        }
+    
+        public void update() {
+            System.out.println("update");
+        }
+    
+        public void delete() {
+            System.out.println("delete");
+        }
+    
+        public void find() {
+            System.out.println("find");
+        }
+    }
+    ```
+
+<!--
 对目标类的所有方法进行拦截，不够灵活，在实际开发中长采用带有切点的切面。
 
 常用的实现类有
@@ -727,7 +960,15 @@ public class SpringDemo5 {
 	<property name="interceptorNames" value="myAroundAdvice"/>
 </bean>
 ```
+-->
 
+
+在Spring中有4种方式去实现AOP的拦截功能：
+
+* 使用`ProxyFactoryBean`和对应的接口实现AOP
+* 使用XML配置AOP
+* 使用`@AspectJ`注解驱动切面：主流方式
+* 使用AspectJ注入切面
 
 #### AspectJ
 
@@ -753,35 +994,656 @@ execution(<访问修饰符>?<返回类型><方法名>(<参数>)<异常>)
 如果要在XML来装配bean的话，那么需要Spring aop的命名空间中的`<aop: aspectj-autoproxy>`元素。
 
 
+
+!!! example ""
+    
+    ```java tab="main"
+    public class Main {
+    
+        @Test
+        public void test() {
+            ApplicationContext context = new 
+                AnnotationConfigApplicationContext(AopConfig.class);
+            RoleService roleService = 
+                context.getBean(RoleService.class);
+            roleService.printRole(new Role(1L, "zhenhua", "lala"));
+            roleService.printRole(new Role(1L, "zhenhua", "lala"), 5);
+        }
+    }
+    ```
+    
+    ```java tab="AopConfig"
+    @Configuration
+    @ComponentScan(basePackages = {"com.exercise.spring.aop_aspectJ"})
+    @EnableAspectJAutoProxy
+    public class AopConfig {
+        @Bean
+        public RoleAspect getRoleAspect() {
+            return new RoleAspect();
+        }
+    }
+    ```
+    
+    ```java tab="RoleAspect"
+    @Aspect
+    public class RoleAspect {
+           @Before("execution(* com.exercise.spring.aop_aspectJ
+                .RoleServiceImpl.printRole(..))")
+        public void before() {
+            System.out.println("准备打印角色信息");
+        }
+    
+        @After("execution(* com.exercise.spring.aop_aspectJ
+            .RoleServiceImpl.printRole(..))")
+        public void after() {
+            System.out.println("已经完成角色信息的打印处理");
+        }
+    
+        @AfterReturning("execution(* com.exercise.spring.aop_aspectJ
+            .RoleServiceImpl.printRole(..))")
+        public void afterReturning() {
+            System.out.println("刚刚完成打印功能，一切正常");
+        }
+    
+        @AfterThrowing("execution(* com.exercise.spring.aop_aspectJ
+            .RoleServiceImpl.printRole(..))")
+        public void afterThrowing() {
+            System.out.println("打印功能异常，查看一下角色对象为空了吗？");
+        }
+    
+        @Before("execution(* com.exercise.spring.aop_aspectJ
+            .RoleServiceImpl.printRole(..))" + "&&args(role, sort)")
+        public void before(Role role, int sort) {
+            System.out.println("准备打印角色信息");
+        }
+    }
+    ```
+    
+    ```java tab="RoleService"
+    public interface RoleService {
+        public void printRole(Role role);
+        public void printRole(Role role, int sort);
+    }
+    @Component
+    public class RoleServiceImpl implements RoleService {
+        public void printRole(Role role) {
+            System.out.println(role);
+        }
+    
+        public void printRole(Role role, int sort) {
+            System.out.println(role.toString() + "sort: " + sort);
+        }
+    }
+    ```
+
+
 #### 在XML中声明切面
 
 在Spring的aop命名空间中，提供了多个元素用来在XML中声明切面。
 
-| AOP配置元素 | 用途 |
-| --- | --- |
-| `<aop: config>` | 顶层的AOP配置元素 |
-| `<aop: advisor>` | 定义AOP通知器 |
-| `<aop: after/after-returning/after-throwing>` | 定义AOP后置/返回/异常通知   | 
-| `<aop: around/before>` | 定义AOP环绕/前置通知 |
-| `<aop: aspect>` | 定义一个切面 |
-| `<aop: pointcut>` | 定义一个切点 |
+| AOP配置元素 | 用途 | 备注 |
+| --- | --- | --- | 
+| `<aop: config>` |  顶层的AOP配置元素 |  |
+| `<aop: advisor>` |  定义AOP通知器 | 不常使用 |
+| `<aop: after/after-returning/after-throwing>` |  定义AOP后置/返回/异常通知   |   |
+| `<aop: around/before>` | 定义AOP环绕/前置通知 |  |
+| `<aop: aspect>` | 定义一个切面 |  |
+| `<aop: pointcut>` | 定义一个切点 |  |
 
 !!! example
 
-    ```xml
-    <aop: config>
-        <aop:aspect ref='audience'>
-        
-            <aop:before pointcut="execution(** concert.Performance.perform(..))" 
-                method="silenceCellPhones"/>
+    ```java tab="java"
+    ApplicationContext context = new 
+            ClassPathXmlApplicationContext("ApplicationContext_Spring_aop_aspectJ.xml");
+    RoleService roleService = context.getBean(RoleService.class);
+    roleService.printRole(new Role(1L, "zhenhua", "lala"));
+    ```
+
+    ```xml tab="XML"
+    <bean id="roleAspect" class="com.exercise.spring.aop_aspectJ.RoleAspect"/>
+    <bean id="roleServiceImpl" class="com.exercise.spring.aop_aspectJ.RoleServiceImpl"/>
+
+    <aop:config>
+        <aop:aspect ref="roleAspect">
+            <aop:before pointcut="execution(* com.exercise.spring.aop_aspectJ
+                    .RoleServiceImpl.printRole(..))" method="before"/>
+            <aop:after pointcut="execution(* com.exercise.spring.aop_aspectJ
+                    .RoleServiceImpl.printRole(..))" method="after"/>
+            <aop:after-returning pointcut="execution(* com.exercise.spring.aop_aspectJ
+                    .RoleServiceImpl.printRole(..))" method="afterReturning"/>
+            <aop:after-throwing pointcut="execution(* com.exercise.spring.aop_aspectJ
+                    .RoleServiceImpl.printRole(..))" method="afterThrowing"/>
         </aop:aspect>
     </aop:config>
     ```
-
-### 通过Spring和JDBC征服数据库
-
-为了避免持久化的逻辑分散到应用的各个组件中，最好将数据访问的功能放到一个或多个专注于此项任务的组件中。这样的组件通常称为**数据访问对象**(data access object, DAO)或Repository。
+    
 
 
-### 事务
+### 4 数据库编程   
+
+<!--为了避免持久化的逻辑分散到应用的各个组件中，最好将数据访问的功能放到一个或多个专注于此项任务的组件中。这样的组件通常称为**数据访问对象**(data access object, DAO)或Repository。-->
+
+
+
+#### Spring-MyBatis
+目前大部分的Java互联网项目，都是用Spring MVC+ Spring + MyBatis搭建平台的。使用Spring IoC可以有效管理各类Java资源，达到热插拔的功能；通过AOP框架，数据库事务可以委托给Spring处理，消除很大一部分的事务代码，配合MyBatis的高灵活、可配置、可优化SQL等特性，完全可以构建高性能的大型网站。
+
+MyBatis社区开发了MyBatis-Spring项目([Maven主页](https://mvnrepository.com/artifact/org.mybatis/mybatis-spring)).
+
+`SqlSessionFactory`是产生`SqlSession`的基础，在MyBatis-Spring项目中提供了`SqlSessionFactoryBean`去支持`SqlSessionFactory`的配置。
+
+```xml
+<bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource"/>
+    <property name="configLocation" value="classpath:mybatis-spring.xml"/>
+</bean>
+```
+
+MyBatis的运行之需要提供Mapper的接口，其实现是由MyBatis的动态代理实现的，所以Spring也没有办法为其实现Mapper类并注册。通过扫描的方式去配置Mapper类是最简单的方式。
+
+```xml
+<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="com.exercise.spring.mybatis_spring" />
+    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+    <!-- 指定标注才扫描成为Mapper -->
+    <property name="annotationClass" value="org.springframework
+                        .stereotype.Repository" />
+</bean>
+```
+
+!!! example "Spring-MyBatis"
+      
+    [完整代码-Private](https://github.com/techlarry/java-web-Exercise/tree/master/src/com/exercise/spring/mybatis_spring)
+    
+    将[MyBatis的例子](MyBatis.md)改成Spring-MyBatis项目。其他代码基本相同。主要区别有：
+    
+    * 在RoleMapper类上标注@Respository
+    * 将数据库的配置从mybatis-config.xml转移到spring-config.xml中
+    * 在spring-config.xml中配置了SqlSessionFactory和MapperScannerConfigurer
+
+    ```java tab="RoleMapper"
+    @Repository
+    public interface RoleMapper {
+        public Role getRole(Long id);
+        public void deleteRole(Long id);
+        public int getRoleNumber();
+        public void updateRole(Role role);
+        public void insertRole(Role role);
+        public void updateRoleInfo(@Param("id") Long id, @Param("roleName") 
+            String roleName, @Param("note") String note);
+    }
+    ```
+    
+    ```java tab="Main"
+    public class Main {
+    
+        @Test
+        public void testSpringMybatis() {
+            ApplicationContext context = new ClassPathXmlApplicationContext("ApplicationContext_Spring_mybatis_spring.xml");
+            RoleMapper mapper = context.getBean(RoleMapper.class);
+            Role role = mapper.getRole(4L);
+            System.out.println(role);
+        }
+    }
+    ```
+    
+    ```xml tab="mybatis-spring.xml"
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <!DOCTYPE configuration
+      PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+      "http://mybatis.org/dtd/mybatis-3-config.dtd">
+    
+    <configuration>
+        <typeAliases>
+            <typeAlias alias="role" type="com.exercise.spring.mybatis_spring.Role"/>
+        </typeAliases>
+    
+        <mappers>
+            <mapper resource="com/exercise/spring/mybatis_spring/RoleMapper.xml"/>
+        </mappers>
+    </configuration>
+    ```
+    
+    ```xml tab="ApplicationContext_Spring_mybatis_spring.xml"
+    <?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:context="http://www.springframework.org/schema/context"
+           xmlns:aop="http://www.springframework.org/schema/aop"
+           xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    
+        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+            <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+            <property name="url" value="jdbc:mysql://localhost:3306/chapter12?useUnicode=true&amp;characterEncoding=utf-8"/>
+            <property name="username" value="root"/>
+            <property name="password" value="imLarry!"/>
+        </bean>
+    
+        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+            <property name="dataSource" ref="dataSource"/>
+            <property name="configLocation" value="classpath:mybatis-spring.xml"/>
+        </bean>
+    
+        <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+            <property name="basePackage" value="com.exercise.spring.mybatis_spring" />
+            <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+            <!-- 指定标注才扫描成为Mapper -->
+            <property name="annotationClass" value="org.springframework.stereotype.Repository" />
+        </bean>
+    </beans>
+    ```
+
+### 5 事务
+
+#### 事务管理器
+
+在Spring中事务是通过事务管理器接口`PlatformTransactionManager`进行管理的。
+
+```java
+public interface PlatformTransactionManager {
+    // 根据指定的传播行为，返回当前活动的事务或创建一个新事务。
+    TransactionStatus getTransaction(TransactionDefinition definition);
+    // 使用事务目前的状态提交事务
+    void commit(TransactionStatus status);
+    // 回滚事务
+    void rollback(TransactionStatus status);
+```
+
+在Spring中，有多种事务管理器的实现，常用的是`DataSourceTransactionManager`。
+
+
+![spring-transaction-class-diagram](figures/spring-transaction-class-diagram.jpg)
+
+事务定义器`TransactionDefinition`用于获取事务的属性：传播行为，隔离级别，超时时间和是否只读。
+
+```java
+public interface TransactionDefinition {
+    // 返回事务的传播行为
+    int getPropagationBehavior(); 
+    // 返回事务的隔离级别，事务管理器根据它来控制另外一个事务可以看到本事务内的哪些数据
+    int getIsolationLevel(); 
+    //返回事务的名字
+    String getName()；
+    // 返回事务的超时时间
+    int getTimeout();  
+    // 返回是否为只读事务。
+    boolean isReadOnly();
+} 
+```
+
+
+
+`TransactionStatus`接口用于设置和查询事务的状态：新事务、只回滚、完成。
+
+```java
+public interface TransactionStatus{
+    boolean isNewTransaction(); // 是否是新的事务
+    boolean hasSavepoint(); // 是否有恢复点
+    void setRollbackOnly();  // 设置为只回滚
+    boolean isRollbackOnly(); // 是否为只回滚
+    boolean isCompleted; // 是否已完成
+} 
+```
+
+一般用XML的方式配置事务管理器。
+
+```xml
+<!--配置数据源事务管理器 -->
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+.... 
+</bean>
+<bean id="transactionManager" class="org.springframework.jdbc
+                .datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"/>
+</bean>
+```
+    
+#### 声明式事务
+
+[[详见Spring官方文档](https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#spring-data-tier)]
+
+使用声明式事务非常简单，之需要在类和方法上加上@`@Transactional`注解，并在配置上类加上`@EnableTransactionManagement`即可。其中`@Transactional`注解的可配置项如下：
+
+
+| 配置项 | 含义 |  备注 |
+| --- | --- | --- |
+| transactionManager | 定义事务管理器 |   |
+| isolation | 隔离级别 |    |
+| propagation | 传播行为   |   |
+| timeout | 超时时间 | 单位为秒，当超时时，会引发异常，默认会导致事务回滚 |
+| readOnly | 是否开启只读事务 | 默认为false |
+
+Spring的声明式事务是通过AOP代理实现的，其事务通知(transactional advice)是由XML或者注解提供的。
+
+![](figures/conceptual_view_of_transaction.png)
+
+
+在Spring IoC容器初始化时，Spring会读入注解或者XML配置的事务信息，并且保存到一个事务定义类里面(`TransactionDefinition`接口的子类)，以备将来使用。当运行时会让Spring拦截注解标注的某一个方法或者类的所有方法。
+
+![@transactiona](figures/@transactional.png)
+
+
+要使用`@Transactional`注解，需要配置注解驱动
+
+```xml
+<tx:annotation-driven transaction-manager="transactionManager"/>
+```
+
+也可以使用XML方式，使用`<tx:advice/>`配置事务设置：和`@Transactional`注解类似，配置传播行为、隔离级别、事务是否可读、事务超时时间等。
+
+!!! example "事务的XML配置"
+
+    [代码](https://github.com/techlarry/java-web-Exercise/tree/master/src/com/exercise/spring/transaction)
+
+    `<tx:advice/>`配置了所有以`get`开始的方法都在只读事务的环境中执行，所以其他方法都以默认的事务环境中执行。
+    
+    ```xml tab="xml"
+    <!-- this is the service object that we want to make transactional -->
+    <bean id="fooService" class="com.exercise.spring
+        .transaction.FooServiceImpl"/>
+    <!-- the transactional advice (what 'happens'; see the <aop:advisor/> bean below) -->
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <!-- the transactional semantics... -->
+        <tx:attributes>
+            <!-- all methods starting with 'get' are read-only -->
+            <tx:method name="get*" read-only="true"/>
+            <!-- other methods use the default transaction settings (see below) -->
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+    
+    <!-- ensure that the above transactional advice runs for any execution\
+        of an operation defined by the FooService interface -->
+    <aop:config>
+        <aop:pointcut id="fooServiceOperation" 
+            expression="execution(* com.exercise.spring.transaction.FooService.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="fooServiceOperation"/>
+    </aop:config>
+    
+    <!-- don't forget the DataSource -->
+    <bean id="dataSource" class="org.springframework.jdbc
+                .datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/
+                chapter12?useUnicode=true&amp;characterEncoding=utf-8"/>
+        <property name="username" value="root"/>
+        <property name="password" value="imLarry!"/>
+    </bean>
+
+    <!-- similarly, don't forget the PlatformTransactionManager -->
+    <bean id="txManager" class="org.springframework.jdbc
+                .datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    ```
+    
+    ```java tab="FooService"
+    public interface FooService {
+    
+        Foo getFoo(String fooName);
+    
+        Foo getFoo(String fooName, String barName);
+    
+        void insertFoo(Foo foo);
+    
+        void updateFoo(Foo foo);
+    }
+    ```
+
+
+注解`@Transactional`隔离级别的默认值是`Isolation.DEFAULT`，其含义是默认的，随数据库默认值的变化而变化。MySQL默认的隔离别别是可重复读。
+
+| 隔离级别 | 含义 |
+| --- | --- |
+| ISOLATION\_DEFAULT | 使用后端数据库默认的隔离级别。 |
+| ISOLATION\_READ\_UNCOMMITTED | 最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读。 |
+| ISOLATION\_READ\_COMMITTED | 允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复读仍有可能发生。 |
+| ISOLATION\_REPEATABLE\_READ | 对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生。 |
+| ISOLATION\_SERIALIZABLE | 最高的隔离级别，完全服从ACID的隔离级别，确保阻止脏读、不可重复读以及幻读，也是最慢的事务隔离级别，因为它通常是通过完全锁定事务相关的数据库表来实现的。 |
+
+
+事务的传播行为是指方法之间的调用事务策略的问题。
+
+| 传播行为 | 含义 |
+| --- | --- |
+| PROPAGATION_REQUIRED | 表示当前方法必须运行在事务中。如果当前事务存在，方法将会在该事务中运行。否则，会启动一个新的事务 |
+| PROPAGATION_SUPPORTS | 表示当前方法不需要事务上下文，但是如果存在当前事务的话，那么该方法会在这个事务中运行 |
+| PROPAGATION_MANDATORY | 表示该方法必须在事务中运行，如果当前事务不存在，则会抛出一个异常 |
+| PROPAGATION_REQUIRED_NEW | 表示当前方法必须运行在它自己的事务中。一个新的事务将被启动。如果存在当前事务，在该方法执行期间，当前事务会被挂起。如果使用JTATransactionManager的话，则需要访问TransactionManager |
+| PROPAGATION_NOT_SUPPORTED | 表示该方法不应该运行在事务中。如果存在当前事务，在该方法运行期间，当前事务将被挂起。如果使用JTATransactionManager的话，则需要访问TransactionManager |
+| PROPAGATION_NEVER | 表示当前方法不应该运行在事务上下文中。如果当前正有一个事务在运行，则会抛出异常 |
+| PROPAGATION_NESTED | 表示如果当前已经存在一个事务，那么该方法将会在嵌套事务中运行。嵌套的事务可以独立于当前事务进行单独地提交或回滚。如果当前事务不存在，那么其行为与PR OPAGATION\_REQUIRED一样。注意各厂商对这种传播行为的支持是有所差异的。可以参考资源管理器的文档来确认它们是否支持嵌套事务 |
+    
+    
+
+!!! example "在Spring+MyBatis组合中使用事务"
+
+    ```xml tab="xml"
+    	<!--启用扫描机制，并指定扫描对应的包-->
+    	<context:annotation-config />
+    	<context:component-scan base-package="com.exercise.spring.mybatis_spring_transaction" />
+    
+    	<!-- 数据库连接池 -->
+    	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+    		<property name="url" value="jdbc:mysql://localhost:3306/chapter13"/>
+    		<property name="username" value="root" />
+    		<property name="password" value="imLarry!" />
+    	</bean>
+    
+    	<!-- 集成MyBatis -->
+    	<bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    		<property name="dataSource" ref="dataSource" />
+             <!--指定MyBatis配置文件-->
+    		<property name="configLocation" value="classpath:/com/exercise/spring/mybatis_spring_transaction/mybatis-config.xml" />
+    	</bean>
+    
+    	<!-- 事务管理器配置数据源事务 -->
+    	<bean id="transactionManager"
+    		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    		<property name="dataSource" ref="dataSource" />
+    	</bean>
+    
+    	<!-- 使用注解定义事务 -->
+    	<tx:annotation-driven transaction-manager="transactionManager" />
+    
+    	<!-- 采用自动扫描方式创建mapper bean -->
+    	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    	   <property name="basePackage" value="com.exercise.spring.mybatis_spring_transaction" />
+    	   <property name="sqlSessionFactoryBeanName" value="SqlSessionFactory" />
+    	   <property name="annotationClass" value="org.springframework.stereotype.Repository" />
+    	</bean>
+    	
+    </beans>
+    ```
+    
+    ```java tab="RoleMapper"
+    @Repository
+    public interface RoleMapper {
+    	public int insertRole(Role role);
+    }
+    ```
+    
+    ```java tab="RoleListServiceImpl"
+    @Service
+    public class RoleListServiceImpl implements RoleListService {
+    	@Autowired
+    	private RoleService roleService = null;
+    	Logger log = Logger.getLogger(RoleListServiceImpl.class);
+    	@Override
+    	@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
+    	public int insertRoleList(List<Role> roleList) {
+    		int count = 0;
+    		for (Role role : roleList) {
+    			try {
+    				count += roleService.insertRole(role);
+    			} catch (Exception ex) {
+    				log.info(ex);
+    			}
+    		}
+    		return count;
+    	}
+    }
+    ```
+    
+    
+### 7 Spring MVC
+
+Spring Web MVC是Spring提供给Web应用的框架设计。Spring MVC是一种基于Servlet的技术，它提供了核心控制器DispatcherServlet和相关的组件，并制定了松散的结构，以适合各种灵活的需要。
+    
+核心组件 
+    
+* DispatcherServlet：前置控制器
+* Handler 处理器，完成具体业务
+* HandlerMapping 将请求映射到handler
+* HandlerInterceptor 处理器拦截器
+* HandlerExecutionChain 处理器执行链
+* HandlerAdapter 处理器适配器
+* ModelAndView 装在模型数据和试图信息
+* ViewResolver 视图解析器
+
+
+SpringMVC实现流程
+
+1. 客户端请求被DispatcherServlet接收。
+2. DispatcherServlet将请求映射到Handler。
+3. 生成Handler以及HandlerInterceptor。
+4. 返回HandlerExecutionChain（Handler+HandlerInterceptor）。
+5. DispatcherServlet通过HandlerAdapter执行Handler。
+6. 返回一个ModelAndView。
+7. DispatcherServlet通过ViewResolver进行解析。
+8. 返回填充了模型数据的View，响应给客户端。
+
+
+![spring_mvc_process](figures/spring_mvc_process.png)
+
+
+SpringMVC的使用
+
+大部分组件由框架提供，开发者只需通过配置进行关联。
+
+开发者只需手动编写Handler，View。
+
+#### 控制器
+
+注解@Controller可以将类标注为控制器。@RequestMapping可以配置在类或者方法之上，指定URI。当Spring MVC启动的时候，首先回去解析@Controller中的@RequestMapping配置，再结合配置的拦截器，就会组成多个拦截器和一个控制器的形式，存放到一个HandlerMapping中去。
+
+```java 
+public @interface RequestMapping {
+    String name() default ""; //请求路径
+    
+    @AliasFor("path")
+    String[] value() default {}; //请求路径，可以是数组
+    
+    @AliasFor("value")
+    String[] path() default {}; //请求路径，数组
+    
+    RequestMethod[] method() default {}; // 请求类型：post/get
+    
+    String[] params() default {}; // 请求参数
+    ...
+}
+```
+
+
+
+控制器开发是Spring MVC的核心内容，其步骤一般会分为3步：获取请求参数，处理业务逻辑，绑定模型和视图
+
+##### 获取请求参数
+
+获取请求参数的方法有很多，但是不建议使用Servlet容器提供的API，因为这样控制器会依赖于Servlet容器，不利于扩展和测试。实际上Spring MVC会自动解析session和request，使用注解@RequestParam获取HTTP请求参数更加好。
+
+!!! example "获取请求参数"
+    
+    ```java tab="使用Servlet API"
+    @RequestMapping(value="/index2", method=RequestMethod.GET)
+    public ModelAndView index2(HttpSession session, HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("index");
+        return mv;
+    }
+    ```
+    
+    ```java tab="使用@RequestParam"
+    @RequestMapping(value="/index2", method=RequestMethod.GET)
+    public ModelAndView index2(@RequestParam("id") Long id) {
+        System.out.println("params[id] = " + id);
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("index");
+        return mv;
+    }
+    ```
+    
+一般而言，Spring MVC会默认使用JstlView进行渲染，也就是将查询出来的模型绑定到JSTL(JSP标准标签库)中，这样通过JSTL就可以把数据模型在JSP中读出展示数据了。但是目前在前端技术中，普遍使用Ajax技术，SpringMVC同样提供了很好的支持
+
+```java
+@RequestMaping(value="/getRole", method=RequestMethod.GET)
+public ModelAndView getRole(@RequestParam("id") Long id) {
+    Role role = roleService.getRole(id);
+    ModelAndView mv = new ModelAndView();
+    mv.addObject("role", role);
+    mv.setView(new MappingJackson2JsonView());
+    return mv;
+}
+```
+
+
+
+
+    
+#### 数据绑定
+
+将HTTP请求中的参数绑定到Handler业务方法的形参
+
+![](figures/15605003486341.jpg)
+
+
+#### 拦截器
+
+[过滤器](Head First Servlets and JSP.md#8)
+
+拦截器是指通过统一拦截从浏览器发往服务器的请求来完成功能的增强。可以解决请求的共性问题：乱码、权限验证。
+
+
+
+
+拦截器是使用JDK动态代理实现的，拦截的是对应调用方法的拦截。
+过滤器是使用Filter实现的，拦截的是request对象。
+
+Spring MVC也可以使用拦截器对请求进行拦截处理，用户可以自定义拦截器来实现特定的功能，自定义的拦截器必须实现HandlerInterceptor接口
+
+* preHandle(): 这个方法在业务处理器处理请求之前被调用，在该方法中对用户请求request进行处理
+* 如果程序员决定该拦截器对请求进行拦截处理后还要调用其他的拦截器，或者是业务处理器去进行处理，则返回true；如果程序员决定不需要再调用其他组件去处理请求，则返回false；
+* postHandle():这个方法在业务处理器处理完请求后，但是DispatcherServlet向客户端返回响应前被调用，在该方法中对用户请求request进行处理
+* afterCompletion():在DispatcherServlet完全处理完请求后被调用，可以在该方法中进行一些资源清理的操作
+
+![HandlerInterceptor](figures/HandlerInterceptor.png)
+
+```xml
+<!-- 拦截器的注册 -->
+<mvc:interceptors>
+    <mvc:interceptor>
+        <mvc:mapping path="/user/**"/>
+        <!--exclude-mapping在所有拦截中进行排除，一般在通配符会有意义。-->
+        <mvc:exclude-mapping path="/user/updatebackground/*"/>
+        <bean class="com.imooc.core.LoginInterceptor"/>
+    </mvc:interceptor>
+</mvc:interceptors>
+```
+
+![Screen Shot 2019-06-15 at 2.15.38 P](figures/Screen%20Shot%202019-06-15%20at%202.15.38%20PM.png)
+
+
+### 常见问题
+
+#### NoSuchBeanDefinitionException
+
+查看类有没有被扫描到。需要注意的是`<context:component-scan base-package>`中通配符`**`可以匹配任意class文件和包，而通配符`*`只能匹配，直接不用通配符匹配路径下任意文件和包。
+
+查看事务设置 `<tx:annotation-driven/>`，设置proxy-target-class=true使用CGLIB代理。[[stackoverflow](https://stackoverflow.com/questions/28917845/spring-autowired-bean-not-found-no-qualifying-bean-of-type-found)]
+
+#### ibatis.binding.BindingException
+
+查看一下`<mapper namespace=>`设置
+
 

@@ -1,4 +1,8 @@
-### CMU10601 
+---
+title: CMU10601
+toc: false
+date: 2017-07-07
+---
 
 * [1 Intro to ML](1 Intro to ML.md)
 * [2 Decision Tree learning](2 Decision Tree learning.md)

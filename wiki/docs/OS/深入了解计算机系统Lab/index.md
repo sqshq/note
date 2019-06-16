@@ -1,4 +1,8 @@
-### 深入了解计算机系统Lab 
+---
+title: 深入了解计算机系统Lab
+toc: false
+date: 2017-07-07
+---
 
 * [Lab1 Data Lab](Lab1 Data Lab.md)
 * [Lab3 Attack Lab](Lab3 Attack Lab.md)

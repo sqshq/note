@@ -1,4 +1,5 @@
 import os
+import time
 import codecs
 import re
 
@@ -15,6 +16,20 @@ TOP_CATEGORY = {'Java', 'Algorithm', 'OS', 'Big Data'}
 
 # escape these files when scanning
 INVALID_FILES = {'index.md'}
+
+# 当前时间
+CURRTIME = "2017-07-07" 
+
+CURRTIMES = time.strftime("%Y-%m-%d", time.localtime())
+
+# 文件开始格式
+FILEMETA = """---
+title: %s
+toc: false
+date: %s
+---
+
+"""
 
 def get_wiki_site():
     cur_path = os.getcwd()
@@ -63,8 +78,9 @@ def reindex(path):
 	# 生成一个导航文件
 	if books:  # 生成书的导航
 		index_books = create_index_books(books)
-		if path == os.path.join(get_wiki_site(), 'docs'):
-			filename = '目录.md'
+		if path == os.path.join(get_wiki_site(), 'docs'): ## 这个是总目录
+			filename = '目录.md'   
+			index_books = replace_space(index_books)  #把路径中的空格替换
 		else:
 			filename = 'index.md'
 		write_index_books(os.path.join(path, filename), index_books)
@@ -75,13 +91,26 @@ def reindex(path):
 		write_index_chapters(path, index_chapters)
 		return index_chapters
 
+def replace_space(string):
+	"""
+	将路径中的空格替换成%20
+	"""
+	new_string = ""
+	for line in string.split('\n'):
+		match = re.search(r"\(.*\)", line)
+		if match:
+			revised = re.sub(r"\s", r"%20", match.group())
+			line = re.sub(r"\(.*\)", revised, line)
+		new_string += line + '\n'
+	return new_string
+
 
 def write_index_books(path, contents):
 	"""
 	把书本/课程导航写入文件
 	"""
 	category = path.split(r'/')[-1]
-	title = '### %s \n\n' % category
+	title =  FILEMETA % (category, CURRTIME)
 	with codecs.open(path, mode='w', encoding='utf-8') as f:
 		f.write(title + contents)
 
@@ -103,7 +132,7 @@ def write_index_chapters(path, contents):
 	把章节导航写入文件
 	"""
 	book = path.split(r'/')[-1]
-	title = '### %s \n\n' % book
+	title = FILEMETA % (book, CURRTIME)
 	with codecs.open(os.path.join(path, 'index.md'), mode='w', encoding='utf-8') as f:
 		f.write(title + contents)
 

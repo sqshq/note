@@ -1,4 +1,8 @@
-### 剑指Offer 
+---
+title: 剑指Offer
+toc: false
+date: 2017-07-07
+---
 
 * [solution](solution.md)
 * [2 ⾯试需要的基础知识](2 ⾯试需要的基础知识.md)

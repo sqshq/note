@@ -1,4 +1,8 @@
-### Head First设计模式 
+---
+title: Head First设计模式
+toc: false
+date: 2017-07-07
+---
 
 * [1 Strategy Pattern](1 Strategy Pattern.md)
 * [2 Observer Pattern](2 Observer Pattern.md)
@@ -14,4 +18,5 @@
 * [12 Compound Patterns](12 Compound Patterns.md)
 * [13 Better Living with Patterns](13 Better Living with Patterns.md)
 * [14 Builder Pattern](14 Builder Pattern.md)
+* [15 Chain Of Responsibility](15 Chain Of Responsibility.md)
 

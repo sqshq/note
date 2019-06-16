@@ -310,8 +310,7 @@ WHERE Vendors.vend_id = Products.vend_id;
 SELECT vend_name, prod_name, prod_price
 FROM Vendors INNER JOIN Products
   ON Vendors.vend_id = Products.vend_id;
-
-
+```
 
 
 
@@ -339,6 +338,7 @@ INSERT INTO Customers（cust_id, cust_name, cust_address,
 ```
 
 !!! tip "总是使用列的列表"
+
     不要使用没有明确给出列的INSERT语句。给出列能使SQL代码继续发挥作用，即使表结构发生了变化。
 
 ### 16 更新和删除数据
@@ -347,7 +347,7 @@ INSERT INTO Customers（cust_id, cust_name, cust_address,
 
 ```sql
 UPDATE Customers
-SET cust_email = 'kim@jsadfl.com', cust_contact = 'Sam Roberts',
+SET cust_email = 'kim@jsadfl.com', cust_contact = 'Sam Roberts'
 WHERE cust_id = '1000005';
 ```
 
@@ -534,6 +534,10 @@ ROLLBACK TO delete1;
 
 ### 22 高级SQL特性
 #### 约束
+外键是表中的一列，其值必须列在另一表的主键中。外键可以使得两张表关联，保证数据的一致性。外键使用的条件：
+
+* 外键列必须建立了索引。MySQL较新版本会在建立外键时自动创建索引。
+* 外键关系的两个列的数据类型必须相似。例如int/tinyint可以，但是int/char不可以。
 
 顾客信息存储在Customers表中。Orders表中的订单通过顾客ID与Customers表中的特定行相关联。
 
@@ -559,15 +563,51 @@ FOREIGN KEY (cust_id) REFERENCES Customers(cust_id);
 
 
 #### 索引
+
+索引用来排序数据以加快搜索和排序操作的速度。
+
+在开始创建索引前，应该记住以下内容。
+
+* 索引改善检索操作的性能，但降低了数据插入、修改和删除的性能。 在执行这些操作时，DBMS 必须动态地更新索引。
+* 索引数据可能要占用大量的存储空间。 
+* 并非所有数据都适合做索引。取值不多的数据（如州）不如具有更多可能值的数据（如姓或名），能通过索引得到那么多的好处。 
+* 索引用于数据过滤和数据排序。如果你经常以某种特定的顺序排序数据，则该数据可能适合做索引。 
+* 可以在索引中定义多个列（例如，州加上城市）。这样的索引仅在以州加城市的顺序排序时有用。如果想按城市排序，则这种索引没有用处。
+
+索引用CREATE INDEX语句创建
+
+```sql
+CREATE INDEX indexName ON mytable(username(length)); 
+```
+
+
+也可以在创建表的时候直接指定
+
+```sql
+CREATE TABLE mytable(  
+    ID INT NOT NULL,   
+    username VARCHAR(16) NOT NULL,  
+    INDEX [indexName] (username(length))  
+);  
+```
+
 #### 触发器
 
 
-### 附录
+### D SQL数据类型
 
-#### SQL数据类型
+#### D.1 字符串数据类型
 
+| 数据类型 | 说明 |
+| --- | --- |
+| CHAR | 1~255个字符的定长字符串。它的长度必须在创建时规定 |
+| TEXT/VARCHAR | 变长文本 |
 
-日期
+定长字符串CHAR接收长度固定的字符串，其长度是在创建表时指定的。变长字符串存储任意长度的文本。虽然变长字符串更加灵活，但是MySQL处理定长远比处理变长快的多。
+
+#### D.3 日期
+
+所有DBMS都支持用来存储日期和时间值的数据类型。
 
 | 数据类型 | 说明 |
 | --- | --- |

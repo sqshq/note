@@ -60,143 +60,6 @@ SqlSessionFactory SqlSessionFactory = null;
 * 配置缓存
 * 提供动态SQL
 
-
-
-
-!!! example ""
-
-    ```java tab="main"
-    public class Main {
-    
-        public static void main(String[] args) {
-            SqlSessionFactory sqlSessionFactory = null;
-            InputStream inputStream;
-    
-            try {
-                inputStream = Resources
-                        .getResourceAsStream("mybatis.xml");
-                sqlSessionFactory = new SqlSessionFactoryBuilder()
-                        .build(inputStream);
-                SqlSession sqlSession= sqlSessionFactory.openSession();
-                RoleMapper roleMapper = sqlSession
-                        .getMapper(RoleMapper.class);
-                Role role = roleMapper.getRole(1L);
-                System.out.println(role.getId());
-                roleMapper.deleteRole(1L);
-                System.out.println(roleMapper.getRoleNumber());
-                roleMapper.insertRole(new Role(4L, "zhenhua", "xixi"));
-                System.out.println(roleMapper.getRole(4L));
-                roleMapper.updateRole(new Role(4L, "zhenhua", "hehe"));
-                System.out.println(roleMapper.getRole(4L));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-    
-    
-       }
-    }
-    ```
-    
-    ```java tab="Role"
-    package com.exercise.mybatis.chapter3;
-    
-    public class Role {
-        private Long id;
-        private String roleName;
-        private String note;
-    
-        public Role(Long id, String roleName, String note) {
-            this.id = id;
-            this.roleName = roleName;
-            this.note = note;
-        }
-    
-        public Long getId() {
-            return id;
-        }
-    
-        public void setId(Long id) {
-            this.id = id;
-        }
-    
-        public String getRoleName() {
-            return roleName;
-        }
-    
-        public void setRoleName(String roleName) {
-            this.roleName = roleName;
-        }
-    
-        public String getNote() {
-            return note;
-        }
-    
-        public void setNote(String note) {
-            this.note = note;
-        }
-    
-    
-        @Override
-        public String toString() {
-            return roleName + "  id: " + id + "  note: " + note;
-        }
-    }
-    ```
-    
-    ```java tab="RoleMapper"
-    package com.exercise.mybatis.chapter3;
-    
-    //映射器接口
-    public interface RoleMapper {
-        public Role getRole(Long id);
-        public void deleteRole(Long id);
-        public int getRoleNumber();
-        public void updateRole(Role role);
-        public void insertRole(Role role);
-    }
-    ```
-    
-    
-    ```xml tab="Rolemapper.xml"
-    <?xml version="1.0" encoding="UTF-8" ?>
-    <!DOCTYPE configuration
-      PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-      "http://mybatis.org/dtd/mybatis-3-config.dtd">
-    
-    <configuration>
-        <typeAliases>
-            <typeAlias alias="role" type="com.exercise.mybatis.chapter3.Role"/>
-        </typeAliases>
-        <environments default="development">
-            <environment id="development">
-                <transactionManager type="JDBC"></transactionManager>
-                <dataSource type="POOLED">
-                    <property name="driver" value="com.mysql.jdbc.Driver"/>
-                    <property name="url" value="jdbc:mysql://localhost:3306/chapter3"/>
-                    <property name="username" value="root"/>
-                    <property name="password" value="imLarry!"/>
-                </dataSource>
-    
-            </environment>
-        </environments>
-        <mappers>
-            <mapper resource="com/exercise/mybatis/chapter3/RoleMapper.xml"/>
-        </mappers>
-    </configuration>
-    ```
-    
-    ```xml tab="mybatis.xml"
-    package com.exercise.mybatis.chapter3;
-    
-    //映射器接口
-    public interface RoleMapper {
-        public Role getRole(Long id);
-        public void deleteRole(Long id);
-        public int getRoleNumber();
-        public void updateRole(Role role);
-        public void insertRole(Role role);
-    }
-    ```
 ### MyBatis配置
 
 
@@ -277,6 +140,10 @@ properties属性可以给系统配置一些运行参数，可以放在XML文件�
         <typeAliase alias="role" type="com.exercise.ssm"/>
     </typeAliases>
     ```
+#### typeHandler类型转换器
+
+typeHandler的作用就是承担jdbcType和javaType之间的相互转换，其中jdbcTpe用于定义数据库类型，javaType用户定义Java类型。在很多情况下我们并不需要去配置typeHandler、jdbcType、javaType，因为MyBatis会探测应该使用什么类型的typeHandler进行处理。
+
 
 #### environments
 
@@ -293,7 +160,7 @@ MyBatis为`Transaction`提供了两个实现类：`JdbcTransaction`和`ManagedTr
 ![transaction](figures/transaction.png)
 
 
-environment的主要作用时配置数据库，在Mybatis中数据库通过PooledDataSourceFactory， UnpooledDataSourceFactory和JndiDataSourceFactory三个工厂类来提供。分别配置如下
+environment的主要作用是配置数据库，在Mybatis中数据库通过`PooledDataSourceFactory`， `UnpooledDataSourceFactory`和`JndiDataSourceFactory`三个工厂类来提供。分别配置如下
 
 ``` xml
 <dataSource type="UNPOOLEd">
@@ -306,9 +173,180 @@ environment的主要作用时配置数据库，在Mybatis中数据库通过Poole
 * POOLED: 数据库池的管理方式，请求时无需再建立和验证，省去了创建新的连接实例时所必需的初始化和认证时间；并且控制最大连接数，避免过多的连接导致系统瓶颈。
 * JNDI：略
 
+
+#### 引入映射器的方法
+
+引入映射器的方法很多：
+
+```xml tab="从文件路径引入"
+<mappers>
+    <mapper resource="com/exercise/mybatis/RoleMapper.xml">
+</mappers>
+```
+
+```xml tab="从包名引入"
+<mappers>
+    <package name="com.exercise.mybatis">
+</mappers>
+```
+
+```xml tab="从类注册引入"
+<mappers>
+    <mapper class="com.exercise.mybatis.RoleMapper"/>
+    <mapper class="com.exercise.mybatis.UserMapper"/>
+</mappers>
+```
+    
+#### 案例
+
+下面的一个简单的案例演示了MyBatis的基本操作。
+
+```java tab="main"
+public class Main {
+    
+    @Test
+    public void testMyBatis() throws Exception {
+        SqlSessionFactory sqlSessionFactory = null;
+        InputStream inputStream;
+    
+        inputStream = Resources.getResourceAsStream("mybatis.xml");
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        RoleMapper roleMapper = sqlSession.getMapper(RoleMapper.class);
+        Role role = roleMapper.getRole(1L);
+        System.out.println(role.getId()); //1
+        roleMapper.deleteRole(1L);
+    
+        Role newRole = new Role("baby", "Q");
+        roleMapper.insertRole(newRole);
+        Long id = newRole.getId();
+    
+        System.out.println(id); //1
+        System.out.println(roleMapper.getRole(id));
+        roleMapper.updateRoleInfo(id, "zhenhua", "lala");
+        System.out.println(roleMapper.getRole(id));
+    }
+}
+```
+    
+```java tab="Role"    
+public class Role {
+    private Long id;
+    private String roleName;
+    private String note;
+    
+    public Role(String roleName, String note) {
+        this.roleName = roleName;
+        this.note = note;
+    }
+    
+    public Long getId() {
+        return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
+    public String getRoleName() {
+        return roleName;
+    }
+    
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+    
+    public String getNote() {
+        return note;
+    }
+    
+    public void setNote(String note) {
+        this.note = note;
+    }
+    
+    
+    @Override
+    public String toString() {
+        return roleName + "  id: " + id + "  note: " + note;
+    }
+}
+```
+    
+```java tab="RoleMapper"    
+//映射器接口
+public interface RoleMapper {
+    public Role getRole(Long id);
+    public void deleteRole(Long id);
+    public int getRoleNumber();
+    public void updateRole(Role role);
+    public void insertRole(Role role);
+}
+```
+    
+    
+```xml tab="mybatis.xml"
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+    
+<configuration>
+    <typeAliases>
+        <typeAlias alias="role" type="com.exercise.mybatis.example.Role"/>
+    </typeAliases>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/chapter3"/>
+                <property name="username" value="root"/>
+                <property name="password" value="imLarry!"/>
+            </dataSource>
+    
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="com/exercise/mybatis/example/RoleMapper.xml"/>
+    </mappers>
+</configuration>
+```
+    
+```xml tab="RoleMapper.xml"
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.exercise.mybatis.example.RoleMapper">
+    <select id="getRole" parameterType="long" resultType="role">
+        select id, role_name as roleName, note
+        from t_role
+        where id = #{id}
+    </select>
+    <select id="deleteRole" parameterType="long">
+        delete from t_role where id = #{id};
+    </select>
+    
+    <select id="getRoleNumber" resultType="int">
+        select count(*) from t_role;
+    </select>
+    
+    <update id="updateRole" parameterType="role">
+        update t_role set role_name=#{roleName} where id=#{id};
+    </update>
+    
+    <insert id="insertRole" parameterType="role" useGeneratedKeys="true" keyProperty="id">
+        insert into t_role (role_name, note) values(#{roleName}, #{note});
+    </insert>
+    
+    <update id="updateRoleInfo">
+        update t_role set role_name=#{roleName}, note=#{note} where id=#{id};
+    </update>
+</mapper>
+```
+    
 ### 映射器
 
-映射器时MyBatis最复杂且最重要的组件。它由一个接口加上XML文件(或者注解)组成。在映射器中可以配置参数、SQL语句、存储过程、缓存、级联等复杂的内容，并且通过简易的映射规则映射到指定的POJO或者其他对象上，映射器能够有效消除JDBC底层的代码。
+映射器是MyBatis最复杂且最重要的组件。它由一个接口加上XML文件(或者注解)组成。在映射器中可以配置参数、SQL语句、存储过程、缓存、级联等复杂的内容，并且通过简易的映射规则映射到指定的POJO或者其他对象上，映射器能够有效消除JDBC底层的代码。
 
 映射器的配置元素
 
@@ -325,10 +363,12 @@ environment的主要作用时配置数据库，在Mybatis中数据库通过Poole
 #### 传递多个参数
 
 
-现实的需求中，可能会有多个参数，比如订单可以根据订单名称、日期或者价格进行查询。为此, MyBatis为开发者提供了一个注解@Param(`org.apache.ibatis.annotations.Param`)。可以通过它去定义映射器的参数名称，使用它可以得到更好的可读性，把接口方法定义为：
+现实的需求中，可能会有多个参数，比如订单可以根据订单名称、日期或者价格进行查询。为此, MyBatis为开发者提供了一个注解@Param(`org.apache.ibatis.annotations.Param`)。可以通过它去定义映射器的参数名称，使用它可以得到更好的可读性。
 
 !!! example "传递多个参数"
 
+    在`RoleMapper`中，使用传递id，roleName来更新Role。注意此时并不需要parameterType参数，MyBatis会自动探索。
+    
     ```java tab="RoleMapper"
     public void updateRoleInfo(@Param("id") Long id, @Param("roleName")     
             String roleName, @Param("note") String note);
@@ -340,9 +380,64 @@ environment的主要作用时配置数据库，在Mybatis中数据库通过Poole
         where id=#{id};
     </update>
     ```
+   
+#### 主键回填
+
+如果MySQL中的表格采用了自增主键(primary key auto_increment)，MYSQL数据库会为该记录生成对应的主键。MyBatis提供了这样的支持。在insert语句中有一个开关属性`useGeneratedKeys`用来控制是否获取数据库生成的主键。当打开了这个开关，还要配置其属性`keyProperty`，告诉系统把生成的主键放在哪个属性中。
+
+!!! example "主键回填"
+    
+    ```java
+     <insert id="insertRole" parameterType="role" useGeneratedKeys="true" keyProperty="id">
+        insert into t_role (role_name, note) values(#{roleName}, #{note});
+    </insert>
+    ```
+    
+#### 自动映射和驼峰映射
+
+MyBatis提供了自动映射功能，默认是开启的。如果编写的SQL列名和属性名保持一致，就会形成自动映射。
+
+!!! example "自动映射"
+    
+    例如通过角色编号(id)获取角色的信息：
+    
+    ```xml
+    <select id="getRole" parameterType="long" resultType="role">
+        select id, role_name as roleName, note from t_role where id = #{id}
+    </select>
+    ```
+    
+    原来的列名`role_name`被别名`roleName`代替了，这样就和POJO上的属性名称保持一致了。此时MyBatis就会将这个结果集映射到POJO的属性`roleName`上，自动完成映射，而无需再进行任何配置。
+
+MyBatis会严格按照驼峰命名的方式做自动映射。如果需要更为强大的映射规则，则需要考虑使用resultMap。    
 
 #### resultMap元素
 
+为了支持复杂的映射，MyBatis提供了resultMap属性。
+
+!!! example "使用resultMap"
+
+    下面这个例子不使用自动映射，而是使用了resultMap作为resultType。
+    
+    ```xml
+    <resultMap id="roleMap" type="role">
+        <id property="id" column="id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="note" column="note"/>
+    </result>
+    <select id="getRole" parameterType="long" resultType="roleMap">
+        select id, role_name, note from t_role where id = #{id}
+    </select>
+    ```
+    
+    
+    
+    
+#### 级联
+
+#### 缓存
+
+#### 存储过程
 
 
 <!--

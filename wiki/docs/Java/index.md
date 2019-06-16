@@ -1,4 +1,8 @@
-### index.md 
+---
+title: index.md
+toc: false
+date: 2017-07-07
+---
 
 #### Head First设计模式 
 
@@ -16,6 +20,7 @@
 * [12 Compound Patterns](Head First设计模式/12 Compound Patterns.md)
 * [13 Better Living with Patterns](Head First设计模式/13 Better Living with Patterns.md)
 * [14 Builder Pattern](Head First设计模式/14 Builder Pattern.md)
+* [15 Chain Of Responsibility](Head First设计模式/15 Chain Of Responsibility.md)
 
 #### Head First Java 
 

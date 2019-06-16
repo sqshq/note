@@ -1,4 +1,8 @@
-### Java Web 
+---
+title: Java Web
+toc: false
+date: 2017-07-07
+---
 
 * [Ajax](Ajax.md)
 * [CSS](CSS.md)

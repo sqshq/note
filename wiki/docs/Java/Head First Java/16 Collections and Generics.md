@@ -25,7 +25,8 @@ Question: What if you need <Song> objects, not just simple <C>Strings</C>.
 Try: We override <C>toString()</C> method in class <Object>.
 
 ```Java
-// We override toString(), because when you do a System.out.println(aSongObject),
+// We override toString(), because when you do a 
+// System.out.println(aSongObject),
 // we want to see the title.
 // When you do a System.out.println(aListOfSongs),
 // it calls the toString() method of EACH element in the list.
@@ -86,7 +87,7 @@ public class ArrayList<E> extends AbstractList<E> ... {
 * Using a type parameter that was NOT defined in the class declaration
 
 ```Java
-//Here we can use <T> because we declared "T" earlier in the method declaration
+// Here we can use <T> because we declared "T" earlier in the method declaration
 public <T extends Animals> void takeThing<ArrayList<T> list)
 ```
 
@@ -153,7 +154,8 @@ public class Song implements Comparable <Song>
     }
     
     // The sort() method sends a Song to compareTo()
-    // to see how that Song compares to the Song on which the method was invoked.
+    // to see how that Song compares to the Song 
+    // on which the method was invoked.
     public int compareTo(Song s)
     {
         // Strings have a compareTo() method

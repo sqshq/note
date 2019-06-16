@@ -1,4 +1,8 @@
-### Spark快速大数据分析 
+---
+title: Spark快速大数据分析
+toc: false
+date: 2017-07-07
+---
 
 * [1 Introduction to Data Analysis with Spark](1 Introduction to Data Analysis with Spark.md)
 * [2 Downloading Spark and Getting Started](2 Downloading Spark and Getting Started.md)

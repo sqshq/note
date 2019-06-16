@@ -1,4 +1,8 @@
-### Stanford 
+---
+title: Stanford
+toc: false
+date: 2017-07-07
+---
 
 * [Topic - Dynamic Programming](Topic - Dynamic Programming.md)
 * [Topic - Graph](Topic - Graph.md)

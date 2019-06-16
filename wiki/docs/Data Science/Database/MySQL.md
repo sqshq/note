@@ -367,7 +367,7 @@ ORDER BY customers.ID
 The following are types of `JOIN` that can be used in SQL:
 
 * `INNER JOIN`: returns rows when there is a match between the tables.
-* `LEFT JOIN`: returns rows from the left table, even if there are no matches in the right table.
+* `LEFT JOIN`: returns rows from the left table, even if there are no matches in the right table. 
 
 ```SQL
 SELECT table1.column1, table2.column2...

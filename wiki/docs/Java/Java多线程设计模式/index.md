@@ -1,4 +1,8 @@
-### Java多线程设计模式 
+---
+title: Java多线程设计模式
+toc: false
+date: 2017-07-07
+---
 
 * [Future模式](Future模式.md)
 * [序章一 Java线程](序章一 Java线程.md)

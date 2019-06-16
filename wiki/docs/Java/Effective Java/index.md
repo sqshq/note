@@ -1,4 +1,8 @@
-### Effective Java 
+---
+title: Effective Java
+toc: false
+date: 2017-07-07
+---
 
 * [1 Introduction](1 Introduction.md)
 * [2 Creating and Destroying Objects](2 Creating and Destroying Objects.md)

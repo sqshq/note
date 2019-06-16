@@ -1,4 +1,8 @@
-### Princeton 
+---
+title: Princeton
+toc: false
+date: 2017-07-07
+---
 
 * [Topic 1 - Union Find](Topic 1 - Union Find.md)
 * [Topic 2 - Stacks and Queues](Topic 2 - Stacks and Queues.md)
