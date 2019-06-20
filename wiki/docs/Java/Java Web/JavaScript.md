@@ -367,7 +367,7 @@ DOM事件的不同写法：
 
 ### 4 高级特性
 
-### JS Window
+#### JS Window
 
 所有浏览器都支持`window`对象。它表示浏览器窗口。
 
@@ -384,6 +384,7 @@ DOM事件的不同写法：
 * `window.close()` - 关闭当前窗口
 * `window.moveTo()` - 移动当前窗口
 * `window.resizeTo()` - 调整当前窗口的尺寸
+* `window.location.href()` - 调转到指定网址
 
 #### 计时事件
 

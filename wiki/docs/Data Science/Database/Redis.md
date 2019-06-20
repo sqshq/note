@@ -44,7 +44,7 @@ Redis还可以实现任务队列，用列表类型键实现队列，由于支持
 
 **安装**
 
-在Mac上直接使用redis安装
+在Mac上直接使用redis安装。
 
 ```bash
 brew install redis
@@ -58,6 +58,7 @@ brew install redis
 * 动态参数启动：`redis-server --port 6379`，制定特定端口
 * 配置文件启动：`redis-server configPath`，需要配置以后使用，适用于生产环境
 
+作为守护进程的启动方式参见[Mac OS](../../Miscellaneous/awesome Install/Mac OS使用.md)。
 
 向Redis发送SHUTDOWN命令(`redis-cli shutdown`)，会断开所有客户端连接，然后根据配置执行持久化，然后退出。
 
@@ -93,7 +94,7 @@ With DB numbers, with a default of a few DBs, we are communication better what t
 
 ### 2 数据类型
 
-多种数据结构：字符串String, 哈希Hash, 链表Linked Lists，集合Sets，有序集合Sorted Sets.
+多种数据结构：字符串String, 哈希Hash, 列表Lists，集合Sets，有序集合Sorted Sets.
 
 ![redis-data-structure](figures/redis-data-structure.png)
 
@@ -245,7 +246,8 @@ Sorted-Set常用命令：
     * 如果不包含端点值，可以在分数前加上"("符号
     * 可以使用"+inf"表示上限
 
-!!! example
+!!! example "有序集合演示"
+
     ```text
     127.0.0.1:6379> zadd scoreboard 89 tom 67 jerry 75 peick //添加元素
     (integer) 3 // scoreboard中一共有三个元素
@@ -323,6 +325,16 @@ Sorted-Set常用命令：
 #### 慢查询
 
 #### 
+
+#### HyperLogLog
+
+极小空间完成独立数量统计。
+
+
+* pfadd key element [element...]: 向hyperloglog添加元素
+* pfcount key [key..]: 计算hyperloglog的独立总数
+* pfmerge destkey sourcekey [sourcekey...] 合并多个hyperloglog
+
 
 ### 4 持久化
 

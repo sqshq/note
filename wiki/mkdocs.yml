@@ -6,6 +6,7 @@ edit_uri: edit/master/wiki/docs
 
 
 theme:
+  language: zh
   name: 'material'
   palette:
     primary: 'indigo'
@@ -20,7 +21,7 @@ extra_css:
 extra:
   search:
     language: 'en, jp'
-    tokenizer: '[\s\-\.]+'
+    #tokenizer: '[\s\-\.]+'
 
 
 extra_javascript:

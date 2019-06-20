@@ -431,6 +431,23 @@ MyBatis会严格按照驼峰命名的方式做自动映射。如果需要更为�
     ```
     
     
+#### 分页
+
+MyBatis中可以使用`RowBounds`进行分页。
+
+```java tab= "Mapper接口"
+public List<Role> findByRowBounds(@Param("roleName") String roleName, @Param("note") String note, RowBounds rowBounds);
+```
+
+```xml tab="mapper配置"
+<select id="findRowBounds" resultType="role">
+    select id, role_name as roleName, note from t_role
+    where role_name like
+    concat('%', #{roleName}, '%')
+    and note like concat('%', #{note}, '%')
+</select>
+```
+
     
     
 #### 级联

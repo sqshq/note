@@ -97,9 +97,9 @@ HTML中存在一些格式化文本的标签，来调整文本样式。
 ```html
 <table>
     <thead>
-        <th>
-            <td> </td>
-        </th>
+        <tr>
+            <th> </th>
+        </tr>
     </thead>
     <tbody>
         <tr>
@@ -134,15 +134,8 @@ HTML支持有序、无序和定义列表。
 
 #### 表单
 
-HTML表单用于收集用户输入，包含表单元素。表单元素是允许用户在表单中输入内容的元素，例如文本域、下拉列表、单选框、复选框。表单的基本格式为
+HTML表单用于收集用户输入，包含表单元素。表单元素是允许用户在表单中输入内容的元素，例如文本域、下拉列表、单选框、复选框。
 
-```html
-<form>
-.
-input elements
-.
-</form>
-```
 
 多数情况下被用到的表单元素是输入元素`:::html <input>`，其输入类型由类型属性(type)定义，常见输入类型如下：
 
@@ -151,6 +144,7 @@ input elements
 * **单选按钮**(Radio Buttons)：`:::html <form> <input type="radio"></form>`
 
 !!! Example "单选按钮"
+    
     ```html
     <form>
         <label><input type="radio" name="indoor-outdoor" value="indoor">indoor</label><br/>
@@ -167,6 +161,7 @@ input elements
 * **复选框**(Checkboxes)： `:::html <form> <input type="checkbox"></form>`
 
 !!! Example "复选框"
+
     ```html
     <form>
     <label><input type="checkbox" name="personality"></label>cat<br/>
@@ -185,12 +180,13 @@ input elements
 * **提交按钮**(Submit Button)： `:::html <form action="" method=""><input type="submit"></form>`。当用户点击确认按钮时，表单的内容会传送到另一个文件。表单的动作属性(action)定义了目的文件的文件名。由动作属性定义的这个文件通常会对接收到的数据进行相关的处理。例如利用[Servlet处理](Head First Servlets and JSP.md)。
 
 !!! Example "用表单发送电子邮件"
+
     ```html
     <form action="MAILTO:someone@example.com" method="post" enctype="text/plain">
-    Name:<input type="text" name="name" value="your name"><br>
-    E-mail:<input type="text" name="mail" value="your email"><br>
-    Comment:<input type="text" name="comment" value="your comment" size="50"><br>
-    <input type="submit" value="Send">
+        Name:<input type="text" name="name" value="your name"><br>
+        E-mail:<input type="text" name="mail" value="your email"><br>
+        Comment:<input type="text" name="comment" value="your comment" size="50"><br>
+        <input type="submit" value="Send">
     </form>
     ```
     

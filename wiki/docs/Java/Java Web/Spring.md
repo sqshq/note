@@ -630,7 +630,7 @@ public class DataSourceBean {
 
 #### Bean的作用域
 
-在默认的情况下，Spring IoC容器只会对一个Bean创建一个实例，这是由Spring的作用域所决定的。Spring提供了4中作用域，它会根据情况来决定是否生成新的对象：
+在默认的情况下，Spring IoC容器只会为一个Bean创建一个实例，这是由Spring的作用域所决定的。Spring提供了4种作用域，它会根据情况来决定是否生成新的对象：
 
 | 类别 | 说明 |
 | --- | --- |
@@ -639,7 +639,11 @@ public class DataSourceBean {
 | 请求request  | 在Web应用中，为每个请求创建一个bean实例 |
 | 会话session | 在Web应用中，为每个会话创建一个bean实例 |
 
+Bean的作用域可以在XML文件中配置。例如
 
+```xml
+<bean id="userInfo" class="com.zhenhua.bean.UserInfo" scope="singleton"/>
+```
 
 #### 使用Spring表达式语言进行装配
 
@@ -1492,15 +1496,16 @@ Spring的声明式事务是通过AOP代理实现的，其事务通知(transactio
 Spring Web MVC是Spring提供给Web应用的框架设计。Spring MVC是一种基于Servlet的技术，它提供了核心控制器DispatcherServlet和相关的组件，并制定了松散的结构，以适合各种灵活的需要。
     
 核心组件 
-    
-* DispatcherServlet：前置控制器
-* Handler 处理器，完成具体业务
-* HandlerMapping 将请求映射到handler
-* HandlerInterceptor 处理器拦截器
-* HandlerExecutionChain 处理器执行链
-* HandlerAdapter 处理器适配器
-* ModelAndView 装在模型数据和试图信息
-* ViewResolver 视图解析器
+
+| 核心组件 | 名称 |
+| DispatcherServlet | 前置控制器 |
+|  Handler | 处理器，完成具体业务 |
+|  HandlerMapping | 将请求映射到handler |
+|  HandlerInterceptor | 处理器拦截器 |
+|  HandlerExecutionChain | 处理器执行链 |
+|  HandlerAdapter |  处理器适配器 |
+|  ModelAndView | 装在模型数据和试图信息 | 
+|  ViewResolver | 视图解析器| 
 
 
 SpringMVC实现流程
@@ -1549,9 +1554,11 @@ public @interface RequestMapping {
 
 控制器开发是Spring MVC的核心内容，其步骤一般会分为3步：获取请求参数，处理业务逻辑，绑定模型和视图
 
-##### 获取请求参数
+#### 接收请求参数
 
-获取请求参数的方法有很多，但是不建议使用Servlet容器提供的API，因为这样控制器会依赖于Servlet容器，不利于扩展和测试。实际上Spring MVC会自动解析session和request，使用注解@RequestParam获取HTTP请求参数更加好。
+<hh>@RequestParam</hh>
+
+控制器接收请求参数的方法有很多，但是不建议使用Servlet容器提供的API，因为这样控制器会依赖于Servlet容器，不利于扩展和测试。实际上Spring MVC会自动解析session和request，使用注解`@RequestParam`获取HTTP请求参数更加好。
 
 !!! example "获取请求参数"
     
@@ -1573,7 +1580,32 @@ public @interface RequestMapping {
         return mv;
     }
     ```
+
+<hh>使用URL传递参数</hh>
+
+一些网站使用URL的形式传递参数，这符合[RESTFul](RESTFul.md)的风格。这时可以使用注解`@PathVariable`从URL的请求地址中获取参数。
+
+
+```java
+// {id} 代表接收一个参数
+@RequestMapping("/getRole/{id}")
+public ModelAndView pathVariable(@PathVariable("id") Long id) {
+    Role role = roleService.getRole(id);
+    ModelAndView mv = new ModelAndView();
+    //绑定数据模型
+    mv.addObject(role);
+    //设置为JSON视图
+    mv.setView(new MappingJackson2JsonView());
+    return mv;
+}
+```
+
+
+
+
     
+#### 视图渲染
+
 一般而言，Spring MVC会默认使用JstlView进行渲染，也就是将查询出来的模型绑定到JSTL(JSP标准标签库)中，这样通过JSTL就可以把数据模型在JSP中读出展示数据了。但是目前在前端技术中，普遍使用Ajax技术，SpringMVC同样提供了很好的支持
 
 ```java
@@ -1587,10 +1619,124 @@ public ModelAndView getRole(@RequestParam("id") Long id) {
 }
 ```
 
+注意，由于MappingJackson2JsonView是一个非逻辑视图，因此对于它而言并不需要视图解析器进行解析，它会直接把模型和视图中的数据模型直接通过JSON视图转换出来。
 
+
+#### 结合Ajax
+
+`@ResponseBody`注解常用在处理Ajax的方法上，`@ResponseBody`表示该方法的返回结果直接写入HTTP response body中。
+
+
+```javascript tab="JS"
+//post传参，方式一
+$("#btn").click(function(){
+    var data = {"user_id":"111","user_name":"abc","user_email":"aaa@sina.com"};
+    $.ajax({
+        url:'<%=request.getContextPath()%>/User/loadData',
+        type:'POST',
+        //data也可设置成"user_id=111&user_name=abc&user_email=aaa@sina.com"这种方式
+        data:data,
+        //contentType : 'application/json',
+        //返回List或Map，dataType要设置为“json”. 
+        dataType:'json',
+        success:function(data){
+            $(data).each(function (i, value) {  
+                    alert(value);
+            });  
+        },
+        error : function() {  
+            alert("error")  
+        }   
+    })
+})
+```
+
+```java tab="java"
+/**
+ * ajax post方式传参,通过@RequestParam接收
+ * @param user_id
+ * @param user_name
+ * @param user_email
+ * @return
+ */
+@RequestMapping(value="/loadData")
+@ResponseBody
+public List loadData(@RequestParam(value="user_id") int user_id,
+        @RequestParam(value="user_name") String user_name,
+        @RequestParam(value="user_email") String user_email){
+    System.out.println(user_id);
+    System.out.println(user_name);
+    System.out.println(user_email);
+    
+    List<String> list=new ArrayList<String>();
+    list.add("电视");
+    list.add("空调");
+    list.add("电冰箱");
+    return list;
+}
+```
 
 
     
+#### 重定向
+
+Spring MVC有一个约定，当返回的字符串带有redirect的时候，它就会认为需要的是一个重定向。视图解析器ViewResolver会自动识别。 不仅可以通过返回字符串来实现重定向，也可以通过返回视图来实现重定向。当然也可以使用[servlet](Head First Servlets and JSP.md)中使用过的`response.sendRedirect()`方法。
+
+```java tab="返回ModelAndView实现重定向"
+@RequestMapping("/addRole")
+public String addRole(ModelAndView mv, String roleName, String note) {
+    Role role = new Role();
+    role.setRoleName(roleName);
+    role.setNote(note);
+    roleService.insertRole(role);
+    // 绑定重定向数据模型
+    mv.addObject("roleName", roleName);
+    mv.addObject("note", note);
+    mv.addObject("id", role.getId());
+    mv.setViewName("redirect:./showRoleJsonInfo.do"); // 设置重定向URL
+    return mv;
+}
+```
+
+```java tab="返回字符串实现重定向"
+@RequestMapping("/addRole")
+// model为重定向数据模型，Spring MVC会自动初始化它
+public String addRole(Model model, String roleName, String note) {
+    Role role = new Role();
+    role.setRoleName(roleName);
+    role.setNote(note);
+    roleService.insertRole(role);
+    // 绑定重定向数据模型
+    model.addAttribute("roleName", roleName);
+    model.addAttribute("note", note);
+    model.addAttribute("id", role.getId());
+    return "redirect:./showRoleJsonInfo.do";
+}
+```
+
+```java tab="response.sendRedirect重定向"
+@RequestMapping("/addRole")
+// model为重定向数据模型，Spring MVC会自动初始化它
+public void addRole(HttpServletRequest request, HttpServletResponse response, 
+                    String roleName, String note) {
+    Role role = new Role();
+    role.setRoleName(roleName);
+    role.setNote(note);
+    roleService.insertRole(role);
+    // 绑定重定向数据模型
+    request.setAttribute("role", role);
+    response.sendRedirect("./showRoleJsonInfo.do");
+}
+```
+
+!!! note "@ResponsBody/redirect"
+    
+       在Spring中，当添加@ResponseBody注解返回JSON类型的数据时，不能同时使用重定向功能。正确的做法是返回JSON数据，然后通过JavaScript的Ajax功能中的Success函数实现网页跳转。(参见 [ref](https://stackoverflow.com/questions/36840104/spring-mvc-redirect-in-responsebody))
+
+
+    
+
+
 #### 数据绑定
 
 将HTTP请求中的参数绑定到Handler业务方法的形参
@@ -1610,12 +1756,12 @@ public ModelAndView getRole(@RequestParam("id") Long id) {
 拦截器是使用JDK动态代理实现的，拦截的是对应调用方法的拦截。
 过滤器是使用Filter实现的，拦截的是request对象。
 
-Spring MVC也可以使用拦截器对请求进行拦截处理，用户可以自定义拦截器来实现特定的功能，自定义的拦截器必须实现HandlerInterceptor接口
+Spring MVC也可以使用拦截器对请求进行拦截处理，用户可以自定义拦截器来实现特定的功能，自定义的拦截器必须实现`HandlerInterceptor`接口
 
-* preHandle(): 这个方法在业务处理器处理请求之前被调用，在该方法中对用户请求request进行处理
-* 如果程序员决定该拦截器对请求进行拦截处理后还要调用其他的拦截器，或者是业务处理器去进行处理，则返回true；如果程序员决定不需要再调用其他组件去处理请求，则返回false；
-* postHandle():这个方法在业务处理器处理完请求后，但是DispatcherServlet向客户端返回响应前被调用，在该方法中对用户请求request进行处理
-* afterCompletion():在DispatcherServlet完全处理完请求后被调用，可以在该方法中进行一些资源清理的操作
+* `preHandle()`: 这个方法在业务处理器处理请求之前被调用，在该方法中对用户请求request进行处理
+    * 如果程序员决定该拦截器对请求进行拦截处理后还要调用其他的拦截器，或者是业务处理器去进行处理，则返回true；如果程序员决定不需要再调用其他组件去处理请求，则返回false；
+*  `postHandle()`:这个方法在业务处理器处理完请求后，但是DispatcherServlet向客户端返回响应前被调用，在该方法中对用户请求request进行处理
+* `afterCompletion()`:在DispatcherServlet完全处理完请求后被调用，可以在该方法中进行一些资源清理的操作
 
 ![HandlerInterceptor](figures/HandlerInterceptor.png)
 
@@ -1633,6 +1779,73 @@ Spring MVC也可以使用拦截器对请求进行拦截处理，用户可以自�
 
 ![Screen Shot 2019-06-15 at 2.15.38 P](figures/Screen%20Shot%202019-06-15%20at%202.15.38%20PM.png)
 
+### 8 Redis
+ 
+ 关于Redis的具体操作详见[Redis](../../Data Science/Database/Redis.md)。
+ 
+#### 在Java Web中的应用
+ 
+ 
+一般而言Redis在Java Web应用中存在两个主要的场景。一个是缓存常用的数据，另一个是在需要高速读/写的场合使用它快速读/写。
+ 
+<hh>缓存</hh>
+ 
+在对数据库的读/写操作中，现实的情况是读操作的次数远超过写操作。当使用例如MySQL的数据库进行读取时，它的硬盘索引是一个相对缓慢的过程。如果把数据直接放在运行在内存中的Redis服务器上，通过直接读取内存中的数据，显然速度会快很多。但是内存的容量往往远小于磁盘，所以并不是想存什么就存什么。只能存储一些常用的数据，例如存储一些高命中率、读操作多、业务数据小的数据。
+
+
+![redis_web](figures/redis_web.png)
+
+使用Redis作为缓存时，第一次读取数据时，由于读取失败，随后去读取硬盘上的数据库，最后再写入Redis。如果要更新/写入数据，那么首先去数据库更新/写入，随后再到Redis中更新/写入。
+
+<hh>高速读写场合</hh>
+
+在一些高速读写场合，比如商品的秒杀，抢红包，春运抢票等，如果使用的是MySQL等数据库，很容易造成数据库的瓶颈，严重的会导致数据库的瘫痪。在这种高速读写场合，往往把这些数据都缓存到Redis中，而在一定情况下(例如商品个数为0，抢红包金额为0)，再把Redis中的数据写入MySQL等数据库中。
+
+
+![high_frequency_redis](figures/high_frequency_redis.png)
+
+#### 在Spring中使用Redis
+
+在Spring中使用Redis，除了需要Jedis之外，还需要Spring Data Redis([Maven页面](https://mvnrepository.com/artifact/org.springframework.data/spring-data-redis), [项目主页](https://spring.io/projects/spring-data-redis) )。Spring Data Redis是Spring Data家族的一员。
+
+Java对象保存在Redis中有以下几种方案：
+
+* Spring模版提供了RedisSerializer接口和一些实现类
+* Spring Data Redis中实现RedisSerializer接口的类
+    * GenericJackson2JsonRedisSerializer
+    * StringRedisSerializer 使用字符串进行序列化
+    * KeySerializer 键序列器
+    * valueSerializer 值序列器
+
+ 
+
+
+```xml
+<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+    <!--最大空闲数 -->
+    <property name="maxIdle" value="50"/>
+    <!--最大连接数 -->
+    <property name="maxTotal" value="100"/>
+    <!--最大等待时间 -->
+    <property name="maxWaitMillis" value="20000"/>
+</bean>
+<bean id="connectionFactory"
+      class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:poolConfig-ref="poolConfig"/>
+<bean id="jdkSerializationRedisSerializer"
+>       class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+<bean id="stringRedisSerializer"
+      class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+    <property name="connectionFactory" ref="connectionFactory"/>
+    <property name="keySerializer" ref="stringRedisSerializer"/>
+    <property name="valueSerializer" ref="jdkSerializationRedisSerializer"/>
+</bean>
+```
+
+
+
+
+
 
 ### 常见问题
 
@@ -1647,3 +1860,15 @@ Spring MVC也可以使用拦截器对请求进行拦截处理，用户可以自�
 查看一下`<mapper namespace=>`设置
 
 
+#### HTML form表单中action的正确写法
+　　我的Java Web Application的context是myweb，即http://localhost:8080/myweb/index.jsp是欢迎页。
+
+　　现在我的一个Controller的映射为@RequestMapping("/fileUp")。
+
+　　如果页面的form中的action=“/fileUp”，转向的URL为http://localhost:8080/fileUp，是无效的。
+
+　　以下是有效的写法，会转向“http://localhost:8080/myweb/fileUp”：
+
+action="/myweb/fileUp"
+action="./fileUp"
+action="fileUp"

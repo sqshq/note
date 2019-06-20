@@ -597,6 +597,8 @@ public void doGet(HttpServletRequest request, HttpServletResponse response)
 * 对于一个新会话，容器会生成会话ID、创建新的cookie对象、把会话ID放到cookie中、把cookie设置为响应的一部分等；
 * 对于后续的请求，容器会从请求的cookie得到会话ID，将这个会话ID与现有的会话匹配，并把会话与当前请求关联。
 
+也就是说cookie的所有工作都在后台进行，你不用把会话ID与cookie关联，你不用在响应中设置cookie，你也不用建立新的cookie对象，这一切都是容器自动完成的。
+
 无论在响应中<red>发送</red>一个会话cookie，还是从请求中得到会话ID，都只需要一个简单语句，余下的所有事情容器都帮你做好了：
 
 ```java
@@ -749,6 +751,31 @@ Cookie[] cookies = request.getCookies();
     			msg = (String)request.getAttribute("msg");
     		}
     	%>
+      <h3><font color="red"><%=msg %></font></h3>
+		<form action="/reg_login/LoginServlet" method="post">
+			<table>
+				<tr>
+					<td class="td1">用户名</td>
+					<td><input type="text" class="input1" name="username" value="<%=username %>"></td>
+				</tr>
+				<tr>
+				<td class="td1">密码</td>
+				<td><input type="password" class="input1" name="password"></td>
+				</tr>
+				<tr>
+				<td class="td1" colspan="2">
+					<input type="checkbox" name="remember" value="true" checked="checked"> 记住用户名</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div class="btn-red">
+							<input type="submit" value="登录" id="login-btn">
+						</div>
+					</td>
+				</tr>
+			</table>
+
+		</form>
     ```
 
 

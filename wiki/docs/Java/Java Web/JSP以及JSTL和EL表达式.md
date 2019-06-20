@@ -55,7 +55,7 @@ JSP全名为Java Server Pages，中文名叫**Java服务器页面**，其根本�
 
     下面是一个显示登陆成功的JSP页面转化成的Java代码中的`_jspService`函数：
     
-    ```java tab="_jspService()"
+    ```java
      public void _jspService(final javax.servlet.http.HttpServletRequest request, 
                 final javax.servlet.http.HttpServletResponse response)
           throws java.io.IOException, javax.servlet.ServletException {
@@ -97,7 +97,7 @@ JSP全名为Java Server Pages，中文名叫**Java服务器页面**，其根本�
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"
     +request.getServerName()+":"+request.getServerPort()+path+"/";
-        // 运行和输出JSP中的HTML, scriptlet和表达式代码
+         // 运行和输出JSP中的HTML, scriptlet和表达式代码
           out.write("\r\n");
           out.write("<!DOCTYPE html>\r\n");
           out.write("<html>\r\n");
@@ -143,13 +143,35 @@ JSP有其自己扩充的语法，而且在JSP中所有的JAVA语句都可以使�
 
 JSP脚本、声明、表达式、注释的使用方法如下，需要注意是否使用分号。
 
-**导入包**
+#### JSP指令
 
- 使用page指令(`<%@`开始的JSP代码为指令)导入包
- 
- ```jsp
- <%@page import="foo.*" %> 
- ```
+JSP指令用来设置整个JSP页面相关的属性，如网页的编码方式和脚本语言。语法格式如下：
+
+```jsp
+<%@ directive attribute="value"%>
+```
+
+JSP中的三种指令标签
+
+| 指令 | 描述 | 
+| --- | --- |
+| `<%@ page ... %>`	| 定义网页依赖属性，比如脚本语言、error页面、缓存需求等等 |
+| `<%@ include ... %>`	| 包含其他文件 |
+| `<%@ taglib ... %>` |	引入标签库的定义 |
+
+!!! example "JSP指令示例"
+
+     使用page指令(`<%@`开始的JSP代码为指令)导入包
+     
+     ```jsp
+     <%@page import="foo.*" %> 
+     ```
+     
+     使用`<%@include ...%>`指令来包含其他文件
+     
+     ```jsp
+     <%@include file="footer.jsp">
+     ```
 
 **scriptlet**
 
@@ -212,20 +234,20 @@ JSP脚本、声明、表达式、注释的使用方法如下，需要注意是�
 
 ### 3 JSP隐式对象
 
-JSP**隐式对象**(又叫内置对象)是不需要预先声明就可以在脚本代码和表达式中随意使用的对象。所有隐式对象都会映射到Servlet API中的实例：
+JSP**隐式对象**(又叫内置对象)是不需要预先声明就可以在脚本代码和表达式中随意使用的对象，一共有9个。所有隐式对象都会映射到Servlet API中的实例：
 
 
-| 隐式对象 | 描述 |
+| 隐式对象 | 描述 | 
 | --- | --- |
-| request |	 HttpServletRequest接口的实例 |
-| response |	HttpServletResponse接口的实例 |
-| out |	JspWriter类的实例，用于把结果输出至网页上 |
-| session |	 HttpSession类的实例 |
-| application |	ServletContext类的实例，与应用上下文有关 |
-| config |	ServletConfig类的实例 |
-| pageContext |	PageContext类的实例，提供对JSP页面所有对象以及命名空间的访问 |
-| page |	 类似于Java类中的this关键字 |
-| Exception |	Exception类的对象，代表发生错误的JSP页面中对应的异常对象 |
+| `request` |	 `HttpServletRequest`接口的实例，封装了HTTP请求的参数、属性等 |
+| `response` | 	`HttpServletResponse`接口的实例 |
+| `out` |	`JspWriter`类的实例，用于把结果输出至网页上 |
+| `session` |	 `HttpSession`类的实例 |
+| `application` |	 `ServletContext`类的实例，与应用上下文有关 |
+| `config` |	`ServletConfig`类的实例，提供Servlet或者JSP引擎的初始化参数 |
+| `pageContext` |	 `PageContext`类的实例，提供对JSP页面所有对象以及命名空间的访问 |
+| `page` |	 类似于Java类中的`this`关键字 |
+| `Exception` |`	Exception`类的对象，代表发生错误的JSP页面中对应的异常对象 |
 
 ### 4 JSTL
 
@@ -247,6 +269,16 @@ JSP标准标签库(JSTL)是一个JSP标签集合，它封装了JSP应用的通�
     <groupId>org.apache.taglibs</groupId>
     <artifactId>taglibs-standard-impl</artifactId>
     <version>1.2.5</version>
+</dependency>
+<dependency>
+    <groupId>javax.servlet.jsp.jstl</groupId>
+    <artifactId>jstl-api</artifactId>
+    <version>1.2</version>
+</dependency>
+<dependency>
+    <groupId>org.glassfish.web</groupId>
+    <artifactId>jstl-impl</artifactId>
+    <version>1.2</version>
 </dependency>
 ```
 
@@ -275,7 +307,7 @@ EL表达式语言的语法为`${expr}`。 这里`expr`指定表达式本身，EL
 
 #### 获取数据
 
-使用EL表达式获取数据语法："${表达式}"。当EL表达式中只有属性名时，会依次去四个作用域page, request, session和application中进行查找。每个作用域都对应一个EL中的名称，如下表所示：
+使用EL表达式获取数据语法："${表达式}"。当EL表达式中只有属性名时，会*依次*去四个作用域page, request, session和application中进行查找。每个作用域都对应一个EL中的名称，如下表所示：
 
 | 作用域 | EL中的表示 |
 | --- | --- |
@@ -311,10 +343,29 @@ EL表达式语言的语法为`${expr}`。 这里`expr`指定表达式本身，EL
 | 18 | empty | 测试空变量值 | 
 
 !!! example 
+
     ```html
     <jsp:setProperty name = "box" property = "perimeter" 
        value = "${2*box.width+2*box.height}"/>
     ```
+    
+!!! note ". vs []"
+    EL表达式可以使用"."或者"[]"操作符在相应的作用域中取得某个属性的值。使用以下三种形式是等价的：
+    
+    ```xml
+    <h3> 三种不同的形式进行输出 </h3>
+    <hr>
+    用户名: ${user.username} <br>
+    密码: ${user.password}
+    <hr>
+    用户名: ${requestScope.user.username} <br>
+    密码: ${requestScope.user.password}
+    <hr>
+    用户名: ${user["username"]} <br>
+    密码: ${user["password"]}
+    <hr>
+    ```
+
 #### 隐式对象
 
 JSP表达式语言支持以下隐式对象
@@ -334,6 +385,6 @@ JSP表达式语言支持以下隐式对象
 | 11 | pageContext | 当前页面的JSP PageContext对象 | 
 
 
-`${param.name}` 等价于 r`equest.getParamter("name")`，这两种方法一般用于服务器从页面或者客户端获取的内容。
+`${param.name}` 等价于 `request.getParamter("name")`，这两种方法一般用于服务器从页面或者客户端获取的内容。
 
-`${requestScope.name} 等价于 request.getAttribute("name")`，一般是从服务器传递结果到页面，在页面中取出服务器保存的值。
+`${requestScope.name}` 等价于 `request.getAttribute("name")`，一般是从服务器传递结果到页面，在页面中取出服务器保存的值。

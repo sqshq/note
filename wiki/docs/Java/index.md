@@ -59,6 +59,7 @@ date: 2017-07-07
 #### Java Web 
 
 * [Ajax](Java Web/Ajax.md)
+* [Bootstrap](Java Web/Bootstrap.md)
 * [CSS](Java Web/CSS.md)
 * [HTML](Java Web/HTML.md)
 * [Head First Servlets and JSP](Java Web/Head First Servlets and JSP.md)
@@ -67,11 +68,13 @@ date: 2017-07-07
 * [Java Web](Java Web/Java Web.md)
 * [JavaScript](Java Web/JavaScript.md)
 * [MyBatis](Java Web/MyBatis.md)
+* [RESTful](Java Web/RESTful.md)
 * [Spring](Java Web/Spring.md)
 * [Tomcat](Java Web/Tomcat.md)
 * [XML](Java Web/XML.md)
 * [jQuery](Java Web/jQuery.md)
 * [人员信息管理系统](Java Web/人员信息管理系统.md)
+* [Log4j](Java Web/Log4j.md)
 
 #### Effective Java 
 

@@ -21,11 +21,11 @@ title: Ajax
 
 `jQuery.ajax(url, [settings])`方法实现了异步的HTTP请求，常见的setting参数如下：
 
-* url: 请求的地址
-* type: 请求时数据的传递方式(常用的有get/post)
-* data: 用来传递的数据(建议使用json来传递)
-* success：请求成功时调用该函数
-* dataType: ajax接收后台数据的类型(建议使用json)
+* `url`: 请求的地址
+* `type`: 请求时数据的传递方式(常用的有get/post)
+* `data`: 用来传递的数据(建议使用json来传递)
+* `success`：请求成功时调用该函数
+* `dataType`: ajax接收后台数据的类型(建议使用json)
 
 [[官方文档详细参数](http://api.jquery.com/jQuery.ajax/)]
 

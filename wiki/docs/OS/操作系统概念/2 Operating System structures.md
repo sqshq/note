@@ -100,6 +100,8 @@ Operating systems with **monolithic structure** (单体结构) place all of the 
 
 ![Traditional UNIX system structure](figures/TradiontalUnixSystemStructure.png)
 
+monolithic kernel单内核
+
 * e.g. Linux is based on Unix and is structured similarly, as shown in figure below.
 
 ![Linux system structure](figures/LinuxSystemStructure.png)
