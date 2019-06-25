@@ -292,6 +292,17 @@ SELECT COUNT(*) AS num_items,
     AVG(prod_price) AS price_avg 
 FROM Products;
 ```
+
+
+### 10 分组数据
+
+分组是使用SELECT语句的GROUP BY子句建立的。
+
+```sql
+SELECT vend_id, COUNT(*) AS num_prods FROM Products GROUP BY vend_id;
+```
+
+
 ### 12 联结表
 
 

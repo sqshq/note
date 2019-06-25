@@ -93,7 +93,7 @@ public void roam(){
 
 There are four access levels, moving from most restrictive to least, the four access levels are: 
 
-**prive, default, protected, public**:
+**private, default, protected, public**:
 
 * public members *_are_* inherited. 
 * private members *_are_* not inherited.

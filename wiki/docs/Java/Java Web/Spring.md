@@ -1493,41 +1493,39 @@ Spring的声明式事务是通过AOP代理实现的，其事务通知(transactio
     
 ### 7 Spring MVC
 
-Spring Web MVC是Spring提供给Web应用的框架设计。Spring MVC是一种基于Servlet的技术，它提供了核心控制器DispatcherServlet和相关的组件，并制定了松散的结构，以适合各种灵活的需要。
+Spring MVC基于模型-视图-控制器(MVC)模式实现，是Spring提供给Web应用的框架设计。Spring MVC是一种基于Servlet的技术，它提供了核心控制器DispatcherServlet和相关的组件，并制定了松散的结构，以适合各种灵活的需要。
     
 核心组件 
 
 | 核心组件 | 名称 |
-| DispatcherServlet | 前置控制器 |
+| --- | --- | 
+|  DispatcherServlet | 前端控制器，查询处理器映射，确定请求的处理顺序 |
 |  Handler | 处理器，完成具体业务 |
-|  HandlerMapping | 将请求映射到handler |
+|  HandlerMapping | 处理器映射，将请求映射到handler |
 |  HandlerInterceptor | 处理器拦截器 |
 |  HandlerExecutionChain | 处理器执行链 |
 |  HandlerAdapter |  处理器适配器 |
-|  ModelAndView | 装在模型数据和试图信息 | 
-|  ViewResolver | 视图解析器| 
+|  Controller | 控制器，处理用户请求 |
+|  ModelAndView | 模型和视图 | 
+|  ViewResolver | 视图解析器 | 
+
+![](figures/spring_mvc_process_jiantu.jpg)
+
+1. 客户端发送请求，带有用户所请求内容的信息。Spring MVC所有的请求都会通过前端控制器(DispatcherServlet)；
+2. 前端控制器查询一个或多个处理器映射(HanderMapping)来确定请求处理顺序。处理器映射会根据请求所携带的URI信息来进行决策；
+3. 一旦选择了合适的控制器，DispatcherServlet会将请求发送给选中的控制器(Controller)；
+4. 控制器在完成处理后，返回模型和视图(ModelAndView)；
+5. DispatcherServlet将会使用视图解析器(ViewResolver)来将逻辑视图名匹配为一个特定的视图实现(例如JSP)；
+6. 视图将使用模型数据渲染输出；
+7. 输出通过相应对象传递给客户端。
 
 
-SpringMVC实现流程
-
-1. 客户端请求被DispatcherServlet接收。
-2. DispatcherServlet将请求映射到Handler。
-3. 生成Handler以及HandlerInterceptor。
-4. 返回HandlerExecutionChain（Handler+HandlerInterceptor）。
-5. DispatcherServlet通过HandlerAdapter执行Handler。
-6. 返回一个ModelAndView。
-7. DispatcherServlet通过ViewResolver进行解析。
-8. 返回填充了模型数据的View，响应给客户端。
 
 
-![spring_mvc_process](figures/spring_mvc_process.png)
 
 
-SpringMVC的使用
 
-大部分组件由框架提供，开发者只需通过配置进行关联。
 
-开发者只需手动编写Handler，View。
 
 #### 控制器
 
@@ -1552,7 +1550,7 @@ public @interface RequestMapping {
 
 
 
-控制器开发是Spring MVC的核心内容，其步骤一般会分为3步：获取请求参数，处理业务逻辑，绑定模型和视图
+控制器开发是Spring MVC的核心内容，其步骤一般会分为3步：获取请求参数，处理业务逻辑，绑定模型和视图。
 
 #### 接收请求参数
 
@@ -1583,7 +1581,7 @@ public @interface RequestMapping {
 
 <hh>使用URL传递参数</hh>
 
-一些网站使用URL的形式传递参数，这符合[RESTFul](RESTFul.md)的风格。这时可以使用注解`@PathVariable`从URL的请求地址中获取参数。
+一些网站使用URL的形式传递参数，这符合[RESTFul](RESTful.md)的风格。这时可以使用注解`@PathVariable`从URL的请求地址中获取参数。
 
 
 ```java
@@ -1601,12 +1599,23 @@ public ModelAndView pathVariable(@PathVariable("id") Long id) {
 ```
 
 
+##### Spring表单
+
+有时候JSP文件的表单极其复杂，那么接收参数就变得不那么容易了，特别是select这样的form元素。幸好，Spring MVC封装了一系列表单标签，开箱即用。使用之前，类似于JSTL，需要在JSP文件的顶部加入指令：
+
+```jsp
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+```
+
+[[官方文档](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-view-jsp)]
+
+使用bean来接收form表单提交的参数时，pojo中必须含有默认的（即空的）构造函数，同时，需要设置到bean中的变量必须有setter方法。
 
 
     
 #### 视图渲染
 
-一般而言，Spring MVC会默认使用JstlView进行渲染，也就是将查询出来的模型绑定到JSTL(JSP标准标签库)中，这样通过JSTL就可以把数据模型在JSP中读出展示数据了。但是目前在前端技术中，普遍使用Ajax技术，SpringMVC同样提供了很好的支持
+一般而言，Spring MVC会默认使用JstlView进行渲染，也就是将查询出来的模型绑定到JSTL(JSP标准标签库)中，这样通过JSTL就可以把数据模型在JSP中读出展示数据了。
 
 ```java
 @RequestMaping(value="/getRole", method=RequestMethod.GET)
@@ -1624,7 +1633,7 @@ public ModelAndView getRole(@RequestParam("id") Long id) {
 
 #### 结合Ajax
 
-`@ResponseBody`注解常用在处理Ajax的方法上，`@ResponseBody`表示该方法的返回结果直接写入HTTP response body中。
+`@ResponseBody`注解常用在处理Ajax的方法上，`@ResponseBody`表示该方法的返回结果直接写入HTTP response body中。控制器返回JSON数据让JavaScript处理。
 
 
 ```javascript tab="JS"
@@ -1746,38 +1755,52 @@ public void addRole(HttpServletRequest request, HttpServletResponse response,
 
 #### 拦截器
 
-[过滤器](Head First Servlets and JSP.md#8)
-
-拦截器是指通过统一拦截从浏览器发往服务器的请求来完成功能的增强。可以解决请求的共性问题：乱码、权限验证。
 
 
+拦截器是指通过统一拦截从浏览器发往服务器的请求来完成功能的增强。它可以解决一些请求的共性问题，如乱码、权限验证。
+
+!!! note "拦截器和过滤器"
+    
+    ![](figures/filter_vs_interceptor.jpg)
+
+    过滤器详见[过滤器](Head First Servlets and JSP.md#8)
+    
+    过滤器是Servlet中的规范，是由Servlet容器Servlet容器过滤每个请求和响应。拦截器位于Spring容器中，由Spring控制。
+    
+    > As a basic guideline, fine-grained handler-related preprocessing tasks are candidates for HandlerInterceptor implementations, especially factored-out common handler code and authorization checks. On the other hand, a Filter is well-suited for request content and view content handling, like multipart forms and GZIP compression. This typically shows when one needs to map the filter to certain content types (e.g. images), or to all requests. [[ref](https://docs.spring.io/autorepo/docs/spring/current/javadoc-api/org/springframework/web/servlet/HandlerInterceptor.html)]
 
 
-拦截器是使用JDK动态代理实现的，拦截的是对应调用方法的拦截。
-过滤器是使用Filter实现的，拦截的是request对象。
+用户可以自定义拦截器来实现特定的功能，自定义的拦截器必须实现`HandlerInterceptor`接口，接口的方法如下：
 
-Spring MVC也可以使用拦截器对请求进行拦截处理，用户可以自定义拦截器来实现特定的功能，自定义的拦截器必须实现`HandlerInterceptor`接口
+![HandlerInterceptor](figures/HandlerInterceptor.png)
 
 * `preHandle()`: 这个方法在业务处理器处理请求之前被调用，在该方法中对用户请求request进行处理
     * 如果程序员决定该拦截器对请求进行拦截处理后还要调用其他的拦截器，或者是业务处理器去进行处理，则返回true；如果程序员决定不需要再调用其他组件去处理请求，则返回false；
-*  `postHandle()`:这个方法在业务处理器处理完请求后，但是DispatcherServlet向客户端返回响应前被调用，在该方法中对用户请求request进行处理
+*  `postHandle()`:这个方法在业务处理器处理完请求后，在DispatcherServlet向客户端返回响应前被调用，在该方法中对用户请求request进行处理
 * `afterCompletion()`:在DispatcherServlet完全处理完请求后被调用，可以在该方法中进行一些资源清理的操作
 
-![HandlerInterceptor](figures/HandlerInterceptor.png)
+也可以继承HandlerInterceptorAdapter，当只想实现3个拦截器方法中的1到2个时，那么只要继承它，根据需要覆盖掉原有的方法就可以了。
+
+
+![multiple_interceptor](figures/multiple_interceptor.png)
+
+一般使用XML的方式配置拦截器
 
 ```xml
 <!-- 拦截器的注册 -->
 <mvc:interceptors>
     <mvc:interceptor>
+        <!-- 拦截器的拦截的URL -->
         <mvc:mapping path="/user/**"/>
         <!--exclude-mapping在所有拦截中进行排除，一般在通配符会有意义。-->
         <mvc:exclude-mapping path="/user/updatebackground/*"/>
-        <bean class="com.imooc.core.LoginInterceptor"/>
+        <!-- 指定拦截器类 -->
+        <bean class="com.zhenhua.LoginInterceptor"/>
     </mvc:interceptor>
 </mvc:interceptors>
 ```
 
-![Screen Shot 2019-06-15 at 2.15.38 P](figures/Screen%20Shot%202019-06-15%20at%202.15.38%20PM.png)
+
 
 ### 8 Redis
  

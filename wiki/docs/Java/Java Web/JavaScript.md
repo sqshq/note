@@ -380,11 +380,8 @@ DOM事件的不同写法：
 
 一些操作浏览器窗口的常用方法:
 
-* `window.open()` - 打开新窗口
-* `window.close()` - 关闭当前窗口
-* `window.moveTo()` - 移动当前窗口
-* `window.resizeTo()` - 调整当前窗口的尺寸
 * `window.location.href()` - 调转到指定网址
+* `window.location.reload()` - 刷新页面
 
 #### 计时事件
 

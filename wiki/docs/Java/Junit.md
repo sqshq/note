@@ -1,0 +1,5 @@
+---
+title: Junit
+---
+
+ Assertions.assertEquals()
