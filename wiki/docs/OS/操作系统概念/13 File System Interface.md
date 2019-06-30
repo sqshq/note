@@ -10,10 +10,7 @@ The file system consists of two distinct parts: a collection of **files**, each 
 
 A **file** is named collection of related information that is recorded on secondary storage.(文件是记录在外存上的相关信息的具有名称的集合)。
 
-A file has a certain defined structure, which depends on its type.
-
-* A text file is a sequence of characters organized into lines.
-* An executable file is a series of code sections.
+A file is a sequence of **logical** records. A logical record may be a byte, a line (of fixed or variable length), or a more complex data item.
 
 #### File Attributes
 
@@ -57,9 +54,9 @@ SOLUTION: The operating system uses two levels of internal tables: a per-process
     * Once a file has been opened by one process, it includes an entry for the file.
     * It also has an **open count** associated with each file to indicate how many processes have the file open.
 
-<font color="red"><b>File locks</b></font>(文件锁) are useful for files that are shared by several processes. For example, a system log file that can be accessed and modified by a number of processes in the system.
+<red>File locks</red>(文件锁) are useful for files that are shared by several processes. For example, a system log file that can be accessed and modified by a number of processes in the system.
 
-File locks provide functionality similar to reader-writer locks in [Chapter 7](osc/ch7.md). A **shared lock**(共享锁) is akin to a reader lock in that several processes can acquire the lock concurrently. An **exclusive lock**(排斥锁) is akin to a writer lock in that only one process at a time can acquire such a lock.
+File locks provide functionality similar to reader-writer locks in [7 Synchronization Examples.md](7 Synchronization Examples.md). A **shared lock**(共享锁) is akin to a reader lock in that several processes can acquire the lock concurrently. An **exclusive lock**(排斥锁) is akin to a writer lock in that only one process at a time can acquire such a lock.
 
 Furthermore, operating systems(e.g. Linux) may provide either **mandatory**  or **advisory** file-locking mechanisms.
 
@@ -67,78 +64,81 @@ Furthermore, operating systems(e.g. Linux) may provide either **mandatory**  or 
 * with advisory locking, the operating system will not prevent other process from accessing to the locked file.
 * For advisory locking, it is up to software developers to ensure that locks are appropriately acquired and released.
 
-The simple program in Java as follows demonstrating file locking. The program acquires an exclusive lock on the first half of the file and a shared lock on the second half.
+!!! example "File Locking in Java"
+
+    The simple program in Java as follows demonstrating file locking. The program acquires an exclusive lock on the first half of the file and a shared lock on the second half.
  
-```Java
-import java.io.*;
-import java.nio.channels.*;
+    ```Java
+    import java.io.*;
+    import java.nio.channels.*;
+    
+    public class LockingExample {
+    	public static final boolean EXCLUSIVE = false;
+    	public static final boolean SHARED = true;
+    
+       public static void main(String args[]) throws IOException {
+        	if (args.length != 1) {
+        		System.err.println("Usage: java LockingExample <input file>");
+        		System.exit(0);
+    	   }
+    
+    	FileLock sharedLock = null;
+    	FileLock exclusiveLock = null;
+    
+    	try {
+    	   RandomAccessFile raf = new RandomAccessFile(args[0], "rw"); 
+    
+    		// get the channel for the file
+         	FileChannel channel = raf.getChannel();
+    
+    		System.out.println("trying to acquire lock ...");
+    		// this locks the first half of the file - exclusive
+    		exclusiveLock = channel.lock(0, raf.length()/2, EXCLUSIVE);
+    		System.out.println("lock acquired ...");
+    
+    		/**
+    		 * Now modify the data  . . .
+    		 */
+    
+    		try {
+    			// sleep for 10 seconds
+    			Thread.sleep(10000);
+    		}
+    		catch (InterruptedException ie) { }
+    
+    		// release the lock
+    		exclusiveLock.release();
+    		System.out.println("lock released ...");
+    
+    		// this locks the second half of the file - shared 
+    		sharedLock = channel.lock(raf.length()/2 + 1, raf.length(), SHARED);
+    		
+    		/**
+    		 * Now read the data  . . .
+    		 */
+    
+    		// release the lock
+    		exclusiveLock.release();
+    	} catch (java.io.IOException ioe) {
+    		System.err.println(ioe);
+    	}
+          	finally {
+    		if (exclusiveLock != null)
+           			exclusiveLock.release();
+    		if (sharedLock != null)
+           			sharedLock.release();
+         	}
+       }
+    }
+    ```
 
-public class LockingExample {
-	public static final boolean EXCLUSIVE = false;
-	public static final boolean SHARED = true;
-
-   public static void main(String args[]) throws IOException {
-    	if (args.length != 1) {
-    		System.err.println("Usage: java LockingExample <input file>");
-    		System.exit(0);
-	   }
-
-	FileLock sharedLock = null;
-	FileLock exclusiveLock = null;
-
-	try {
-	   RandomAccessFile raf = new RandomAccessFile(args[0], "rw"); 
-
-		// get the channel for the file
-     	FileChannel channel = raf.getChannel();
-
-		System.out.println("trying to acquire lock ...");
-		// this locks the first half of the file - exclusive
-		exclusiveLock = channel.lock(0, raf.length()/2, EXCLUSIVE);
-		System.out.println("lock acquired ...");
-
-		/**
-		 * Now modify the data  . . .
-		 */
-
-		try {
-			// sleep for 10 seconds
-			Thread.sleep(10000);
-		}
-		catch (InterruptedException ie) { }
-
-		// release the lock
-		exclusiveLock.release();
-		System.out.println("lock released ...");
-
-		// this locks the second half of the file - shared 
-		sharedLock = channel.lock(raf.length()/2 + 1, raf.length(), SHARED);
-		
-		/**
-		 * Now read the data  . . .
-		 */
-
-		// release the lock
-		exclusiveLock.release();
-	} catch (java.io.IOException ioe) {
-		System.err.println(ioe);
-	}
-      	finally {
-		if (exclusiveLock != null)
-       			exclusiveLock.release();
-		if (sharedLock != null)
-       			sharedLock.release();
-     	}
-   }
-}
-```
 #### File Types
 
 A common technique for implementing file types is to include the type as part of the file name. 
 
 * The name is split into two parts—a *name* and an *extension*, usually separated by a period. 
 * The system uses the extension to indicate the type of the file and the type of operations that can be done on that file
-* The UNIX system uses a **magic number**[[Wikipedia](_s://en.wikipedia.org/wiki/Magic_number_(programming))] stored at the beginning of some binary files to indicate the type of data in the file (for example, the format of an image file). Not all files have magic numbers.
+* The UNIX system uses a **magic number**([Wikipedia](https://en.wikipedia.org/wiki/Magic_number_(programming)), 魔数) stored at the beginning of some binary files to indicate the type of data in the file (for example, the format of an image file). Not all files have magic numbers.
 
 #### File Structure
 
@@ -236,9 +236,9 @@ ISSUES: If we want to allow everyone to read a file, we must list all users with
 
 SOLUTION: A condensed version of the access list, many system recognize three classifications of users in connection with each file:
 
-* Owner. The user who created the file is the owner.
-* Group. A set of users who are sharing the file and need similar access is a group, or work group
-* Other. All other users in the system.
+* *Owner*. The user who created the file is the owner.
+* *Group*. A set of users who are sharing the file and need similar access is a group, or work group
+* *Other*. All other users in the system.
 
 #### Other Protection Approaches
 
@@ -265,7 +265,7 @@ A sample directory listing from a UNIX environment is shown in below:
 
 Advantage
 
-* Manipulating files through memory rather than incurring the overhead of using `read()` and `write()` system calls simplifies and speeds up file access and usuage.
+* Manipulating files through memory rather than incurring the overhead of using `read()` and `write()` system calls simplifies and speeds up file access and usage.
 
 Multiple processes may be allowed to map the same file concurrently, to allow sharing of data. The virtual memory map of each sharing process points to the same page of physical memory. The memory-mapping system calls can also support **copy-on-write** functionality, allowing processes to share a file in read-only mode but to have their own copies of any data they modify.
 

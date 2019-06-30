@@ -16,7 +16,7 @@ All the low-level networking details are taken care of by classes in the <C>java
 
 To connect to another machine, We need a <C>Socket</C> connection. A <C>Socket</C> (<C>java.net.Socket</C>) is an object that represents a network connection between two machines. A connection is a *relationship* between two machines, where two pieces of software know about each other.
 
-To make a Socket connection, you need to know two things about the server: who it is, and which port it’s running on. In other words, **IP address** and **TCP port number**.
+To make a `Socket` connection, you need to know two things about the server: who it is, and which port it’s running on. In other words, **IP address** and **TCP port number**.
 
 ```Java
 // 196.164.1.103 is the IP address for the sever
@@ -36,7 +36,7 @@ Well-known TCP port numbers for common server applications:
 
 **To read data from a <C>Socket</C>, use a <C>BufferedReader</C>**.
 
-To communicate over a <C>Socket</C> connection, you use regular I/O streams. One of the coolest features in Java is that the most of you I/O work won't care what you high-level chain stream is actually connected to.
+To communicate over a <C>Socket</C> connection, you use regular I/O streams. One of the coolest features in Java is that the most of your I/O work won't care what you high-level chain stream is actually connected to.
 
 
 * Make a <C>Socket</C> connection to the server

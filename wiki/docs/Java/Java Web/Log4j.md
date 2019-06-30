@@ -32,51 +32,52 @@ Log4J的Maven配置。
 !!! example "log4j.properties示例"
 
     ```xml
-    ## set log levels ###    
-    log4j.rootLogger = INFO, console, debugFile, errorFile  
-        
-    ### 输出到控制台 ###    
-    log4j.appender.console = org.apache.log4j.ConsoleAppender  
-    ##这个不指定默认是System.out,指定输出控制台  
-    log4j.appender.console.Target = System.out  
-    ##输出INFO级别以上的日志  
-    log4j.appender.console.Threshold = INFO  
-    ##布局模式，自己灵活指定  
-    log4j.appender.console.layout = org.apache.log4j.PatternLayout  
-    log4j.appender.console.layout.ConversionPattern = [framework][%d{ABSOLUTE}-%l][%p]:%m %n  
-      
-    ### 保存日志内容到具体文件 ###  
-    ##输出到每天一个独立文件  
-    log4j.appender.debugFile = org.apache.log4j.DailyRollingFileAppender  
-    ##输出DEBUG级别以上的日志   
-    log4j.appender.debugFile.Threshold = DEBUG  
-    ##异常日志文件路径,文件名称方案  
-    log4j.appender.debugFile.File = D:/logs/log.log  
-    log4j.appender.debugFile.DatePattern = '.'yyyy-MM-dd-HH  
-    ##设定信息是增加而不是覆盖  
-    log4j.appender.debugFile.Append=true  
-    #信息输出格式  
-    log4j.appender.debugFile.layout = org.apache.log4j.PatternLayout  
-    log4j.appender.debugFile.layout.ConversionPattern = [framework][%d{ABSOLUTE}-%l][%p]:%m %n  
-      
-    ### 保存异常信息到具体文件 ###    
-    ##输出到每天一个独立文件  
-    log4j.appender.errorFile = org.apache.log4j.DailyRollingFileAppender  
-    ##只输出ERROR级别以上的日志内容   
-    log4j.appender.errorFile.Threshold = ERROR  
-    ##异常日志文件路径,文件名称方案  
-    log4j.appender.errorFile.File = D:/logs/error.log  
-    log4j.appender.errorFile.DatePattern = '.'yyyy-MM-dd-HH  
-    ##设定信息是增加而不是覆盖  
-    log4j.appender.errorFile.Append=true  
-    #信息输出格式  
-    log4j.appender.errorFile.layout = org.apache.log4j.PatternLayout  
-    log4j.appender.errorFile.layout.ConversionPattern = [framework][%d{ABSOLUTE}-%l][%p]:%m %n  
+    ## set log levels ###
+    log4j.rootLogger = INFO, console, debugFile, errorFile
+    
+    ### 输出到控制台 ###
+    log4j.appender.console = org.apache.log4j.ConsoleAppender
+    ##这个不指定默认是System.out,指定输出控制台
+    log4j.appender.console.Target = System.out
+    ##输出INFO级别以上的日志
+    log4j.appender.console.Threshold = INFO
+    ##布局模式，自己灵活指定
+    log4j.appender.console.layout = org.apache.log4j.PatternLayout
+    log4j.appender.console.layout.ConversionPattern = [framework][%d{ABSOLUTE}-%l][%p]:%m %n
+    
+    ### 保存日志内容到具体文件 ###
+    ##输出到每天一个独立文件
+    log4j.appender.debugFile = org.apache.log4j.DailyRollingFileAppender
+    ##输出DEBUG级别以上的日志
+    log4j.appender.debugFile.Threshold = DEBUG
+    ##异常日志文件路径,文件名称方案
+    log4j.appender.debugFile.File = logs/log.log
+    log4j.appender.debugFile.DatePattern = '.'yyyy-MM-dd-HH
+    ##设定信息是增加而不是覆盖
+    log4j.appender.debugFile.Append=true
+    #信息输出格式
+    log4j.appender.debugFile.layout = org.apache.log4j.PatternLayout
+    log4j.appender.debugFile.layout.ConversionPattern = [framework][%d{ABSOLUTE}-%l][%p]:%m %n
+    
+    ### 保存异常信息到具体文件 ###
+    ##输出到每天一个独立文件
+    log4j.appender.errorFile = org.apache.log4j.DailyRollingFileAppender
+    ##只输出ERROR级别以上的日志内容
+    log4j.appender.errorFile.Threshold = ERROR
+    ##异常日志文件路径,文件名称方案
+    log4j.appender.errorFile.File = logs/error.log
+    log4j.appender.errorFile.DatePattern = '.'yyyy-MM-dd-HH
+    ##设定信息是增加而不是覆盖
+    log4j.appender.errorFile.Append=true
+    #信息输出格式
+    log4j.appender.errorFile.layout = org.apache.log4j.PatternLayout
+    log4j.appender.errorFile.layout.ConversionPattern = [framework][%d{ABSOLUTE}-%l][%p]:%m %n
     ```
 
 在Java程序中使用Log4J
 
 !!! example "Log4j使用"
+
     ```java
     private static final Logger logger = 
         LoggerFactory.getLogger(TestSpringController.class); 

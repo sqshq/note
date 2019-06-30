@@ -103,13 +103,13 @@ Interned String:
 
 #### 直接内存/堆外内存
 
-**直接内存**(Direct Memory)或堆外内存(off-heap memory)不是虚拟机运行时数据区的一部分，这些内存直接受操作系统管理。这样做的结果就是能保证一个较小的堆，以减少垃圾回收对应用的影响。
+**直接内存**(Direct Memory)或**堆外内存**(off-heap memory)不是虚拟机运行时数据区的一部分，这些内存直接受操作系统管理。这样做的结果就是能保证一个较小的堆，以减少垃圾回收对应用的影响。
 
 ![native_memory](figures/native_memory.png)
 
 怎样通过Java分配内存？
 
-* java.nio.ByteBuffer:
+* java.nio.ByteBuffer[详见](../Head First Java/14 Serialization and File IO.md#4-java-nio):
     * HeapByteBuffer (on-heap, up to 2gb)  
     * DirectByteBuffer (off-heap, up to 2gb)  
     * MappedByteBuffer (off-heap, up to 2gb, persisted)

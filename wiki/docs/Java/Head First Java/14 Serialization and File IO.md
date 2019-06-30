@@ -7,7 +7,7 @@ date: 2017-10-30
 ![https://www.safaribooksonline.com/library/view/learning-java/1565927184/ch10.html#ch10-15265](figures/JavaIOLibarary.png)
 
 
-### Saving Objects
+### 1 Saving Objects
 
 If your data will be used by only the Java program that generated it:
 
@@ -216,7 +216,7 @@ A serializable class can declare its own <C>serialVersionUID</C> explicitly by d
 ANY-ACCESS-MODIFIER static final long serialVersionUID = 42L;
 ```
 
-### Writing Files
+### 2 Writing Files
 
 #### File Class
 
@@ -286,67 +286,67 @@ BufferedWriter writer = new BufferedWriter(new FileWriter(aFile));
 ```
 
 
-* <C>FileWriter</C> writes each and every thing you pass to the file each and every time.
-* <C>BufferedWriter</C> will hold all the stuff you write to it until it's full. **Only then the buffer is full will the FileWriter actually be told to write to the file on disk**.
+* <C>FileWriter</C> writes each and every thing you pass to the file *each and every time*.
+* <C>BufferedWriter</C> will hold all the stuff you write to it until it's full. **Only then the buffer is full will the `FileWriter` actually be told to write to the file on disk**.
     * If you do want to send data *before* the buffer is full, **Just Flush It**(`writer.flush()`).
 
 ![BufferedWrite](figures/BufferedWriter.png)
 
-### Reading Files
+### 3 Reading Files
 
-* Usually, we use a <C>File</C> Object to represent a file, a <C>FileReader</C> to do the actual reading, and a <C>BufferedReader</C> to make the reading more efficient.
+Usually, we use a <C>File</C> Object to represent a file, a <C>FileReader</C> to do the actual reading, and a <C>BufferedReader</C> to make the reading more efficient.
 
-```Java
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+!!! example "Reading A FILE"
 
-public class ReadAFile {
-    public static void main (String[] args){
-        try{
-            File myFile = new File("Foo.text");
-            // A FileReader is a connection stream for characters, that connects to a text file.
-            FileReader fileReader = new FileReader(myFile);
-            //Chain the FileReader to a BufferedReader for more efficient reading.
-            BufferedReader reader = new BufferedReader(fileReader);
-
-            // Make a String variable to hold each line as the line is read.
-            String line = null;
-
-            while ((line = reader.readLine())!=null) {
-                System.out.println(line);
+    ```Java
+    import java.io.BufferedReader;
+    import java.io.File;
+    import java.io.FileReader;
+    
+    public class ReadAFile {
+        public static void main (String[] args){
+            try{
+                File myFile = new File("Foo.text");
+                // A FileReader is a connection stream for characters, that connects to a text file.
+                FileReader fileReader = new FileReader(myFile);
+                //Chain the FileReader to a BufferedReader for more efficient reading.
+                BufferedReader reader = new BufferedReader(fileReader);
+    
+                // Make a String variable to hold each line as the line is read.
+                String line = null;
+    
+                while ((line = reader.readLine())!=null) {
+                    System.out.println(line);
+                }
+                reader.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-            reader.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
     }
-}
-```
+    ```
 
-### 字节流/字符流
+#### 字节流/字符流
 
-在java.io包中流的操作主要有**字节流**(byte streams)、**字符流**(character streams)两大类，并且两个都具备输入输出的操作。InputStream和OutputStream属于字节流，Reader和Writer属于字符流。
+在`java.io`包中流的操作主要有**字节流**(byte streams)、**字符流**(character streams)两大类，并且两个都具备输入输出的操作。`InputStream`和`OutputStream`属于字节流，`Reader`和`Writer`属于字符流。
 
 [对比](https://stackoverflow.com/questions/3013996/byte-stream-and-character-stream)：字节流一个字节一个字节访问文件。字节流适合于任何文件，除了文本文件。例如，当文件的字符使用两个字节的unicode编码时，字节流会分开对待每个字符，需要手动转换。而字符流一个字符一个字符访问文件。字符流需要指定文件编码才能正确访问。
 
 ![](figures/character_streams_byte_streams.png)
 
-### Java NIO
+### 4 Java NIO
 
-When studying both the Java NIO and IO API's, a question quickly pops into mind:
-
-When should I use IO and when should I use NIO?
+NIO是New I/O的简称，表示新的一套Java IO标准。Java NIO与IO的主要区别如下：
 
 | IO | NIO |
 | --- | --- |
-| Stream oriented | Buffer oriented |
-| Blocking IO | Non blocking IO |
-| | Selectors |
+| 面向流 | 面向缓冲 |
+| 阻塞IO | 非阻塞IO |
+| 无 | Selectors |
 
 #### Main Differences of NIO and IO
 
-[[Java NIO vs. IO](https://dzone.com/articles/java-nio-vs-io)，[翻译](http://ifeve.com/java-nio-vs-io/)]
+[[Java NIO vs. IO](http://tutorials.jenkov.com/java-nio/nio-vs-io.html)，[翻译](http://ifeve.com/java-nio-vs-io/)]
 
 **Stream Oriented vs. Buffer Oriented**
 
@@ -361,7 +361,7 @@ Java NIO's buffer oriented approach is slightly different. Data is read into a b
 
 **Blocking vs. Non-blocking IO**
 
-Java IO's various streams are blocking. That means, that when a thread invokes a read() or write(), that thread is blocked until there is some data to read, or the data is fully written. The thread can do nothing else in the meantime.
+Java IO's various streams are blocking. That means, that when a thread invokes a `read()` or `write()`, that thread is blocked until there is some data to read, or the data is fully written. The thread can do nothing else in the meantime.
 
 Java IO: Reading data from a blocking stream.
 
@@ -419,12 +419,41 @@ while (bytesRead != -1) {
       System.out.println("Read " + bytesRead);
       buf.flip();
 
-      while(buf.hasRemaining()){
+      while (buf.hasRemaining()){
           System.out.print((char) buf.get());
       }
-
       buf.clear();
       bytesRead = inChannel.read(buf);
 }
 aFile.close();
 ```
+
+Buffer中有三个重要的参数：位置(position)、容量(capacity)和上限(limit):
+
+* posiiton: 当前缓冲区的位置
+* capacity: 缓冲区的容量上限
+* limit: 缓冲区的实际上线，总是小于或者等于capacity
+
+![](figures/nio_buffer.jpg)
+
+In the typical life cycle of a Java NIO buffer, the buffer is created empty ready for a producer to fill it up with data. The buffer is in **filling mode**(a producer writes into the buffer).  After the producer has finished writing data, the buffer is then **flipped** to prepare it for **draining mode**(a consumer reads from the buffer）. At this point, the buffer is ready for the consumer to read the data.  Once done, the buffer is then **cleared** and ready for writing again.
+
+
+![](figures/nio_reading_writing_flip.png)
+
+`flip()`操作会重置position为0,并把limit设置到当前position，通常用于将buffer从写模式转换为读模式。
+
+#### Direct buffer
+
+Direct buffers are more **efficient** as I/O operations are performed directly on the buffer without the need of copying the information into memory first. However, creating a direct buffer is an **expensive** operation, and might even trigger a full Garbage Collection. Direct buffers are usually best suited when working with long-lived and large buffers, although performance gain should be measured before committing to using direct buffers.
+
+
+![](figures/nio_direct_buffer.png)
+
+
+Direct buffers are created with  `allocateDirect()` method:
+
+```java 
+ByteBuffer byteBuffer = ByteBuffer.allocateDirect(100);
+```
+

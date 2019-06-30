@@ -4,69 +4,131 @@ date: 2017-12-30
 tags: [Linux]
 ---
 
-Centos是追求稳定的程序员首选的Linux桌面版本。本文给出使用过程中最重要的几个问题的解决方案。
-
-#### 美化[¶](https://techlarry.github.io/Miscellaneous/awesome%20Install/ubuntu%E6%97%A5%E5%BF%97/#_1)
-
-Ubuntu的主题通常需要自定义，达到使用者的最熟悉的布局，能够最方便、最高效的使用。Centos可以直接拿过来使用，因为都是基于Gnome3构建的州面环境。建议使用Mac主题和字体，具体可以参考博文[给Ubuntu安装macOS主题](https://www.cnblogs.com/feipeng8848/p/8970556.html)。
-
-#### 同步[¶](https://techlarry.github.io/Miscellaneous/awesome%20Install/ubuntu%E6%97%A5%E5%BF%97/#_2)
-
-在Linux下文件同步没有免费的优秀方案。使用坚果云可以免费同步，但其一个月2GB的流量限制和不菲的套餐，使得大多数用户望而却步。而国外的优秀的网盘在大陆都被禁用或者连接速度极低。
-
-选择Vultr搭建nextCloud私有云是非常好的方法，最便宜的套餐2.5美元一个月，网速非常快，亲测可以占满100MB带宽。而且搭建的SS服务器，不像阿里云，有着被封的风险。
+Centos是追求稳定的程序员首选的Linux桌面版本。下面以Centos 6.10, VirtualBox为例。
 
 
+### 1 安装与基础配置
 
-#### 备份
+新建虚拟机。网络选择NAT和Host-Only选项。安装大概3分钟。重启后，创建用户名和密码。
 
-rsync是非常好的一个备份工具。在创建好需要排除的备份列表后，使用命令
+
+#### 配置用户
+
+为用户user添加sudo权限。修改/etc/sudoers文件
+
+```text
+root ALL=(ALL) ALL
+user ALL=(ALL) ALL #user改成您的用户名
+```
+
+#### 修改主机名
+
+默认安装的主机名往往非常怪异，需要修改。修改`/etc/sysconfig/network`文件中的HOSTNAME属性，重新启动后生效。
+
+
+
+#### SSH
+CentOS默认是不启动SSH服务的。所以需要安装，启动、配置。
 
 ```bash
- sudo rsync -aAXhv --exclude-from=excluded / /store/backup/backup_20170322_3
+# 安装SSH
+yum install openssh-server
+# 开启
+service sshd start
+# 开启服务的自动启动
+chkconfig sshd on
+``` 
+
+配置SSH免密登陆, 首先利用ifconfig查看虚拟机Ip地址，例如192.168.56.103,然后将Ip地址增加到本机host文件中.
+
+```text
+192.168.56.103 centos
 ```
 
-可以非常简单的进行备份。
+然后利用ssh-copy-id命令将密钥拷贝到虚拟机，过程中选择yes，并输入密码。
 
-#### 文档
-
-
-
-Typora是非常强大的markdown写作软件。可以在/usr/share/applications中添加文件typora.desktop，其内容为
-
-```
-[Desktop Entry]
-Name=Typora
-Exec=/opt/Typora-linux-x64/Typora %u
-Type=Application
-Icon=/opt/Typora-linux-x64/resources/app/asserts/icon/icon_128x128.png
-Terminal=false
+```bash
+ssh-copy-id centos
 ```
 
-即可将其添加到桌面。
+然后在主机上登陆虚拟机
 
-#### 视频
-
-VLC和SMPlayer是Linux上最受欢迎的播放器。安装VLC视频播放器：
-
-```
-rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-1.el7.nux.noarch.rpm
-yum update
-yum  install vlc
+```bash
+ssh centos
 ```
 
 
 
+#### 源
 
+配置国内的阿里、网易的安装源能够大大加快包的下载速度。
 
-#### 作为服务器
+```bash
+# 备份，为了更新失败时切换回去
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+# 进入yum源配置文件夹
+cd /etc/yum.repos.d/
+# 根据centos版本下载对应的新源
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo
+#生成缓存，会把新下载CentOS-Base.repo源生效。
+yum makecache
+```
+#### oh-my-zsh
 
-CentOS广泛被用作搭建服务器的平台，而Apache服务器使用最广。
+使用流行的oh-my-zsh使目录跳转、文字输入更加快捷。
 
 ```
-sudo yum install httpd -y #安装Apache服务
-systemctl start httpd # 启动
-systemctl enable httpd # 设置开机自启Apache服务
+# zsh
+yum -y install zsh
+yum -y install  git
+# 安装oh-my-zsh
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 ```
 
-然后把网站放在`/var/www/html`下，打开浏览器，访问本地地址，就可以看到网站。
+由于往往有多台虚拟机，所以希望显示[登陆用户，主机名，路径]这样的信息，否则很容易搞混虚拟机，产生误操作。在`～/.zshrc`文件中添加
+
+```bash
+PROMPT='%{$fg_bold[yellow]%}%n@%m ${ret_status} %{$fg[cyan]%}%d%{$reset_color%} $(git_prompt_info)'
+```
+
+使用`source ~/.zshrc`生效。
+
+#### mysql
+
+启动mysql服务
+
+```bash
+sudo service mysqld start
+```
+
+设置管理员密码
+
+```bash
+mysqladmin -u root  password 'new-password';
+```
+
+如果想重新设置密码，用原先密码登陆数据库
+
+```sql
+#使用mysql数据库        
+ use mysql；
+#修改          
+update user set password=password("new-password") where user="root";
+#刷新权限        
+flush privileges;
+```
+
+设置mysql开机启动
+
+```bash
+chkconfig mysqld on
+```
+
+#### 后台运行
+
+Centos虚拟机的操作一般是通过主机的终端来操作的，所以就希望虚拟机在后台运行。
+
+```
+# 开启虚拟机在后台运行
+VBoxManage startvm <vm_name> -type headless
+```

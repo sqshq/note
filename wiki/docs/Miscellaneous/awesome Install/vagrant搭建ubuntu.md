@@ -17,6 +17,7 @@ tags: [vagrant, ubuntu]
 安装好了Vagrant，后然后安装Virtual box，请到[下载网页](https://www.virtualbox.org)直接下载需要的版本。
 
 下面安装`Ubuntu`
+
 （1）打开Mac terminal，运行下面命令，安装`Ubuntu`。
 
 ```bash

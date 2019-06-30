@@ -132,7 +132,7 @@ def write_index_chapters(path, contents):
 	把章节导航写入文件
 	"""
 	book = path.split(r'/')[-1]
-	title = FILEMETA % (book, CURRTIME)
+	title = FILEMETA % ("index", CURRTIME)
 	with codecs.open(os.path.join(path, 'index.md'), mode='w', encoding='utf-8') as f:
 		f.write(title + contents)
 

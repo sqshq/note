@@ -52,7 +52,7 @@ Process Control Block:
 ![process control block](figures/processControlBlock.png)
 
 
-The process control block in Linux is represented by the C structure `task_struct` ('include/linux/sched.h')， [CODE LINK](https://elixir.bootlin.com/linux/latest/source/include/linux/sched.h#L592)
+The process control block in Linux is represented by the C structure `task_struct`(`include/linux/sched.h`)， ([CODE LINK](https://elixir.bootlin.com/linux/latest/source/include/linux/sched.h#L592))
 
 * Within the Linux kernel, all active processes are represented using a **doubly linked list** of task struct.
 
@@ -74,6 +74,7 @@ The **process scheduler**(进程调度程序) selects an available process for p
 #### Scheduling Queues
 
 **Ready queue**(就绪队列): the status of processes are ready.
+
 * generally stored as a linked list, its header contains pointers to the first PCB in the list, each PCB includes a pointer field that points to next PCB in the ready queue.
 
 **Wait Queue**(等待队列): the status of processes are waiting.

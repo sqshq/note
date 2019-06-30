@@ -93,4 +93,3 @@ Command + N 自动生成方法getter, setter, constructor
 * `/WEB-INF/classes`：存放程序所需要的所有Java class文件。
 * `/WEB-INF/lib`：存放程序所需要的所有jar文件。
 * `/WEB-INF/web.xml`：web应用的部署配置文件。它是工程中最重要的配置文件，它描述了servlet和组成应用的其它组件，以及应用初始化参数、安全管理约束等。
-
