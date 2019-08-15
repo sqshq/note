@@ -1,5 +1,5 @@
 ---
-title: Java编程思想
+title: index
 toc: false
 date: 2017-07-07
 ---
@@ -14,7 +14,7 @@ date: 2017-07-07
 * [8 复用类](8 复用类.md)
 * [9 多态](9 多态.md)
 * [10 接口](10 接口.md)
-* [11 Inner Classes](11 Inner Classes.md)
+* [11 内部类](11 内部类.md)
 * [12 Holding Your Objects](12 Holding Your Objects.md)
 * [13 通过异常处理错误](13 通过异常处理错误.md)
 * [14 String](14 String.md)

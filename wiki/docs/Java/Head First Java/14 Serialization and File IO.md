@@ -378,11 +378,11 @@ What threads spend their idle time on when not blocked in IO calls, is usually p
 
 If you need to manage thousands of open connections simultaneously, which each only send a little data, for instance a chat server, implementing the server in NIO is probably an advantage. Similarly, if you need to keep a lot of open connections to other computers, e.g. in a P2P network, using a single thread to manage all of your outbound connections might be an advantage. This one thread, multiple connections design is illustrated in this diagram:
 
-![](figures/15348420529139.png)
+![](figures/multipleConnection.png)
 
 If you have fewer connections with very high bandwidth, sending a lot of data at a time, perhaps a classic IO server implementation might be the best fit. This diagram illustrates a classic IO server design:
 
-![](figures/15348420743344.png)
+![](figures/classic_io_server_design.png)
 
 
 
@@ -406,6 +406,23 @@ Here are the most important Channel implementations in Java NIO:
 * <C>DatagramChannel</C> can read and write data over the network via UDP.
 * <C>SocketChannel</C> can read and write data over the network via TCP.
 * <C>ServerSocketChannel</C> allows you to listen for incoming TCP connections, like a web server does. For each incoming connection a <C>SocketChannel</C> is created.
+
+#### NIO Buffer
+
+Java NIO Buffers are used when interacting with NIO Channels. Data is read from channels into buffers, and written from buffers into channels.
+
+Using a `Buffer` to read and write data typically follows this little 4-step process:
+
+* Write data into the `Buffer`
+* Call `buffer.flip()`
+* Read data out of the `Buffer`
+* Call `buffer.clear()` or `buffer.compact()`
+
+In the typical life cycle of a Java NIO buffer, the buffer is created empty ready for a producer to fill it up with data. The buffer is in **filling mode**(a producer writes into the buffer).  After the producer has finished writing data, the buffer is then **flipped** to prepare it for **draining mode**(a consumer reads from the buffer）. At this point, the buffer is ready for the consumer to read the data.  Once done, the buffer is then **cleared** and ready for writing again.
+
+
+![](figures/nio_reading_writing_flip.png)
+
 
 ```Java
 RandomAccessFile aFile = new RandomAccessFile("data/nio-data.txt", "rw");
@@ -436,10 +453,7 @@ Buffer中有三个重要的参数：位置(position)、容量(capacity)和上限
 
 ![](figures/nio_buffer.jpg)
 
-In the typical life cycle of a Java NIO buffer, the buffer is created empty ready for a producer to fill it up with data. The buffer is in **filling mode**(a producer writes into the buffer).  After the producer has finished writing data, the buffer is then **flipped** to prepare it for **draining mode**(a consumer reads from the buffer）. At this point, the buffer is ready for the consumer to read the data.  Once done, the buffer is then **cleared** and ready for writing again.
 
-
-![](figures/nio_reading_writing_flip.png)
 
 `flip()`操作会重置position为0,并把limit设置到当前position，通常用于将buffer从写模式转换为读模式。
 

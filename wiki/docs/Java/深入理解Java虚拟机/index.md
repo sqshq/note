@@ -1,5 +1,5 @@
 ---
-title: 深入理解Java虚拟机
+title: index
 toc: false
 date: 2017-07-07
 ---

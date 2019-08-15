@@ -44,18 +44,6 @@ date: 2017-07-07
 * [18 Remote deploy with RMI](Head First Java/18 Remote deploy with RMI.md)
 * [19 Appendix](Head First Java/19 Appendix.md)
 
-#### Java多线程设计模式 
-
-* [Future模式](Java多线程设计模式/Future模式.md)
-* [序章一 Java线程](Java多线程设计模式/序章一 Java线程.md)
-* [序章二 多线程程序的评价标准](Java多线程设计模式/序章二 多线程程序的评价标准.md)
-* [1 Single Threaded Execution模式](Java多线程设计模式/1 Single Threaded Execution模式.md)
-* [2 Immutable模式](Java多线程设计模式/2 Immutable模式.md)
-* [3 Guarded Suspension模式](Java多线程设计模式/3 Guarded Suspension模式.md)
-* [4 Balking模式](Java多线程设计模式/4 Balking模式.md)
-* [5 Producer-Consumer模式](Java多线程设计模式/5 Producer-Consumer模式.md)
-* [6 Read-Write Lock模式](Java多线程设计模式/6 Read-Write Lock模式.md)
-
 #### Java Web 
 
 * [Ajax](Java Web/Ajax.md)
@@ -64,12 +52,14 @@ date: 2017-07-07
 * [HTML](Java Web/HTML.md)
 * [Head First Servlets and JSP](Java Web/Head First Servlets and JSP.md)
 * [JDBC](Java Web/JDBC.md)
+* [JSON](Java Web/JSON.md)
 * [JSP以及JSTL和EL表达式](Java Web/JSP以及JSTL和EL表达式.md)
 * [Java Web](Java Web/Java Web.md)
 * [JavaScript](Java Web/JavaScript.md)
 * [MyBatis](Java Web/MyBatis.md)
 * [RESTful](Java Web/RESTful.md)
 * [Spring](Java Web/Spring.md)
+* [SpringBoot](Java Web/SpringBoot.md)
 * [Tomcat](Java Web/Tomcat.md)
 * [XML](Java Web/XML.md)
 * [jQuery](Java Web/jQuery.md)
@@ -120,7 +110,7 @@ date: 2017-07-07
 * [8 复用类](Java编程思想/8 复用类.md)
 * [9 多态](Java编程思想/9 多态.md)
 * [10 接口](Java编程思想/10 接口.md)
-* [11 Inner Classes](Java编程思想/11 Inner Classes.md)
+* [11 内部类](Java编程思想/11 内部类.md)
 * [12 Holding Your Objects](Java编程思想/12 Holding Your Objects.md)
 * [13 通过异常处理错误](Java编程思想/13 通过异常处理错误.md)
 * [14 String](Java编程思想/14 String.md)
@@ -133,4 +123,10 @@ date: 2017-07-07
 * [21 注解](Java编程思想/21 注解.md)
 * [22 并发](Java编程思想/22 并发.md)
 * [23 Graphical User Interfaces](Java编程思想/23 Graphical User Interfaces.md)
+
+#### 高并发 
+
+* [JDK并发包](高并发/JDK并发包.md)
+* [Java多线程设计模式](高并发/Java多线程设计模式.md)
+* [多线程基础](高并发/多线程基础.md)
 

@@ -1,5 +1,5 @@
 ---
-title: Effective Java
+title: index
 toc: false
 date: 2017-07-07
 ---

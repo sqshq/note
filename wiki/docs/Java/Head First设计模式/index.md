@@ -1,5 +1,5 @@
 ---
-title: Head First设计模式
+title: index
 toc: false
 date: 2017-07-07
 ---
