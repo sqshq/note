@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="4a425725-8907-4521-8bf9-cc3e3a4ecb6c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/nav.py" beforeDir="false" afterPath="$PROJECT_DIR$/nav.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parseHTMLTable.py" beforeDir="false" afterPath="$PROJECT_DIR$/parseHTMLTable.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../custom_theme/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/../custom_theme/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../custom_theme/main_beifen.html" beforeDir="false" afterPath="$PROJECT_DIR$/../custom_theme/main_beifen.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Algorithm/CS61B/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Algorithm/CS61B/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Algorithm/Princeton/Topic 3 - Sorting.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Algorithm/Princeton/Topic 3 - Sorting.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Algorithm/Princeton/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Algorithm/Princeton/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Algorithm/Stanford/Topic - Graph.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Algorithm/Stanford/Topic - Graph.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Algorithm/Stanford/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Algorithm/Stanford/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Algorithm/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Algorithm/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Algorithm/剑指Offer/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Algorithm/剑指Offer/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Big Data.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Big Data/Big Data.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/1 Meet Hadoop.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/1 Meet Hadoop.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/10 Setting Up a Hadoop Cluster.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/11 Adminstering Hadoop.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/12 Avro.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/12 Avro.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/14 Flume.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/14 Flume.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/15 Sqoop.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/15 Sqoop.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/17 Hive.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/17 Hive.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/19 Spark.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/19 Spark.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/2 MapReduce.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/2 MapReduce.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/20 HBase.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/20 HBase.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/3 The Hadoop Distributed FileSystem.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/4 YARN.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/4 YARN.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/5 Hadoop IO.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/5 Hadoop IO.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/6 Developing a MapReduce Application.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/7 How MapReduce Works.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/8 MapReduce Types and Formats.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/9 MapReduce Features.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/figures/15368265326304.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/figures/15368265789576.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/figures/EfficientlyMerging40FileSegamentsWithAMergeFactorOf10.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/figures/EfficientlyMerging40FileSegamentsWithAMergeFactorOf10.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/figures/MapReduceDataFlowWithMultipleReduceTask.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/figures/The relationship of the Streaming executable to the node manager and the task container.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Big Data/Hadoop权威指南/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Spark快速大数据分析/7 Running on a Cluster**.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/Spark快速大数据分析/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Big Data/Spark快速大数据分析/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Big Data/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Big Data/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Data Science/CMU10601/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Data Science/CMU10601/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Data Science/Database/MySQL.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Data Science/Database/SQL必知必会.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Data Science/Database/SQL必知必会.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Data Science/Database/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Data Science/Database/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Data Science/Database/高性能MySQL.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Data Science/Database/高性能MySQL.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Data Science/Practical Data Science/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Data Science/Practical Data Science/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Data Science/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Data Science/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Data Science/面向程序员的数据挖掘指南/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Data Science/面向程序员的数据挖掘指南/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/Effective Java/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/Effective Java/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/Head First Java/7 Inheritance and polymorphism.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/Head First Java/7 Inheritance and polymorphism.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/Head First Java/8 Interfaces and Abstract Classes.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/Head First Java/8 Interfaces and Abstract Classes.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/Head First Java/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/Head First Java/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/Head First设计模式/1 Strategy Pattern.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/Head First设计模式/1 Strategy Pattern.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/Head First设计模式/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/Head First设计模式/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/Java Web/Log4j.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/Java Web/Log4j.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/Java Web/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/Java Web/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/Java编程思想/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/Java编程思想/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/其他/Java record.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/其他/Java record.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/深入理解Java虚拟机/10 早期(编译期)优化.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/深入理解Java虚拟机/10 早期(编译期)优化.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/深入理解Java虚拟机/2 Java内存区域与内存溢出正常.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/深入理解Java虚拟机/2 Java内存区域与内存溢出正常.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/深入理解Java虚拟机/3 垃圾收集器与内存分配策略.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/深入理解Java虚拟机/3 垃圾收集器与内存分配策略.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/深入理解Java虚拟机/figures/java_runtime_data_area.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/深入理解Java虚拟机/figures/jvm_internals.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/深入理解Java虚拟机/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/深入理解Java虚拟机/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/高并发/JDK并发包.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/高并发/JDK并发包.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/高并发/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Java/高并发/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Java/高并发/多线程设计模式.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Leetcode/118. Pascal's Triangle.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Leetcode/119. Pascal's Triangle II.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/Maven.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Miscellaneous/Maven.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/Python/Python配置.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Miscellaneous/Python/Python配置.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/Scala/collections-diagrams.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/Scala/reduceLeft_add.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/Scala/scala_types.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/Scala/慕课网Scala入门.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/Scala/慕课网Scala入门.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/Scala/第3章 从Java到Scala.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/Scala/第3章 从Java到Scala.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/Scala/第4章 处理对象.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/Scala/第4章 处理对象.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/TensorFlow/1 TF系统框架.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/TensorFlow/2 TF核心概念.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/TensorFlow/3 TF代码分析初步.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/TensorFlow/4 TF OpKernels简介.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/TensorFlow/5 TF - Graph模块.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/TensorFlow/TF会话生命周期.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/VSCODE.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/awesome Install/CentOS日志.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Miscellaneous/awesome Install/CentOS日志.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/awesome Install/Mac OS使用.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/awesome Install/Mac环境下搭建Hadoop家族产品.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Miscellaneous/awesome Install/Mac环境下搭建Hadoop家族产品.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/awesome Install/Youtube.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Miscellaneous/awesome Install/Youtube.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/awesome Install/搭建远程下载服务器.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/awesome Install/黑苹果日志.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Miscellaneous/awesome Install/黑苹果日志.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/Miscellaneous/建站日志.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/Miscellaneous/建站日志.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/UNIX环境高级编程/3 文件IO.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/UNIX环境高级编程/figures/process_table_entry.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/UNIX环境高级编程/figures/two_independent_processes_with_the_same_file_open.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/操作系统概念/10 Virtual Memory.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/操作系统概念/10 Virtual Memory.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/操作系统概念/11 Mass-Storage Structure.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/操作系统概念/11 Mass-Storage Structure.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/操作系统概念/12 I:O Systems.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/操作系统概念/13 File System Interface.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/操作系统概念/13 File System Interface.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/操作系统概念/2 Operating System structures.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/操作系统概念/2 Operating System structures.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/操作系统概念/3 Processes.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/操作系统概念/3 Processes.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/操作系统概念/5 CPU Scheduling.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/操作系统概念/5 CPU Scheduling.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/操作系统概念/6 Synchronization Tools.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/操作系统概念/6 Synchronization Tools.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/操作系统概念/7 Synchronization Examples.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/操作系统概念/7 Synchronization Examples.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/操作系统概念/8 DeadLocks.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/操作系统概念/8 DeadLocks.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/操作系统概念/9 Virtual Memory.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/操作系统概念/figures/15327413379278.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/操作系统概念/figures/permissions_in_a_unix_system.png" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/操作系统概念/figures/permissions_in_a_unix_system.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/操作系统概念/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/操作系统概念/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/深入了解计算机系统/10 系统级IO.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/深入了解计算机系统/10 系统级IO.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/深入了解计算机系统/2 信息的表示和处理.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/深入了解计算机系统/2 信息的表示和处理.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/深入了解计算机系统/4 处理器体系结构.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/深入了解计算机系统/4 处理器体系结构.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/深入了解计算机系统/6 存储器层次结构.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/深入了解计算机系统/6 存储器层次结构.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/深入了解计算机系统/9 虚拟内存.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/深入了解计算机系统/9 虚拟内存.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/深入了解计算机系统/figures/platter.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/深入了解计算机系统/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/深入了解计算机系统/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/深入了解计算机系统Lab/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/深入了解计算机系统Lab/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/计算机网络 自顶向下/2 应用层.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/计算机网络 自顶向下/2 应用层.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/计算机网络 自顶向下/4 网络层.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/计算机网络 自顶向下/4 网络层.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/计算机网络 自顶向下/5 链路层.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/计算机网络 自顶向下/5 链路层.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/OS/计算机网络 自顶向下/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/OS/计算机网络 自顶向下/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/css/extra.css" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/css/extra.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/index.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/tags/Array.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/tags/Array.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docs/目录.md" beforeDir="false" afterPath="$PROJECT_DIR$/../docs/目录.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mkdocs.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../mkdocs.yml" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/nav.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="69">
+              <caret line="134" column="11" selection-start-line="134" selection-start-column="11" selection-end-line="134" selection-end-column="11" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/opt/miniconda3/envs/note/lib/python3.6/codecs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="376">
+              <caret line="319" selection-start-line="319" selection-end-line="319" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>print</find>
+      <find>st</find>
+      <find>book</find>
+      <find>level</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>menu</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/nav.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectConfigurationFiles">
+    <option name="files">
+      <list>
+        <option value="$PROJECT_DIR$/.idea/bin.iml" />
+        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
+        <option value="$PROJECT_DIR$/.idea/misc.xml" />
+        <option value="$PROJECT_DIR$/.idea/modules.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="564" />
+    <option name="y" value="168" />
+    <option name="width" value="1841" />
+    <option name="height" value="1186" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="bin" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bin" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="nav" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="bin" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/opt/miniconda3/envs/note/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/nav.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4a425725-8907-4521-8bf9-cc3e3a4ecb6c" name="Default Changelist" comment="" />
+      <created>1574169195427</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1574169195427</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="564" y="168" width="1841" height="1186" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Favorites" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49931788" visible="true" weight="0.30714285" />
+      <window_info id="Structure" order="1" sideWeight="0.5006821" side_tool="true" visible="true" weight="0.30714285" />
+      <window_info anchor="bottom" id="Version Control" />
+      <window_info anchor="bottom" id="Python Console" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3299817" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.40036562" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/nav.py</url>
+          <line>268</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$USER_HOME$/opt/miniconda3/envs/note/lib/python3.6/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="319" selection-start-line="319" selection-end-line="319" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Caches/PyCharmCE2019.1/python_stubs/-643577505/builtins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="514" column="4" lean-forward="true" selection-start-line="512" selection-start-column="7" selection-end-line="516" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nav.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="69">
+          <caret line="134" column="11" selection-start-line="134" selection-start-column="11" selection-end-line="134" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
